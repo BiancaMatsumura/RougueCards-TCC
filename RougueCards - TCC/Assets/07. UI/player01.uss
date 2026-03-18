@@ -1,0 +1,30 @@
+.player01 {
+    visibility: visible;
+    background-color: rgba(255, 0, 0, 0.04);
+    border-left-color: rgb(79, 79, 79);
+    border-right-color: rgb(79, 79, 79);
+    border-top-color: rgb(79, 79, 79);
+    border-bottom-color: rgb(79, 79, 79);
+}
+
+.player02 {
+    visibility: visible;
+    background-color: rgba(0, 0, 255, 0.04);
+    border-left-color: rgb(79, 79, 79);
+    border-right-color: rgb(79, 79, 79);
+    border-top-color: rgb(79, 79, 79);
+    border-bottom-color: rgb(79, 79, 79);
+}
+
+.containers {
+    background-image: url("project://database/Assets/05.%20Sprites/teste/PNG/Default/Border/panel-border-013.png?fileID=21300000&guid=6a0667024af98254fa909d67f19f2cbc&type=3#panel-border-013");
+    -unity-slice-left: 32;
+    -unity-slice-top: 32;
+    -unity-slice-right: 32;
+    -unity-slice-bottom: 32;
+    -unity-background-scale-mode: stretch-to-fill;
+    -unity-slice-scale: 3.2px;
+    width: 800px;
+    height: 500px;
+    background-color: rgba(0, 0, 0, 0.16);
+}
