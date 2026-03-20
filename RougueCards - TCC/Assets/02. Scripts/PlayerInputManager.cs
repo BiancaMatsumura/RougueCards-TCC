@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System.Collections.Generic;
 
 public class PlayerInputManager : MonoBehaviour
 {
@@ -10,11 +11,19 @@ public class PlayerInputManager : MonoBehaviour
     private bool player01Joined = false;
     private bool player02Joined = false;
 
+    private HashSet<Gamepad> usedGamepads = new HashSet<Gamepad>();
+
     void Update()
     {
+
+        if (player01Joined && player02Joined) return;
+
         foreach (var gamepad in Gamepad.all)
         {
-            if (gamepad.startButton.wasPressedThisFrame)
+            if (usedGamepads.Contains(gamepad))
+                continue;
+
+            if (gamepad.buttonSouth.wasPressedThisFrame)
             {
                 // Player 1 entra primeiro
                 if (!player01Joined)
@@ -30,8 +39,11 @@ public class PlayerInputManager : MonoBehaviour
 
                     player01Joined = true;
 
+                    usedGamepads.Add(gamepad);
+
                     return;
                 }
+
                 // Player 2 entra depois
                 if (!player02Joined)
                 {
@@ -45,6 +57,9 @@ public class PlayerInputManager : MonoBehaviour
                         player.transform.position = spawnPoints[1].position;
 
                     player02Joined = true;
+
+                    usedGamepads.Add(gamepad);
+                    this.enabled = false;
                     return;
                 }
             }

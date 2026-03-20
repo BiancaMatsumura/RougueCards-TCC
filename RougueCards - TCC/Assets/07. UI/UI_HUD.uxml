@@ -1,14 +1,15 @@
 <engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/07.%20UI/player01.uss?fileID=7433441132597879392&amp;guid=366a9650e9bf5c5408667bffb5e865a4&amp;type=3#player01" />
+    <engine:VisualElement name="PauseContainer" style="flex-grow: 1; height: 1080px; width: 1920px; opacity: 1; visibility: visible; position: absolute; background-color: rgba(0, 0, 0, 0.31); align-items: center; justify-content: center; align-self: center;">
+        <engine:VisualElement name="PauseMenu" class="containers" style="align-items: center; justify-content: center; display: none; visibility: visible; flex-direction: column; align-content: center;">
+            <engine:Label text="PAUSE MENU" style="background-color: rgba(255, 255, 255, 0); -unity-text-align: middle-center; -unity-background-image-tint-color: rgb(255, 255, 255); color: rgb(255, 255, 255); font-size: 41px; margin-top: 0; margin-bottom: 32px; margin-right: 0; margin-left: 0;" />
+            <engine:Button text="Resume" name="ResumeButton" class="Button" />
+            <engine:Button text="Restart" name="RestartButton" enable-rich-text="false" class="Button" style="width: 400px; height: 60px; font-size: 30px;" />
+            <engine:Button text="Main Menu" name="MainMenu" enable-rich-text="false" class="Button" style="width: 400px; height: 60px; font-size: 30px;" />
+        </engine:VisualElement>
+    </engine:VisualElement>
     <engine:VisualElement name="Container" style="flex-grow: 1; flex-direction: row;">
         <engine:VisualElement name="Player01" class="player01" style="flex-grow: 1;" />
         <engine:VisualElement name="Player02" class="player02" style="flex-grow: 1;" />
-    </engine:VisualElement>
-    <engine:VisualElement name="PauseContainer" style="flex-grow: 1; height: 1080px; width: 1920px; opacity: 1; visibility: visible; position: absolute; background-color: rgba(0, 0, 0, 0.31); align-items: center; justify-content: center; align-self: center;">
-        <engine:VisualElement name="PauseMenu" class="containers" style="align-items: center; justify-content: flex-start; display: flex; visibility: hidden;">
-            <engine:Label text="PAUSE MENU" style="background-color: rgba(255, 255, 255, 0); -unity-text-align: middle-center; -unity-background-image-tint-color: rgb(255, 255, 255); color: rgb(255, 255, 255); font-size: 41px; margin-top: 62px; margin-bottom: 45px;" />
-            <engine:Button text="Resume" name="ResumeButton" style="width: 400px; height: 60px; font-size: 30px; margin-bottom: 20px;" />
-            <engine:Button text="Restart" name="RestartButton" enable-rich-text="false" style="width: 400px; height: 60px; font-size: 30px;" />
-        </engine:VisualElement>
     </engine:VisualElement>
 </engine:UXML>

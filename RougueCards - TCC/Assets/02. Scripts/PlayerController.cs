@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
     private CharacterController controller;
     private Vector2 moveInput;
     private Vector3 velocity;
+    private bool jumpRequested;
 
     void Awake()
     {
@@ -23,12 +24,23 @@ public class PlayerController : MonoBehaviour
 
     public void Jump(InputAction.CallbackContext context)
     {
-        velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+        if (context.performed && controller.isGrounded)
+        {
+            jumpRequested = true;
+        }
     }
 
-
-    void FixedUpdate()
+    void Update()
     {
+        if (controller.isGrounded && velocity.y < 0)
+            velocity.y = -2f; 
+
+        if (jumpRequested)
+        {
+            velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+            jumpRequested = false;
+        }
+
         Vector3 move = new Vector3(moveInput.x, 0, moveInput.y);
         controller.Move(move * speed * Time.deltaTime);
 
