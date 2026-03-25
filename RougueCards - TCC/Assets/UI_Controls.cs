@@ -113,7 +113,7 @@ public partial class @UI_Controls: IInputActionCollection2, IDisposable
                     ""name"": ""Cancel"",
                     ""type"": ""Button"",
                     ""id"": ""15cef263-9014-4fd5-94d9-4e4a6234a6ef"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
@@ -185,6 +185,15 @@ public partial class @UI_Controls: IInputActionCollection2, IDisposable
                     ""name"": ""Pause"",
                     ""type"": ""Button"",
                     ""id"": ""d78cd2cc-7e25-4f06-ae9f-82bc2a990a65"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""PanelCards"",
+                    ""type"": ""Button"",
+                    ""id"": ""c974df19-439f-43fe-a0de-989056f177de"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
@@ -620,6 +629,17 @@ public partial class @UI_Controls: IInputActionCollection2, IDisposable
                     ""action"": ""Pause"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""55458bf8-7fda-4693-b29b-b4a6a8ff2be5"",
+                    ""path"": ""<Gamepad>/select"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PanelCards"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -722,6 +742,7 @@ public partial class @UI_Controls: IInputActionCollection2, IDisposable
         m_UI_TrackedDevicePosition = m_UI.FindAction("TrackedDevicePosition", throwIfNotFound: true);
         m_UI_TrackedDeviceOrientation = m_UI.FindAction("TrackedDeviceOrientation", throwIfNotFound: true);
         m_UI_Pause = m_UI.FindAction("Pause", throwIfNotFound: true);
+        m_UI_PanelCards = m_UI.FindAction("PanelCards", throwIfNotFound: true);
     }
 
     ~@UI_Controls()
@@ -813,6 +834,7 @@ public partial class @UI_Controls: IInputActionCollection2, IDisposable
     private readonly InputAction m_UI_TrackedDevicePosition;
     private readonly InputAction m_UI_TrackedDeviceOrientation;
     private readonly InputAction m_UI_Pause;
+    private readonly InputAction m_UI_PanelCards;
     /// <summary>
     /// Provides access to input actions defined in input action map "UI".
     /// </summary>
@@ -868,6 +890,10 @@ public partial class @UI_Controls: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "UI/Pause".
         /// </summary>
         public InputAction @Pause => m_Wrapper.m_UI_Pause;
+        /// <summary>
+        /// Provides access to the underlying input action "UI/PanelCards".
+        /// </summary>
+        public InputAction @PanelCards => m_Wrapper.m_UI_PanelCards;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -927,6 +953,9 @@ public partial class @UI_Controls: IInputActionCollection2, IDisposable
             @Pause.started += instance.OnPause;
             @Pause.performed += instance.OnPause;
             @Pause.canceled += instance.OnPause;
+            @PanelCards.started += instance.OnPanelCards;
+            @PanelCards.performed += instance.OnPanelCards;
+            @PanelCards.canceled += instance.OnPanelCards;
         }
 
         /// <summary>
@@ -971,6 +1000,9 @@ public partial class @UI_Controls: IInputActionCollection2, IDisposable
             @Pause.started -= instance.OnPause;
             @Pause.performed -= instance.OnPause;
             @Pause.canceled -= instance.OnPause;
+            @PanelCards.started -= instance.OnPanelCards;
+            @PanelCards.performed -= instance.OnPanelCards;
+            @PanelCards.canceled -= instance.OnPanelCards;
         }
 
         /// <summary>
@@ -1179,5 +1211,12 @@ public partial class @UI_Controls: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnPause(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "PanelCards" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnPanelCards(InputAction.CallbackContext context);
     }
 }

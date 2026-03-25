@@ -27,7 +27,7 @@
                     "name": "Cancel",
                     "type": "Button",
                     "id": "15cef263-9014-4fd5-94d9-4e4a6234a6ef",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -99,6 +99,15 @@
                     "name": "Pause",
                     "type": "Button",
                     "id": "d78cd2cc-7e25-4f06-ae9f-82bc2a990a65",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "PanelCards",
+                    "type": "Button",
+                    "id": "c974df19-439f-43fe-a0de-989056f177de",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -532,6 +541,17 @@
                     "processors": "",
                     "groups": ";Gamepad",
                     "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "55458bf8-7fda-4693-b29b-b4a6a8ff2be5",
+                    "path": "<Gamepad>/select",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "PanelCards",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

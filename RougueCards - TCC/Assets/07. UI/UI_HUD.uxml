@@ -1,15 +1,49 @@
 <engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/07.%20UI/player01.uss?fileID=7433441132597879392&amp;guid=366a9650e9bf5c5408667bffb5e865a4&amp;type=3#player01" />
     <engine:VisualElement name="PauseContainer" style="flex-grow: 1; height: 1080px; width: 1920px; opacity: 1; visibility: visible; position: absolute; background-color: rgba(0, 0, 0, 0.31); align-items: center; justify-content: center; align-self: center;">
-        <engine:VisualElement name="PauseMenu" class="containers" style="align-items: center; justify-content: center; display: none; visibility: visible; flex-direction: column; align-content: center;">
+        <engine:VisualElement name="PauseMenu" class="containerMenu" style="align-items: center; justify-content: center; display: none; visibility: visible; flex-direction: column; align-content: center; width: 800px; top: 200px; height: 600px;">
             <engine:Label text="PAUSE MENU" style="background-color: rgba(255, 255, 255, 0); -unity-text-align: middle-center; -unity-background-image-tint-color: rgb(255, 255, 255); color: rgb(255, 255, 255); font-size: 41px; margin-top: 0; margin-bottom: 32px; margin-right: 0; margin-left: 0;" />
             <engine:Button text="Resume" name="ResumeButton" class="Button" />
             <engine:Button text="Restart" name="RestartButton" enable-rich-text="false" class="Button" style="width: 400px; height: 60px; font-size: 30px;" />
             <engine:Button text="Main Menu" name="MainMenu" enable-rich-text="false" class="Button" style="width: 400px; height: 60px; font-size: 30px;" />
         </engine:VisualElement>
     </engine:VisualElement>
-    <engine:VisualElement name="Container" style="flex-grow: 1; flex-direction: row;">
+    <engine:VisualElement name="PlayerContainers" style="flex-grow: 1; flex-direction: row;">
         <engine:VisualElement name="Player01" class="player01" style="flex-grow: 1;" />
         <engine:VisualElement name="Player02" class="player02" style="flex-grow: 1;" />
+    </engine:VisualElement>
+    <engine:VisualElement name="CardsContainer" style="flex-grow: 1; position: absolute; width: 1920px; height: 1080px;">
+        <engine:VisualElement name="CardsPanel" class="containerCards" style="flex-grow: 1; flex-direction: row; align-items: center; justify-content: space-around; display: none;">
+            <engine:VisualElement name="Card01Panel" style="flex-grow: 1; justify-content: flex-start; align-items: center; width: auto; height: 450px; max-width: 250px;">
+                <engine:VisualElement name="Card01" class="cards" style="flex-grow: 1; justify-content: flex-start; align-items: stretch; flex-direction: column; height: 1350px;">
+                    <engine:VisualElement name="back" style="flex-grow: 1; background-color: rgb(255, 255, 255); border-top-left-radius: 15px; border-top-right-radius: 15px; border-bottom-right-radius: 15px; border-bottom-left-radius: 15px; position: absolute; max-width: 250px; max-height: 350px; width: 100%; height: 100%; display: flex; background-image: url(&quot;project://database/Assets/05.%20Sprites/teste/PNG/Default/Panel/panel-001.png?fileID=2800000&amp;guid=85ca0b7bdb5f4ab4692b430edd59e31c&amp;type=3#panel-001&quot;); -unity-background-image-tint-color: rgba(5, 0, 255, 0.55); -unity-slice-scale: 1px; padding-bottom: 30px; justify-content: flex-end; align-items: center;" />
+                    <engine:VisualElement name="front" style="flex-grow: 1; background-color: rgb(255, 255, 255); border-top-left-radius: 15px; border-top-right-radius: 15px; border-bottom-right-radius: 15px; border-bottom-left-radius: 15px; position: absolute; max-width: 250px; max-height: 350px; align-items: center; width: 100%; height: 100%; -unity-background-image-tint-color: rgba(255, 0, 0, 0.5); background-repeat: no-repeat no-repeat; background-image: url(&quot;project://database/Assets/05.%20Sprites/teste/PNG/Default/Panel/panel-001.png?fileID=2800000&amp;guid=85ca0b7bdb5f4ab4692b430edd59e31c&amp;type=3#panel-001&quot;); background-position-x: left 0; background-position-y: top 0; -unity-slice-scale: 1px; -unity-slice-left: 0; -unity-slice-top: 0; -unity-slice-right: 0; -unity-slice-bottom: 0; -unity-background-scale-mode: stretch-to-fill; background-size: 100% 100%; justify-content: flex-end; align-content: flex-end; padding-bottom: 30px;" />
+                </engine:VisualElement>
+                <engine:VisualElement name="ButtonContainer01" style="flex-grow: 1; flex-direction: column; align-items: center; justify-content: flex-start; align-self: center; width: 100%; height: 100%; margin-top: 12px;">
+                    <engine:Button text="FLIP" name="flip" class="cardButton" style="align-items: auto;" />
+                    <engine:Button text="PICK UP" name="pickUp" class="cardButton" />
+                </engine:VisualElement>
+            </engine:VisualElement>
+            <engine:VisualElement name="Card02Panel" style="flex-grow: 1; justify-content: flex-start; align-items: center; width: auto; height: 450px; max-width: 250px;">
+                <engine:VisualElement name="Card02" class="cards" style="flex-grow: 1; justify-content: flex-start; align-items: stretch; flex-direction: column; width: 250px; height: 1350px;">
+                    <engine:VisualElement name="back" style="flex-grow: 1; background-color: rgb(255, 255, 255); border-top-left-radius: 15px; border-top-right-radius: 15px; border-bottom-right-radius: 15px; border-bottom-left-radius: 15px; position: absolute; max-width: 250px; max-height: 350px; width: 100%; height: 100%; display: flex; background-image: url(&quot;project://database/Assets/05.%20Sprites/teste/PNG/Default/Panel/panel-001.png?fileID=2800000&amp;guid=85ca0b7bdb5f4ab4692b430edd59e31c&amp;type=3#panel-001&quot;); -unity-background-image-tint-color: rgba(5, 0, 255, 0.55); -unity-slice-scale: 1px; padding-bottom: 30px; justify-content: flex-end; align-items: center;" />
+                    <engine:VisualElement name="front" style="flex-grow: 1; background-color: rgb(255, 255, 255); border-top-left-radius: 15px; border-top-right-radius: 15px; border-bottom-right-radius: 15px; border-bottom-left-radius: 15px; position: absolute; max-width: 250px; max-height: 350px; align-items: center; width: 100%; height: 100%; -unity-background-image-tint-color: rgba(255, 0, 0, 0.5); background-repeat: no-repeat no-repeat; background-image: url(&quot;project://database/Assets/05.%20Sprites/teste/PNG/Default/Panel/panel-001.png?fileID=2800000&amp;guid=85ca0b7bdb5f4ab4692b430edd59e31c&amp;type=3#panel-001&quot;); background-position-x: left 0; background-position-y: top 0; -unity-slice-scale: 1px; -unity-slice-left: 0; -unity-slice-top: 0; -unity-slice-right: 0; -unity-slice-bottom: 0; -unity-background-scale-mode: stretch-to-fill; background-size: 100% 100%; justify-content: flex-end; align-content: flex-end; padding-bottom: 30px;" />
+                </engine:VisualElement>
+                <engine:VisualElement name="ButtonContainer02" style="flex-grow: 1; flex-direction: column; align-items: center; justify-content: flex-start; align-self: center; width: 100%; height: 100%; margin-top: 12px;">
+                    <engine:Button text="FLIP" name="flip" class="cardButton" style="align-items: auto;" />
+                    <engine:Button text="PICK UP" name="pickUp" class="cardButton" />
+                </engine:VisualElement>
+            </engine:VisualElement>
+            <engine:VisualElement name="Card03Panel" style="flex-grow: 1; justify-content: flex-start; align-items: center; width: auto; height: 450px; max-width: 250px;">
+                <engine:VisualElement name="Card03" class="cards" style="flex-grow: 1; justify-content: flex-start; align-items: stretch; flex-direction: column; width: 250px; height: 1350px;">
+                    <engine:VisualElement name="back" style="flex-grow: 1; background-color: rgb(255, 255, 255); border-top-left-radius: 15px; border-top-right-radius: 15px; border-bottom-right-radius: 15px; border-bottom-left-radius: 15px; position: absolute; max-width: 250px; max-height: 350px; width: 100%; height: 100%; display: flex; background-image: url(&quot;project://database/Assets/05.%20Sprites/teste/PNG/Default/Panel/panel-001.png?fileID=2800000&amp;guid=85ca0b7bdb5f4ab4692b430edd59e31c&amp;type=3#panel-001&quot;); -unity-background-image-tint-color: rgba(5, 0, 255, 0.55); -unity-slice-scale: 1px; padding-bottom: 30px; justify-content: flex-end; align-items: center;" />
+                    <engine:VisualElement name="front" style="flex-grow: 1; background-color: rgb(255, 255, 255); border-top-left-radius: 15px; border-top-right-radius: 15px; border-bottom-right-radius: 15px; border-bottom-left-radius: 15px; position: absolute; max-width: 250px; max-height: 350px; align-items: center; width: 100%; height: 100%; -unity-background-image-tint-color: rgba(255, 0, 0, 0.5); background-repeat: no-repeat no-repeat; background-image: url(&quot;project://database/Assets/05.%20Sprites/teste/PNG/Default/Panel/panel-001.png?fileID=2800000&amp;guid=85ca0b7bdb5f4ab4692b430edd59e31c&amp;type=3#panel-001&quot;); background-position-x: left 0; background-position-y: top 0; -unity-slice-scale: 1px; -unity-slice-left: 0; -unity-slice-top: 0; -unity-slice-right: 0; -unity-slice-bottom: 0; -unity-background-scale-mode: stretch-to-fill; background-size: 100% 100%; justify-content: flex-end; align-content: flex-end; padding-bottom: 30px;" />
+                </engine:VisualElement>
+                <engine:VisualElement name="ButtonContainer03" style="flex-grow: 1; flex-direction: column; align-items: center; justify-content: flex-start; align-self: center; width: 100%; height: 100%; margin-top: 12px;">
+                    <engine:Button text="FLIP" name="flip" class="cardButton" style="align-items: auto;" />
+                    <engine:Button text="PICK UP" name="pickUp" class="cardButton" />
+                </engine:VisualElement>
+            </engine:VisualElement>
+        </engine:VisualElement>
     </engine:VisualElement>
 </engine:UXML>
