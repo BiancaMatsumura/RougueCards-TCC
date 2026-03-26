@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 648c01704e2900642adcd685752a44b7, type: 3}
-  m_Name: 03
+  m_Name: Teste01
   m_EditorClassIdentifier: 
-  cardId: Card03
-  frontImage: {fileID: 21300000, guid: b5abb39d1c38eb94a9679d32b7ae252d, type: 3}
-  backImage: {fileID: 21300000, guid: ed95a72de408eb44ebb4a5976909e182, type: 3}
+  frontImage: {fileID: 21300000, guid: f61f3420a6b7d604aa25c7fa13a7310a, type: 3}
+  backImage: {fileID: 21300000, guid: b99e67f2d60623c4fa554f3925c4bf05, type: 3}
+  xpRequired: 2

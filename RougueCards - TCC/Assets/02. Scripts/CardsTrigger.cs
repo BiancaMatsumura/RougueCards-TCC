@@ -3,6 +3,7 @@ using UnityEngine;
 public class CardsTrigger : MonoBehaviour
 {
     private CardManager cardManager;
+    [SerializeField] private PlayerProgress playerProgress;
 
     void Start()
     {
@@ -22,6 +23,15 @@ public class CardsTrigger : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             cardManager.HidePanel();
+        }
+    }
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            playerProgress.AddXP(1);
+            Debug.Log("XP adicionado! Total: " + playerProgress.currentXP);
         }
     }
 }

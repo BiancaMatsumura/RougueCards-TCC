@@ -524,6 +524,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3ec0b32ec64c564eb0747e17663a7aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerProgress: {fileID: 11400000, guid: 00a38000d9bba5a42b1cef107458d7c8, type: 2}
 --- !u!1 &663819737
 GameObject:
   m_ObjectHideFlags: 0
@@ -1056,10 +1057,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1d2f19aa425c1f48850261eb583dfb8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cards:
-  - {fileID: 11400000, guid: 213ee05ad72fb7f4ea02749ab87bf75a, type: 2}
-  - {fileID: 11400000, guid: 343c6d4a07713c0478de2bb210bcd4cc, type: 2}
-  - {fileID: 11400000, guid: 2fea1f008b477f94791f33210c8907cc, type: 2}
+  cardDatabase: {fileID: 11400000, guid: a7b1e506f0124584aa07ae2c55049283, type: 2}
+  playerProgress: {fileID: 11400000, guid: 00a38000d9bba5a42b1cef107458d7c8, type: 2}
   toggleAction: {fileID: -6450635596403456157, guid: 6e778180076408648b21a1e54c02c1a0, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
