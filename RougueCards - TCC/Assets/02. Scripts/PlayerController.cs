@@ -47,4 +47,15 @@ public class PlayerController : MonoBehaviour
         velocity.y += gravity * Time.deltaTime;
         controller.Move(velocity * Time.deltaTime);
     }
+
+    private void Start()
+{
+    var health = GetComponent<Health>();
+    var ui = FindFirstObjectByType<HealthUIManager>();
+
+    if (ui != null && health != null)
+    {
+        ui.RegisterPlayer(health);
+    }
+}
 }

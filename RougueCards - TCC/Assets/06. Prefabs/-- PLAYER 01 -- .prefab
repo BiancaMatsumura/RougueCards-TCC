@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 800785824798947834}
   - component: {fileID: 555732341801166916}
   - component: {fileID: 6138996996254611058}
+  - component: {fileID: -6934750094547098812}
   m_Layer: 0
   m_Name: '-- PLAYER 01 -- '
   m_TagString: Player
@@ -108,7 +109,7 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -341,6 +342,21 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &-6934750094547098812
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1370686436433694047}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17aca3beb29d6c84b89dc95d138737ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerID: 1
+  maxHealth: 100
+  currentHealth: 0
 --- !u!1 &4288222435443977718
 GameObject:
   m_ObjectHideFlags: 0

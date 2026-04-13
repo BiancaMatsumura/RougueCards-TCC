@@ -46,4 +46,12 @@
             </engine:VisualElement>
         </engine:VisualElement>
     </engine:VisualElement>
+    <engine:VisualElement name="HealthRoot" style="flex-grow: 1; position: absolute; top: 10px; left: 10px; right: 10px; bottom: 0; flex-direction: row; justify-content: space-between; border-left-color: rgba(0, 0, 0, 0); border-right-color: rgba(0, 0, 0, 0); border-top-color: rgba(0, 0, 0, 0); border-bottom-color: rgba(0, 0, 0, 0); opacity: 1; height: 100px;">
+        <engine:VisualElement name="HealthP1" style="flex-grow: 1; width: 400px; height: 40px; background-color: rgb(75, 75, 75); position: relative; justify-content: space-between; flex-direction: row; background-size: 100% 100%; border-top-width: 3px; border-right-width: 3px; border-bottom-width: 3px; border-left-width: 3px; background-image: none; -unity-background-image-tint-color: rgb(255, 255, 255);">
+            <engine:VisualElement name="FillP1" style="flex-grow: 1; width: 100%; height: 100%; background-color: rgb(255, 0, 0);" />
+        </engine:VisualElement>
+        <engine:VisualElement name="HealthP2" style="flex-grow: 1; width: 400px; height: 40px; background-color: rgb(65, 65, 65); flex-direction: row; justify-content: space-between; position: relative; background-image: none; background-size: 100% 100%; border-top-width: 3px; border-right-width: 3px; border-bottom-width: 3px; border-left-width: 3px; -unity-background-image-tint-color: rgb(255, 255, 255);">
+            <engine:VisualElement name="FillP2" style="flex-grow: 1; width: 100%; height: 100%; background-color: rgb(15, 53, 207);" />
+        </engine:VisualElement>
+    </engine:VisualElement>
 </engine:UXML>
