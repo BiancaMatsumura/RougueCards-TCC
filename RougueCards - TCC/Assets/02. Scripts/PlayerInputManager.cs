@@ -4,10 +4,6 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Users;
 
-/// <summary>
-/// Gerencia a entrada dinâmica de jogadores (teclado e controles) na cena.
-/// Responsável por instanciar os prefabs e vinculá-los ao sistema global de atributos.
-/// </summary>
 public class PlayerInputManager : MonoBehaviour
 {
     [SerializeField] private GameObject player01Prefab;
@@ -37,7 +33,6 @@ public class PlayerInputManager : MonoBehaviour
             }
         }
 
-
         var keyboard = Keyboard.current;
         if (keyboard == null) return;
 
@@ -54,23 +49,17 @@ public class PlayerInputManager : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Instancia o jogador na cena, define seu esquema de controle e realiza o vínculo 
-    /// obrigatório com o AttributeMaestro para permitir upgrades compartilhados.
-    /// </summary>
-    /// <param name="gamepad">O dispositivo detectado ou null para teclado.</param>
     private void JoinPlayer(InputType inputType, Gamepad gamepad)
     {
-        // Lógica de Entrada do Player 01
-        GameObject prefab     = !player01Joined ? player01Prefab : player02Prefab;
-        int        spawnIndex = !player01Joined ? 0 : 1;
+        GameObject prefab = !player01Joined ? player01Prefab : player02Prefab;
+        int spawnIndex = !player01Joined ? 0 : 1;
 
         string scheme = inputType switch
         {
-            InputType.Gamepad        => !player01Joined ? "Player01" : "Player02",
-            InputType.KeyboardWASD   => "WASD_Player",
+            InputType.Gamepad => !player01Joined ? "Player01" : "Player02",
+            InputType.KeyboardWASD => "WASD_Player",
             InputType.KeyboardArrows => "SETAS_Player",
-            _                        => "WASD_Player"
+            _ => "WASD_Player"
         };
 
         // Instancia o prefab normalmente
@@ -79,20 +68,19 @@ public class PlayerInputManager : MonoBehaviour
         if (spawnPoints.Length > spawnIndex)
             obj.transform.position = spawnPoints[spawnIndex].position;
 
-            // Localiza o componente de estatísticas do novo jogador e o entrega para o Maestro.
-            // Sem isso, o Maestro não saberia em quem aplicar os bônus das cartas.
-            if (AttributeMaestro.Instance != null)
-            {
-                AttributeMaestro.Instance.player1 = player.GetComponent<PlayerStats>();
-            }
-
+        // Localiza o componente de estatísticas do novo jogador e o entrega para o Maestro.
+        // Sem isso, o Maestro não saberia em quem aplicar os bônus das cartas.
+        if (AttributeMaestro.Instance != null)
+        {
+            AttributeMaestro.Instance.player1 = player01Prefab.GetComponent<PlayerStats>();
+        }
         var playerInput = obj.GetComponent<PlayerInput>();
+
         if (inputType == InputType.Gamepad)
         {
-                        playerInput.SwitchCurrentControlScheme(scheme, gamepad);
-        }
 
-        // Lógica de Entrada do Player 02
+            playerInput.SwitchCurrentControlScheme(scheme, gamepad);
+        }
         if (!player02Joined)
         {
             var player = PlayerInput.Instantiate(
@@ -107,9 +95,9 @@ public class PlayerInputManager : MonoBehaviour
             // Realiza o mesmo vínculo para o segundo jogador no slot correspondente do Maestro.
             if (AttributeMaestro.Instance != null)
             {
-                AttributeMaestro.Instance.player2 = player.GetComponent<PlayerStats>();
+                AttributeMaestro.Instance.player2 = player02Prefab.GetComponent<PlayerStats>();
             }
-
+        }
         else
         {
             // Teclado: cria um InputUser separado e COMPARTILHA o dispositivo
@@ -126,18 +114,14 @@ public class PlayerInputManager : MonoBehaviour
         else
         {
             player02Joined = true;
-            if (gamepad != null) usedGamepads.Add(gamepad);
-            else keyboardUsed = true;
-
-            // Desativa o script após ambos entrarem para otimizar performance
             this.enabled = false;
         }
 
         switch (inputType)
         {
-            case InputType.Gamepad:        usedGamepads.Add(gamepad); break;
-            case InputType.KeyboardWASD:   wasdUsed    = true;        break;
-            case InputType.KeyboardArrows: arrowsUsed  = true;        break;
+            case InputType.Gamepad: usedGamepads.Add(gamepad); break;
+            case InputType.KeyboardWASD: wasdUsed = true; break;
+            case InputType.KeyboardArrows: arrowsUsed = true; break;
         }
     }
 }
