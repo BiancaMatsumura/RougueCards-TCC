@@ -30,5 +30,14 @@ namespace RougueCards.Attributes
                 additiveBonus += amount;
             }
         }
+
+        /// <summary>
+        /// Reseta os bônus para o estado inicial.
+        /// </summary>
+        public void ResetModifiers()
+        {
+            this.additiveBonus = 0;
+            this.multiplierBonus = 0;
+        }
     }
 }

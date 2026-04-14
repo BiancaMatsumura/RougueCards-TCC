@@ -25,6 +25,11 @@ namespace RougueCards.Attributes
         /// <summary> Tempo de tolerância entre abates (ex: 2 segundos). </summary>
         [SerializeField] private float comboDuration = 2.0f;
 
+        private void Awake()
+        {
+            stats.ResetAllAttributes();
+        }
+
         /// <summary>
         /// Deve ser chamado sempre que o jogador matar um inimigo.
         /// Aumenta o combo e notifica o Maestro se atingir o estado de COMBO (2+).

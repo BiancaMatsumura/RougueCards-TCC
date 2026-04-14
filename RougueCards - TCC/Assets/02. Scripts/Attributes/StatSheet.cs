@@ -1,4 +1,5 @@
 using System;
+using System.Reflection;
 using UnityEngine;
 
 namespace RougueCards.Attributes
@@ -48,5 +49,21 @@ namespace RougueCards.Attributes
         public PlayerAttributes EliteSpawnRate = new() { BaseValue = 1.2f };
         public PlayerAttributes PowerupMultiplier = new() { BaseValue = 1.0f };
         public PlayerAttributes PowerupChance = new() { BaseValue = 1.0f };
+
+        /// <sumarry>
+        /// Pecorre tofdos os campos PlayerAtributes desta classe e reseta os bônus.
+        /// </sumarry>
+        public void ResetAllAttributes()
+        {
+            FieldInfo[] fields = this.GetType().GetFields(BindingFlags.Public | BindingFlags.Instance);
+            foreach (var field in fields)
+            {
+                if (field.FieldType == typeof(PlayerAttributes))
+                {
+                    var attr = (PlayerAttributes)field.GetValue(this);
+                    attr?.ResetModifiers();
+                }
+            }
+        }
     }
 }

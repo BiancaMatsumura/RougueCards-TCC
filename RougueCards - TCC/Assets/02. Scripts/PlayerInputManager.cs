@@ -65,38 +65,33 @@ public class PlayerInputManager : MonoBehaviour
         // Instancia o prefab normalmente
         GameObject obj = Instantiate(prefab);
 
+        // Pega o componente PlayerStats da INSTÂNCIA(obj), não do Prefab
+        PlayerStats statsInstance = obj.GetComponent<PlayerStats>();
+
         if (spawnPoints.Length > spawnIndex)
             obj.transform.position = spawnPoints[spawnIndex].position;
 
-        // Localiza o componente de estatísticas do novo jogador e o entrega para o Maestro.
-        // Sem isso, o Maestro não saberia em quem aplicar os bônus das cartas.
+        // Atribui ao Maestro dependendo de quem está entrando
         if (AttributeMaestro.Instance != null)
         {
-            AttributeMaestro.Instance.player1 = player01Prefab.GetComponent<PlayerStats>();
+            if (!player01Joined)
+            {
+                AttributeMaestro.Instance.player1 = statsInstance;
+                statsInstance.playerID = 1;
+            }
+            else
+            {
+                AttributeMaestro.Instance.player2 = statsInstance;
+                statsInstance.playerID = 2;
+            }
         }
+
         var playerInput = obj.GetComponent<PlayerInput>();
 
         if (inputType == InputType.Gamepad)
         {
 
             playerInput.SwitchCurrentControlScheme(scheme, gamepad);
-        }
-        if (!player02Joined)
-        {
-            var player = PlayerInput.Instantiate(
-                player02Prefab,
-                controlScheme: "Player02",
-                pairWithDevice: gamepad != null ? (InputDevice)gamepad : Keyboard.current
-            );
-
-            if (spawnPoints.Length > 1)
-                player.transform.position = spawnPoints[1].position;
-
-            // Realiza o mesmo vínculo para o segundo jogador no slot correspondente do Maestro.
-            if (AttributeMaestro.Instance != null)
-            {
-                AttributeMaestro.Instance.player2 = player02Prefab.GetComponent<PlayerStats>();
-            }
         }
         else
         {
