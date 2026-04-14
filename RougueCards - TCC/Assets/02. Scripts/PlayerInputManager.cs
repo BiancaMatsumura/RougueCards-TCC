@@ -1,7 +1,8 @@
+using RougueCards.Attributes;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Users;
-using System.Collections.Generic;
 
 public class PlayerInputManager : MonoBehaviour
 {
@@ -50,28 +51,46 @@ public class PlayerInputManager : MonoBehaviour
 
     private void JoinPlayer(InputType inputType, Gamepad gamepad)
     {
-        GameObject prefab     = !player01Joined ? player01Prefab : player02Prefab;
-        int        spawnIndex = !player01Joined ? 0 : 1;
+        GameObject prefab = !player01Joined ? player01Prefab : player02Prefab;
+        int spawnIndex = !player01Joined ? 0 : 1;
 
         string scheme = inputType switch
         {
-            InputType.Gamepad        => !player01Joined ? "Player01" : "Player02",
-            InputType.KeyboardWASD   => "WASD_Player",
+            InputType.Gamepad => !player01Joined ? "Player01" : "Player02",
+            InputType.KeyboardWASD => "WASD_Player",
             InputType.KeyboardArrows => "SETAS_Player",
-            _                        => "WASD_Player"
+            _ => "WASD_Player"
         };
 
         // Instancia o prefab normalmente
         GameObject obj = Instantiate(prefab);
 
+        // Pega o componente PlayerStats da INSTÂNCIA(obj), não do Prefab
+        PlayerStats statsInstance = obj.GetComponent<PlayerStats>();
+
         if (spawnPoints.Length > spawnIndex)
             obj.transform.position = spawnPoints[spawnIndex].position;
+
+        // Atribui ao Maestro dependendo de quem está entrando
+        if (AttributeMaestro.Instance != null)
+        {
+            if (!player01Joined)
+            {
+                AttributeMaestro.Instance.player1 = statsInstance;
+                statsInstance.playerID = 1;
+            }
+            else
+            {
+                AttributeMaestro.Instance.player2 = statsInstance;
+                statsInstance.playerID = 2;
+            }
+        }
 
         var playerInput = obj.GetComponent<PlayerInput>();
 
         if (inputType == InputType.Gamepad)
         {
-            
+
             playerInput.SwitchCurrentControlScheme(scheme, gamepad);
         }
         else
@@ -95,9 +114,9 @@ public class PlayerInputManager : MonoBehaviour
 
         switch (inputType)
         {
-            case InputType.Gamepad:        usedGamepads.Add(gamepad); break;
-            case InputType.KeyboardWASD:   wasdUsed    = true;        break;
-            case InputType.KeyboardArrows: arrowsUsed  = true;        break;
+            case InputType.Gamepad: usedGamepads.Add(gamepad); break;
+            case InputType.KeyboardWASD: wasdUsed = true; break;
+            case InputType.KeyboardArrows: arrowsUsed = true; break;
         }
     }
 }

@@ -1,10 +1,14 @@
+using RougueCards.Attributes;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
 
+/// <summary>
+/// Gerencia o painel de seleção de cartas e aplica os upgrades escolhidos.
+/// </summary>
+[RequireComponent(typeof(UIDocument))]
 public class CardManager : MonoBehaviour
 {
-
     [SerializeField] private CardDatabase cardDatabase;
     [SerializeField] private PlayerProgress playerProgress;
     [SerializeField] private InputActionReference toggleAction;
@@ -12,8 +16,7 @@ public class CardManager : MonoBehaviour
     private CardController[] controllers;
     private VisualElement cardPanel;
     private bool isPanelVisible = false;
-
-    private VisualElement root; // guarde a referência
+    private VisualElement root;
 
     void Awake()
     {
@@ -24,7 +27,7 @@ public class CardManager : MonoBehaviour
 
         root.RegisterCallback<GeometryChangedEvent>(_ =>
         {
-            if (isPanelVisible)
+            if (isPanelVisible && controllers != null && controllers.Length > 0)
                 controllers[0].FocusFlip();
         });
     }
@@ -66,6 +69,9 @@ public class CardManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Liga ou desliga o painel de cartas.
+    /// </summary>
     private void SetPanelVisible(bool visible)
     {
         isPanelVisible = visible;
@@ -73,8 +79,22 @@ public class CardManager : MonoBehaviour
 
         if (visible)
         {
-            LoadCards(); // ← redefine as cartas toda vez que abre
-            controllers[0].FocusFlip();
+            LoadCards();
+
+            // Regra da Imagem: Quem tem o maior combo tem o poder de escolha.
+            // Checamos se o Maestro existe antes de usar
+            if (AttributeMaestro.Instance != null)
+            {
+                PlayerStats decider = AttributeMaestro.Instance.GetDecidingPlayer();
+                if (decider != null)
+                {
+                    Debug.Log($"O jogador {decider.playerID} decide qual carta pegar!");
+                }
+            }
+
+            if (controllers != null && controllers.Length > 0)
+                controllers[0].FocusFlip();
+
             Time.timeScale = 0f;
         }
         else
@@ -84,8 +104,18 @@ public class CardManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Chamado quando uma carta é selecionada pelo jogador.
+    /// </summary>
     private void HandlePickUp(CardData data)
     {
+        if (AttributeMaestro.Instance != null)
+        {
+            AttributeMaestro.Instance.ApplySharedUpgrade(data.statToUpgrade, data.upgradeValue, data.isPercentage);
+        }
+
+        HidePanel();
         Debug.Log($"Carta coletada: {data.name}");
+
     }
 }

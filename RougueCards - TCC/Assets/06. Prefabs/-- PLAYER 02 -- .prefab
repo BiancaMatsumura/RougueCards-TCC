@@ -62,6 +62,8 @@ MeshRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -83,9 +85,11 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!65 &7275312310372474675
 BoxCollider:
@@ -228,7 +232,6 @@ MonoBehaviour:
   m_ScreenCoordScaleBias: {x: 0, y: 0, z: 0, w: 0}
   m_RequiresDepthTexture: 0
   m_RequiresColorTexture: 0
-  m_Version: 2
   m_TaaSettings:
     m_Quality: 3
     m_FrameInfluence: 0.1
@@ -236,6 +239,7 @@ MonoBehaviour:
     m_MipBias: 0
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
+  m_Version: 2
 --- !u!1 &6236625106383521709
 GameObject:
   m_ObjectHideFlags: 0
@@ -252,6 +256,7 @@ GameObject:
   - component: {fileID: 7221531722904969912}
   - component: {fileID: 9210644778469414990}
   - component: {fileID: 7358156550701995794}
+  - component: {fileID: 6224121843961701078}
   - component: {fileID: -6771927528543469913}
   m_Layer: 0
   m_Name: '-- PLAYER 02 -- '
@@ -305,6 +310,8 @@ MeshRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -326,9 +333,11 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!136 &6092529571827824720
 CapsuleCollider:
@@ -558,10 +567,10 @@ Rigidbody:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6236625106383521709}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -578,7 +587,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &-6771927528543469913
+--- !u!114 &6224121843961701078
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -587,8 +596,72 @@ MonoBehaviour:
   m_GameObject: {fileID: 6236625106383521709}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 17aca3beb29d6c84b89dc95d138737ee, type: 3}
+  m_Script: {fileID: 11500000, guid: aa888aaa94e688543aff2755b8f4abb8, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: 
-  maxHealth: 100
-  currentHealth: 0
+  m_EditorClassIdentifier: Assembly-CSharp::RougueCards.Attributes.PlayerStats
+  playerID: 2
+  stats:
+    MaxHP:
+      BaseValue: 134
+    HPRegen:
+      BaseValue: 10
+    Overheal:
+      BaseValue: 0
+    Shield:
+      BaseValue: 0
+    Armor:
+      BaseValue: 0
+    Evasion:
+      BaseValue: 1
+    LifeSteal:
+      BaseValue: 7
+    Thorns:
+      BaseValue: 5
+    Damage:
+      BaseValue: 1.7
+    CritChance:
+      BaseValue: 1
+    CritDamage:
+      BaseValue: 1
+    AttackSpeed:
+      BaseValue: 106
+    ProjectileQty:
+      BaseValue: 0
+    Ricochet:
+      BaseValue: 0
+    Size:
+      BaseValue: 1
+    ProjectileSpeed:
+      BaseValue: 1.2
+    Duration:
+      BaseValue: 1
+    EliteDamage:
+      BaseValue: 1
+    Knockback:
+      BaseValue: 1
+    MoveSpeed:
+      BaseValue: 1
+    ExtraJumps:
+      BaseValue: 0
+    JumpHeight:
+      BaseValue: 9
+    Luck:
+      BaseValue: 7
+    Difficulty:
+      BaseValue: 32
+    CollectionRange:
+      BaseValue: 5
+    XPMultiplier:
+      BaseValue: 1
+    GoldMultiplier:
+      BaseValue: 1
+    SilverMultiplier:
+      BaseValue: 1
+    EliteSpawnRate:
+      BaseValue: 1.2
+    PowerupMultiplier:
+      BaseValue: 1
+    PowerupChance:
+      BaseValue: 1
+  currentCombo: 0
+  comboDuration: 2
