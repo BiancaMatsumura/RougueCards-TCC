@@ -3,16 +3,23 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     [SerializeField] private float speed = 3f;
+    [SerializeField] private float updateTargetRate = 0.5f; // tempo pra trocar alvo
 
     private Transform target;
+    private float timer;
 
     void Update()
     {
-        if (target == null)
+        timer += Time.deltaTime;
+
+        // Atualiza alvo a cada X tempo
+        if (timer >= updateTargetRate)
         {
             FindClosestPlayer();
-            return;
+            timer = 0f;
         }
+
+        if (target == null) return;
 
         Vector3 dir = (target.position - transform.position).normalized;
         transform.position += dir * speed * Time.deltaTime;
@@ -23,6 +30,7 @@ public class Enemy : MonoBehaviour
         var players = GameObject.FindGameObjectsWithTag("Player");
 
         float minDist = Mathf.Infinity;
+        Transform closest = null;
 
         foreach (var p in players)
         {
@@ -33,8 +41,10 @@ public class Enemy : MonoBehaviour
             if (dist < minDist)
             {
                 minDist = dist;
-                target = p.transform;
+                closest = p.transform;
             }
         }
+
+        target = closest;
     }
 }

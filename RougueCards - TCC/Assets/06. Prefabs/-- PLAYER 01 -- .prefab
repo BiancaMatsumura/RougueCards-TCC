@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 555732341801166916}
   - component: {fileID: 6138996996254611058}
   - component: {fileID: 754078657173125604}
-  - component: {fileID: -6934750094547098812}
+  - component: {fileID: -780580857012416262}
   m_Layer: 0
   m_Name: '-- PLAYER 01 -- '
   m_TagString: Player
@@ -70,8 +70,6 @@ MeshRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
-  m_ForceMeshLod: -1
-  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -93,11 +91,9 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!136 &836151332041351916
 CapsuleCollider:
@@ -327,10 +323,10 @@ Rigidbody:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1370686436433694047}
-  serializedVersion: 5
+  serializedVersion: 4
   m_Mass: 1
-  m_LinearDamping: 0
-  m_AngularDamping: 0.05
+  m_Drag: 0
+  m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -363,68 +359,145 @@ MonoBehaviour:
   stats:
     MaxHP:
       BaseValue: 134
+      additiveBonus: 0
+      multiplierBonus: 1
     HPRegen:
       BaseValue: 10
+      additiveBonus: 0
+      multiplierBonus: 1
     Overheal:
       BaseValue: 0
+      additiveBonus: 0
+      multiplierBonus: 1
     Shield:
       BaseValue: 0
+      additiveBonus: 0
+      multiplierBonus: 1
     Armor:
       BaseValue: 0
+      additiveBonus: 0
+      multiplierBonus: 1
     Evasion:
       BaseValue: 1
+      additiveBonus: 0
+      multiplierBonus: 1
     LifeSteal:
       BaseValue: 7
+      additiveBonus: 0
+      multiplierBonus: 1
     Thorns:
       BaseValue: 5
+      additiveBonus: 0
+      multiplierBonus: 1
     Damage:
       BaseValue: 1.7
+      additiveBonus: 0
+      multiplierBonus: 1
     CritChance:
       BaseValue: 1
+      additiveBonus: 0
+      multiplierBonus: 1
     CritDamage:
       BaseValue: 1
+      additiveBonus: 0
+      multiplierBonus: 1
     AttackSpeed:
       BaseValue: 106
+      additiveBonus: 0
+      multiplierBonus: 1
     ProjectileQty:
       BaseValue: 0
+      additiveBonus: 0
+      multiplierBonus: 1
     Ricochet:
       BaseValue: 0
+      additiveBonus: 0
+      multiplierBonus: 1
     Size:
       BaseValue: 1
+      additiveBonus: 0
+      multiplierBonus: 1
     ProjectileSpeed:
       BaseValue: 1.2
+      additiveBonus: 0
+      multiplierBonus: 1
     Duration:
       BaseValue: 1
+      additiveBonus: 0
+      multiplierBonus: 1
     EliteDamage:
       BaseValue: 1
+      additiveBonus: 0
+      multiplierBonus: 1
     Knockback:
       BaseValue: 1
+      additiveBonus: 0
+      multiplierBonus: 1
     MoveSpeed:
       BaseValue: 1
+      additiveBonus: 0
+      multiplierBonus: 1
     ExtraJumps:
       BaseValue: 0
+      additiveBonus: 0
+      multiplierBonus: 1
     JumpHeight:
       BaseValue: 9
+      additiveBonus: 0
+      multiplierBonus: 1
     Luck:
       BaseValue: 7
+      additiveBonus: 0
+      multiplierBonus: 1
     Difficulty:
       BaseValue: 32
+      additiveBonus: 0
+      multiplierBonus: 1
     CollectionRange:
       BaseValue: 5
+      additiveBonus: 0
+      multiplierBonus: 1
     XPMultiplier:
       BaseValue: 1
+      additiveBonus: 0
+      multiplierBonus: 1
     GoldMultiplier:
       BaseValue: 1
+      additiveBonus: 0
+      multiplierBonus: 1
     SilverMultiplier:
       BaseValue: 1
+      additiveBonus: 0
+      multiplierBonus: 1
     EliteSpawnRate:
       BaseValue: 1.2
+      additiveBonus: 0
+      multiplierBonus: 1
     PowerupMultiplier:
       BaseValue: 1
+      additiveBonus: 0
+      multiplierBonus: 1
     PowerupChance:
       BaseValue: 1
+      additiveBonus: 0
+      multiplierBonus: 1
   currentCombo: 0
   comboDuration: 2
+--- !u!114 &-780580857012416262
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1370686436433694047}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17aca3beb29d6c84b89dc95d138737ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerID: 1
+  maxHealth: 100
+  currentHealth: 0
 --- !u!1 &4288222435443977718
 GameObject:
   m_ObjectHideFlags: 0
@@ -487,8 +560,6 @@ MeshRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
-  m_ForceMeshLod: -1
-  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -510,11 +581,9 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!65 &9048539366938440733
 BoxCollider:
@@ -657,6 +726,7 @@ MonoBehaviour:
   m_ScreenCoordScaleBias: {x: 0, y: 0, z: 0, w: 0}
   m_RequiresDepthTexture: 0
   m_RequiresColorTexture: 0
+  m_Version: 2
   m_TaaSettings:
     m_Quality: 3
     m_FrameInfluence: 0.1
@@ -664,4 +734,3 @@ MonoBehaviour:
     m_MipBias: 0
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
-  m_Version: 2
