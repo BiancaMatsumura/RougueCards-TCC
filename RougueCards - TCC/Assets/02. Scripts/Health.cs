@@ -3,13 +3,13 @@ using System;
 
 public class Health : MonoBehaviour
 {
-    public int playerID; // 1 ou 2
+    public int playerID;
 
     public int maxHealth = 100;
     public int currentHealth;
 
-    public event Action<int, int, int> OnHealthChanged; 
-    // (playerID, current, max)
+    public event Action<int, int, int> OnHealthChanged;
+    public event Action OnDeath; // 👈 NOVO
 
     void Awake()
     {
@@ -30,7 +30,7 @@ public class Health : MonoBehaviour
 
     private void Die()
     {
-        Debug.Log($"Player {playerID} morreu");
-        gameObject.SetActive(false);
+        OnDeath?.Invoke(); // 👈 dispara evento
+        Destroy(gameObject); // melhor que SetActive(false)
     }
 }

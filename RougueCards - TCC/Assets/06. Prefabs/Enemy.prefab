@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 719878357296310022}
   - component: {fileID: 542973585866644192}
   - component: {fileID: -4453271482895477748}
+  - component: {fileID: -1223435608833976042}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Enemy
@@ -182,3 +183,17 @@ MonoBehaviour:
   playerID: 0
   maxHealth: 30
   currentHealth: 0
+--- !u!114 &-1223435608833976042
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 64197260445343202}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ded31907ef9bf96428ae08cd7357c554, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  xpValue: 1
+  playerProgress: {fileID: 11400000, guid: 00a38000d9bba5a42b1cef107458d7c8, type: 2}
