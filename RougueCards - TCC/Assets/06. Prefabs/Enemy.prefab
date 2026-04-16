@@ -195,5 +195,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ded31907ef9bf96428ae08cd7357c554, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  xpValue: 1
-  playerProgress: {fileID: 11400000, guid: 00a38000d9bba5a42b1cef107458d7c8, type: 2}
+  XPprefab: {fileID: 7842632854057511571, guid: 77c1340847dc33e47bfe09f9cc390e83, type: 3}

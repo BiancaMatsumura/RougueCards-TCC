@@ -12,6 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 648c01704e2900642adcd685752a44b7, type: 3}
   m_Name: Teste03
   m_EditorClassIdentifier: 
-  cardId: Card03
   frontImage: {fileID: 21300000, guid: b5abb39d1c38eb94a9679d32b7ae252d, type: 3}
   backImage: {fileID: 21300000, guid: ed95a72de408eb44ebb4a5976909e182, type: 3}
+  xpRequired: 0
+  statToUpgrade: 6
+  upgradeValue: 2
+  isPercentage: 0

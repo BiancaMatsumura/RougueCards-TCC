@@ -10,11 +10,14 @@ public class Health : MonoBehaviour
 
     public event Action<int, int, int> OnHealthChanged;
     public event Action OnDeath; // 👈 NOVO
+    
 
     void Awake()
     {
         currentHealth = maxHealth;
         OnHealthChanged?.Invoke(playerID, currentHealth, maxHealth);
+
+        GameOverWatcher.Instance?.RegisterPlayer(this);
     }
 
     public void TakeDamage(int amount)

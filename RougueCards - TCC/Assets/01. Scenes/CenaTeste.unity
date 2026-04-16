@@ -649,6 +649,8 @@ GameObject:
   - component: {fileID: 1243163933}
   - component: {fileID: 1243163936}
   - component: {fileID: 1243163937}
+  - component: {fileID: 1243163938}
+  - component: {fileID: 1243163939}
   m_Layer: 0
   m_Name: '-- GAME CONTROLLER  -- '
   m_TagString: Untagged
@@ -778,6 +780,33 @@ MonoBehaviour:
   m_PointerBehavior: 0
   m_CursorLockBehavior: 0
   m_ScrollDeltaPerTick: 6
+--- !u!114 &1243163938
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1243163932}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19dee618aa66e0f44817c43431048343, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player1: {fileID: 0}
+  player2: {fileID: 0}
+--- !u!114 &1243163939
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1243163932}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70c15ceab3730a04ebf786e04d3d3766, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uiController: {fileID: 1962024337}
 --- !u!1 &1534837035
 GameObject:
   m_ObjectHideFlags: 0
@@ -1037,8 +1066,10 @@ GameObject:
   m_Component:
   - component: {fileID: 1962024331}
   - component: {fileID: 1962024330}
-  - component: {fileID: 1962024332}
   - component: {fileID: 1962024334}
+  - component: {fileID: 1962024335}
+  - component: {fileID: 1962024336}
+  - component: {fileID: 1962024337}
   m_Layer: 5
   m_Name: '-- UI  -- '
   m_TagString: Untagged
@@ -1080,19 +1111,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1962024332
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1962024329}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d989fd10619fbfb41b6996931ee94967, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  inputActions: {fileID: -944628639613478452, guid: 6e778180076408648b21a1e54c02c1a0, type: 3}
 --- !u!114 &1962024334
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1108,6 +1126,44 @@ MonoBehaviour:
   cardDatabase: {fileID: 11400000, guid: a7b1e506f0124584aa07ae2c55049283, type: 2}
   playerProgress: {fileID: 11400000, guid: 00a38000d9bba5a42b1cef107458d7c8, type: 2}
   toggleAction: {fileID: -6450635596403456157, guid: 6e778180076408648b21a1e54c02c1a0, type: 3}
+--- !u!114 &1962024335
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1962024329}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4921eb50b279106498876be7ab94b008, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1962024336
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1962024329}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbf202529497b454fa859a19167b532c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  progress: {fileID: 11400000, guid: 00a38000d9bba5a42b1cef107458d7c8, type: 2}
+--- !u!114 &1962024337
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1962024329}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf50573f34b7dbc41a47aa74c12b5765, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inputActions: {fileID: -944628639613478452, guid: 6e778180076408648b21a1e54c02c1a0, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

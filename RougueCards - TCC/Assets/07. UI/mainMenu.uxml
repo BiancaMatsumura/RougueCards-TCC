@@ -1,0 +1,11 @@
+<engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/07.%20UI/mainMenu02.uss?fileID=7433441132597879392&amp;guid=224a81ce6ba1f554f9bb3c7288b5a867&amp;type=3#mainMenu02" />
+    <engine:VisualElement name="Background" style="flex-grow: 1; background-color: rgb(180, 180, 180); justify-content: center; background-image: url(&quot;project://database/Assets/05.%20Sprites/UI/TELA%20INICIAL_Background.png?fileID=2800000&amp;guid=1c3392d3ee556f24daa6fb7054ce0279&amp;type=3#TELA INICIAL_Background&quot;);">
+        <engine:VisualElement name="ButtonContainers" style="flex-grow: 1; position: absolute; align-self: center; justify-content: space-between; align-items: center; align-content: auto; width: 500px; height: 455px; top: 450px;">
+            <engine:Button text="PLAY" name="PlayButton" class="Button" />
+            <engine:Button text="OPTION" name="OptionButton" class="Button" />
+            <engine:Button text="CREDITS" name="CreditsButton" class="Button" />
+            <engine:Button text="QUIT" name="QuitButton" class="Button" />
+        </engine:VisualElement>
+    </engine:VisualElement>
+</engine:UXML>

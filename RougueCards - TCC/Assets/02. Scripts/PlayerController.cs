@@ -33,7 +33,7 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         if (controller.isGrounded && velocity.y < 0)
-            velocity.y = -2f; 
+            velocity.y = -2f;
 
         if (jumpRequested)
         {
@@ -49,13 +49,13 @@ public class PlayerController : MonoBehaviour
     }
 
     private void Start()
-{
-    var health = GetComponent<Health>();
-    var ui = FindFirstObjectByType<HealthUIManager>();
-
-    if (ui != null && health != null)
     {
-        ui.RegisterPlayer(health);
+        var health = GetComponent<Health>();
+        var ui = FindFirstObjectByType<HealthUIManager>();
+
+        if (ui != null && health != null)
+        {
+            ui.RegisterPlayer(health);
+        }
     }
-}
 }

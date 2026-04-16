@@ -18,6 +18,8 @@ public class CardManager : MonoBehaviour
     private bool isPanelVisible = false;
     private VisualElement root;
 
+    private System.Action<int> onStageCompletedHandler;
+
     void Awake()
     {
         root = GetComponent<UIDocument>().rootVisualElement;
@@ -39,12 +41,27 @@ public class CardManager : MonoBehaviour
             toggleAction.action.Enable();
             toggleAction.action.performed += OnToggleInput;
         }
+
+        if (playerProgress != null)
+        {
+            onStageCompletedHandler = OnStageCompleted;
+            playerProgress.OnStageCompleted += onStageCompletedHandler;
+        }
     }
 
     void OnDisable()
     {
         if (toggleAction != null)
             toggleAction.action.performed -= OnToggleInput;
+
+        if (playerProgress != null)
+            playerProgress.OnStageCompleted -= onStageCompletedHandler;
+    }
+
+    private void OnStageCompleted(int stage)
+    {
+        Debug.Log($"Estágio {stage} completo! Abrindo painel de cartas...");
+        ShowPanel();
     }
 
     // — Chamado pelo input —

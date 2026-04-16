@@ -19,6 +19,7 @@ public class DamageDealer : MonoBehaviour
             {
                 health.TakeDamage(damage);
                 timer = 0f;
+                Debug.Log($"Dealt {damage} damage to Player {health.playerID}");
             }
         }
     }

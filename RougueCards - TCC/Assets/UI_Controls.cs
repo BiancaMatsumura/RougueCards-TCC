@@ -632,6 +632,17 @@ public partial class @UI_Controls: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""a78660f5-ed27-4a11-9254-61076090ab59"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""55458bf8-7fda-4693-b29b-b4a6a8ff2be5"",
                     ""path"": ""<Gamepad>/select"",
                     ""interactions"": """",

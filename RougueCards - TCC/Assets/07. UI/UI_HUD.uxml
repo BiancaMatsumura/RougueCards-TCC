@@ -8,9 +8,30 @@
             <engine:Button text="Main Menu" name="MainMenu" enable-rich-text="false" class="Button" style="width: 400px; height: 60px; font-size: 30px;" />
         </engine:VisualElement>
     </engine:VisualElement>
-    <engine:VisualElement name="PlayerContainers" style="flex-grow: 1; flex-direction: row;">
-        <engine:VisualElement name="Player01" class="player01" style="flex-grow: 1;" />
-        <engine:VisualElement name="Player02" class="player02" style="flex-grow: 1;" />
+    <engine:VisualElement name="GameOverContainer" style="flex-grow: 1; height: 1080px; width: 1920px; opacity: 1; visibility: visible; position: absolute; background-color: rgba(0, 0, 0, 0.31); align-items: center; justify-content: center; align-self: center;">
+        <engine:VisualElement name="GameOverMenu" class="containerMenu" style="align-items: center; justify-content: center; display: none; visibility: visible; flex-direction: column; align-content: center; width: 800px; top: 200px; height: 600px;">
+            <engine:Label text="GAME OVER" style="background-color: rgba(255, 255, 255, 0); -unity-text-align: middle-center; -unity-background-image-tint-color: rgb(255, 255, 255); color: rgb(255, 255, 255); font-size: 41px; margin-top: 0; margin-bottom: 32px; margin-right: 0; margin-left: 0;" />
+            <engine:Button text="Restart" name="RestartButton" enable-rich-text="false" class="Button" style="width: 400px; height: 60px; font-size: 30px;" />
+            <engine:Button text="Main Menu" name="MainMenu" enable-rich-text="false" class="Button" style="width: 400px; height: 60px; font-size: 30px;" />
+        </engine:VisualElement>
+    </engine:VisualElement>
+    <engine:VisualElement name="PlayerContainers" style="flex-grow: 1; flex-direction: row; justify-content: center;">
+        <engine:VisualElement name="Player01" class="player01" style="flex-grow: 1; align-self: auto; background-color: rgba(255, 0, 0, 0.02);">
+            <engine:VisualElement name="LifeContainer" style="flex-grow: 1; width: 900px; position: absolute; height: 106px; align-self: center; align-items: center; justify-content: center;">
+                <engine:VisualElement name="Life" style="flex-grow: 1; position: absolute; width: 900px; height: 40px; align-self: flex-start; background-color: rgb(48, 48, 48); border-top-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; border-bottom-left-radius: 5px;" />
+                <engine:VisualElement name="FillP1" style="flex-grow: 1; position: absolute; width: 900px; height: 40px; align-self: flex-start; background-color: rgb(108, 0, 0); border-top-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; border-bottom-left-radius: 5px;" />
+            </engine:VisualElement>
+        </engine:VisualElement>
+        <engine:VisualElement name="Player02" class="player02" style="flex-grow: 1; background-color: rgba(0, 0, 255, 0.02);">
+            <engine:VisualElement name="LifeContainer" style="flex-grow: 1; width: 900px; position: absolute; height: 106px; align-self: center; align-items: center; justify-content: center;">
+                <engine:VisualElement name="Life" style="flex-grow: 1; position: absolute; width: 900px; height: 40px; align-self: flex-start; background-color: rgb(48, 48, 48); border-top-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; border-bottom-left-radius: 5px;" />
+                <engine:VisualElement name="FillP2" style="flex-grow: 1; position: absolute; width: 900px; height: 40px; align-self: flex-start; background-color: rgb(9, 0, 108); border-top-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; border-bottom-left-radius: 5px;" />
+            </engine:VisualElement>
+        </engine:VisualElement>
+        <engine:VisualElement name="XPContainer" style="flex-grow: 1; width: 1600px; position: absolute; height: 100px; align-self: flex-end; align-items: center; justify-content: center;">
+            <engine:VisualElement name="XP" style="flex-grow: 1; position: absolute; width: 1600px; height: 40px; align-self: flex-start; background-color: rgb(48, 48, 48); border-top-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; border-bottom-left-radius: 5px;" />
+            <engine:VisualElement name="FillXP" style="flex-grow: 1; position: absolute; width: 1600px; height: 40px; align-self: flex-start; background-color: rgb(253, 184, 80); border-top-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; border-bottom-left-radius: 5px;" />
+        </engine:VisualElement>
     </engine:VisualElement>
     <engine:VisualElement name="CardsContainer" style="flex-grow: 1; position: absolute; width: 1920px; height: 1080px;">
         <engine:VisualElement name="CardsPanel" class="containerCards" style="flex-grow: 1; flex-direction: row; align-items: center; justify-content: space-around; display: none;">
@@ -44,14 +65,6 @@
                     <engine:Button text="PICK UP" name="pickUp" class="cardButton" />
                 </engine:VisualElement>
             </engine:VisualElement>
-        </engine:VisualElement>
-    </engine:VisualElement>
-    <engine:VisualElement name="HealthRoot" style="flex-grow: 1; position: absolute; top: 10px; left: 10px; right: 10px; bottom: 0; flex-direction: row; justify-content: space-between; border-left-color: rgba(0, 0, 0, 0); border-right-color: rgba(0, 0, 0, 0); border-top-color: rgba(0, 0, 0, 0); border-bottom-color: rgba(0, 0, 0, 0); opacity: 1; height: 100px;">
-        <engine:VisualElement name="HealthP1" style="flex-grow: 1; width: 400px; height: 40px; background-color: rgb(75, 75, 75); position: relative; justify-content: space-between; flex-direction: row; background-size: 100% 100%; border-top-width: 3px; border-right-width: 3px; border-bottom-width: 3px; border-left-width: 3px; background-image: none; -unity-background-image-tint-color: rgb(255, 255, 255);">
-            <engine:VisualElement name="FillP1" style="flex-grow: 1; width: 100%; height: 100%; background-color: rgb(255, 0, 0);" />
-        </engine:VisualElement>
-        <engine:VisualElement name="HealthP2" style="flex-grow: 1; width: 400px; height: 40px; background-color: rgb(65, 65, 65); flex-direction: row; justify-content: space-between; position: relative; background-image: none; background-size: 100% 100%; border-top-width: 3px; border-right-width: 3px; border-bottom-width: 3px; border-left-width: 3px; -unity-background-image-tint-color: rgb(255, 255, 255);">
-            <engine:VisualElement name="FillP2" style="flex-grow: 1; width: 100%; height: 100%; background-color: rgb(15, 53, 207);" />
         </engine:VisualElement>
     </engine:VisualElement>
 </engine:UXML>

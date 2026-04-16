@@ -2,8 +2,7 @@ using UnityEngine;
 
 public class EnemyXP : MonoBehaviour
 {
-    [SerializeField] private int xpValue = 1;
-    [SerializeField] private PlayerProgress playerProgress;
+    [SerializeField]private GameObject XPprefab;
 
     private Health health;
 
@@ -26,9 +25,10 @@ public class EnemyXP : MonoBehaviour
 
     void GiveXP()
     {
-        if (playerProgress != null)
+        if (XPprefab != null)
         {
-            playerProgress.AddXP(xpValue);
+            Instantiate(XPprefab, transform.position, Quaternion.identity);
         }
+
     }
 }
