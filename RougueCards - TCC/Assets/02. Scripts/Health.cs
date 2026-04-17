@@ -11,6 +11,7 @@ public class Health : MonoBehaviour
     public event Action<int, int, int> OnHealthChanged;
     public event Action OnDeath; // 👈 NOVO
     
+    private Animation anim;
 
     void Awake()
     {
@@ -18,6 +19,7 @@ public class Health : MonoBehaviour
         OnHealthChanged?.Invoke(playerID, currentHealth, maxHealth);
 
         GameOverWatcher.Instance?.RegisterPlayer(this);
+        anim = GetComponent<Animation>();
     }
 
     public void TakeDamage(int amount)
@@ -26,6 +28,8 @@ public class Health : MonoBehaviour
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
 
         OnHealthChanged?.Invoke(playerID, currentHealth, maxHealth);
+
+        anim.Play("DAMAGEVFX");
 
         if (currentHealth <= 0)
             Die();

@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 542973585866644192}
   - component: {fileID: -4453271482895477748}
   - component: {fileID: -1223435608833976042}
+  - component: {fileID: -489652007919317186}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Enemy
@@ -196,3 +197,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   XPprefab: {fileID: 7842632854057511571, guid: 77c1340847dc33e47bfe09f9cc390e83, type: 3}
+--- !u!111 &-489652007919317186
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 64197260445343202}
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Animation: {fileID: 7400000, guid: 7a4891031509a024991df47ad3ed8a3f, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: 7a4891031509a024991df47ad3ed8a3f, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_UpdateMode: 0
+  m_CullingType: 0
