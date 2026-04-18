@@ -5,6 +5,10 @@ public class HealthUIManager : MonoBehaviour
 {
     private VisualElement fillP1;
     private VisualElement fillP2;
+    private Label currentHealthLabel1;
+    private Label maxHealthLabel1;
+    private Label currentHealthLabel2;
+    private Label maxHealthLabel2;
 
     void Awake()
     {
@@ -12,6 +16,13 @@ public class HealthUIManager : MonoBehaviour
 
         fillP1 = root.Q<VisualElement>("FillP1");
         fillP2 = root.Q<VisualElement>("FillP2");
+        currentHealthLabel1 = root.Q<Label>("CurrentLife1");
+        maxHealthLabel1 = root.Q<Label>("MaxLife1");
+        currentHealthLabel2 = root.Q<Label>("CurrentLife2");
+        maxHealthLabel2 = root.Q<Label>("MaxLife2");
+
+        //UpdateHealth(1, 100, 100);
+        //UpdateHealth(2, 100, 100);
     }
 
     public void RegisterPlayer(Health health)
@@ -19,14 +30,19 @@ public class HealthUIManager : MonoBehaviour
         health.OnHealthChanged += UpdateHealth;
     }
 
-    private void UpdateHealth(int playerID, int current, int max)
+    public void UpdateHealth(int playerID, int current, int max)
     {
         float percent = (float)current / max;
 
         if (playerID == 1)
             fillP1.style.width = Length.Percent(percent * 100);
+            currentHealthLabel1.text = current.ToString();
+            maxHealthLabel1.text = max.ToString();
+
 
         if (playerID == 2)
             fillP2.style.width = Length.Percent(percent * 100);
+            currentHealthLabel2.text = current.ToString();
+            maxHealthLabel2.text = max.ToString();
     }
 }

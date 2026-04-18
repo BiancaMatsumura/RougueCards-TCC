@@ -4,6 +4,8 @@ using RougueCards.Attributes;
 [CreateAssetMenu(fileName = "CardData", menuName = "Cards/CardData")]
 public class CardData : ScriptableObject
 {
+    public string cardName;
+    public string description;
     public Sprite frontImage;
     public Sprite backImage;
 

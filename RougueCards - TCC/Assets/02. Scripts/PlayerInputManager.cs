@@ -36,13 +36,13 @@ public class PlayerInputManager : MonoBehaviour
         var keyboard = Keyboard.current;
         if (keyboard == null) return;
 
-        if (!wasdUsed && keyboard.tabKey.wasPressedThisFrame)
+        if (!wasdUsed && keyboard.spaceKey.wasPressedThisFrame)
         {
             JoinPlayer(InputType.KeyboardWASD, null);
             return;
         }
 
-        if (!arrowsUsed && keyboard.enterKey.wasPressedThisFrame)
+        if (!arrowsUsed && keyboard.rightCtrlKey.wasPressedThisFrame)
         {
             JoinPlayer(InputType.KeyboardArrows, null);
             return;

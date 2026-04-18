@@ -12,25 +12,19 @@ public class PlayerController : MonoBehaviour
     private Vector2 moveInput;
     private Vector3 velocity;
     private bool jumpRequested;
+    private HealthUIManager healthUI;
 
-    public Animator control;
-    
-    // sistema de combo
-    private bool IsInCombo;
-
-    private int counter;
-    [Header("Combo System")]
-    public int ComboLengthMax = 3;
-
-    public float ComoboWindow = 2f; // Janela para combo de ataque 
-    public bool IsShooter;
-
-    public GameObject Hands;
-    
     void Awake()
     {
         controller = GetComponent<CharacterController>();
-       
+        healthUI = FindFirstObjectByType<HealthUIManager>();
+        if (healthUI != null)
+        {
+            healthUI.UpdateHealth(1, 100, 100);
+            healthUI.UpdateHealth(2, 100, 100);
+        }
+
+
     }
 
     public void Move(InputAction.CallbackContext context)
@@ -47,7 +41,7 @@ public class PlayerController : MonoBehaviour
     }
 
     public void ATK(InputAction.CallbackContext context)
-    {   
+    {
         Debug.Log(context.phase);
         if (context.performed)
         {
@@ -59,7 +53,7 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         if (controller.isGrounded && velocity.y < 0)
-            velocity.y = -2f; 
+            velocity.y = -2f;
 
         if (jumpRequested)
         {
@@ -73,75 +67,18 @@ public class PlayerController : MonoBehaviour
         velocity.y += gravity * Time.deltaTime;
         controller.Move(velocity * Time.deltaTime);
 
-        if(Input.GetKeyDown(KeyCode.Q) && IsShooter == true)
-        {
-
-            if(IsInCombo == false)
-            {
-                StartCoroutine(ComboTimer());
-                Debug.Log("combo start");
-                //control.SetBool("isAttacking", true);
-            }
-
-                
-            counter++;
-            ComboSteps(ComboLengthMax);
-            Debug.Log(counter);
-        }
     }
 
     private void Start()
-{
-    var health = GetComponent<Health>();
-    var ui = FindFirstObjectByType<HealthUIManager>();
-
-    if (ui != null && health != null)
     {
-        ui.RegisterPlayer(health);
-    }
+        var health = GetComponent<Health>();
+        var ui = FindFirstObjectByType<HealthUIManager>();
 
-    if(IsShooter)
-        {   
-            Hands.SetActive(true);
-            
-        }
-}
-
-    IEnumerator ComboTimer()
-    {
-        Debug.Log("combo true");
-        IsInCombo = true;
-
-        yield return new WaitForSeconds(ComoboWindow); 
-
-        counter = 0;
-        BacktoTrigger();
-
-        IsInCombo = false;
-
-        Debug.Log("time out Corroutine off"); 
-
-    }
-
-void ComboSteps(int StepsLength)
-    {
-        if(IsInCombo == true)
+        if (ui != null && health != null)
         {
-           
-        if(counter > StepsLength){ counter = 0; BacktoTrigger(); return; } // Back to trigger
-
-        string Ataque = "Atack";
-
-        string Next = Ataque + counter;
-
-        control.Play(Next);
-
-        Debug.Log(Next);
+            ui.RegisterPlayer(health);
         }
+
     }
 
-    void BacktoTrigger()
-    {
-      control.SetTrigger("Back");
-    }
 }

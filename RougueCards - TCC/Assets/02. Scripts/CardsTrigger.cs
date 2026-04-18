@@ -26,12 +26,5 @@ public class CardsTrigger : MonoBehaviour
         }
     }
 
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            playerProgress.AddXP(1);
-            Debug.Log("XP adicionado! Total: " + playerProgress.currentXP);
-        }
-    }
+
 }

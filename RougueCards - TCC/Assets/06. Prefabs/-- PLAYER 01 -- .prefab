@@ -19,6 +19,7 @@ GameObject:
   - component: {fileID: 754078657173125604}
   - component: {fileID: 881652555557746211}
   - component: {fileID: 7197112135679768964}
+  - component: {fileID: 7001157502035901915}
   m_Layer: 0
   m_Name: '-- PLAYER 01 -- '
   m_TagString: Player
@@ -324,6 +325,22 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 96d568c6-fc4c-43e6-816a-5bf67e1c0409
     m_ActionName: 'Player02/Pause[/DualShock4GamepadHID/start]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7001157502035901915}
+        m_TargetAssemblyTypeName: Shooter, Assembly-CSharp
+        m_MethodName: ATK
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 9f19b20b-a5a5-4434-8370-0fae8de681ba
+    m_ActionName: 'Player01/ATK[/Keyboard/q]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player01
@@ -344,11 +361,6 @@ MonoBehaviour:
   speed: 5
   jumpHeight: 2
   gravity: -9.8
-  control: {fileID: 7197112135679768964}
-  ComboLengthMax: 3
-  ComoboWindow: 2
-  IsShooter: 1
-  Hands: {fileID: 9107774236856691626}
 --- !u!114 &754078657173125604
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -526,6 +538,23 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &7001157502035901915
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1370686436433694047}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b77fb2a7df338145bbc34a2049afbaf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  control: {fileID: 7197112135679768964}
+  ComboLengthMax: 3
+  ComoboWindow: 2
+  IsShooter: 1
+  Hands: {fileID: 4638376472147725006, guid: 68766d56f3b1b154da595d64505360fb, type: 3}
 --- !u!1 &4288222435443977718
 GameObject:
   m_ObjectHideFlags: 0
@@ -701,7 +730,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 60
+  field of view: 70
   orthographic: 0
   orthographic size: 5
   m_Depth: 0
@@ -817,7 +846,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4638376472147725006, guid: 68766d56f3b1b154da595d64505360fb, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -827,10 +856,5 @@ PrefabInstance:
 --- !u!4 &1033329879321087428 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3489342717061901472, guid: 68766d56f3b1b154da595d64505360fb, type: 3}
-  m_PrefabInstance: {fileID: 4484321590806913380}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &9107774236856691626 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4638376472147725006, guid: 68766d56f3b1b154da595d64505360fb, type: 3}
   m_PrefabInstance: {fileID: 4484321590806913380}
   m_PrefabAsset: {fileID: 0}

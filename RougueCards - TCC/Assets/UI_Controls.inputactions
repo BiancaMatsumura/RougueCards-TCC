@@ -557,6 +557,17 @@
                 },
                 {
                     "name": "",
+                    "id": "a1dd99c3-96ab-4e7a-8c15-7116f20075dd",
+                    "path": "<Keyboard>/numpadEnter",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "55458bf8-7fda-4693-b29b-b4a6a8ff2be5",
                     "path": "<Gamepad>/select",
                     "interactions": "",

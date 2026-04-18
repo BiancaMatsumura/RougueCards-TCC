@@ -129,3 +129,55 @@
     transition-timing-function: ease-in-out-back;
     transition-duration: 0.5s;
 }
+
+.backCard {
+    flex-grow: 1;
+    background-color: rgb(255, 255, 255);
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+    border-bottom-left-radius: 15px;
+    position: absolute;
+    max-width: 250px;
+    max-height: 350px;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    background-image: url("project://database/Assets/05.%20Sprites/teste/PNG/Default/Panel/panel-001.png?fileID=2800000&guid=85ca0b7bdb5f4ab4692b430edd59e31c&type=3#panel-001");
+    -unity-background-image-tint-color: rgba(5, 0, 255, 0.55);
+    -unity-slice-scale: 1px;
+    padding-bottom: 30px;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.frontCard {
+    flex-grow: 1;
+    background-color: rgb(255, 255, 255);
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+    border-bottom-left-radius: 15px;
+    position: absolute;
+    max-width: 250px;
+    max-height: 350px;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    -unity-background-image-tint-color: rgba(255, 0, 0, 0.5);
+    background-repeat: no-repeat no-repeat;
+    background-image: url("project://database/Assets/05.%20Sprites/teste/PNG/Default/Panel/panel-001.png?fileID=2800000&guid=85ca0b7bdb5f4ab4692b430edd59e31c&type=3#panel-001");
+    background-position-x: left 0;
+    background-position-y: top 0;
+    -unity-slice-scale: 1px;
+    -unity-slice-left: 0;
+    -unity-slice-top: 0;
+    -unity-slice-right: 0;
+    -unity-slice-bottom: 0;
+    -unity-background-scale-mode: stretch-to-fill;
+    background-size: 100% 100%;
+    justify-content: flex-end;
+    align-content: flex-end;
+    padding-bottom: 30px;
+    display: none;
+}

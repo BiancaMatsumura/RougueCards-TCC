@@ -206,7 +206,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 60
+  field of view: 70
   orthographic: 0
   orthographic size: 5
   m_Depth: 0
@@ -592,6 +592,10 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 96d568c6-fc4c-43e6-816a-5bf67e1c0409
     m_ActionName: 'Player02/Pause[/DualShock4GamepadHID/start]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 9f19b20b-a5a5-4434-8370-0fae8de681ba
+    m_ActionName: 'Player01/ATK[/Keyboard/e,/Keyboard/rightCtrl]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player01

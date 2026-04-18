@@ -25,13 +25,21 @@ public class CardController
         this.data = data;
 
         var slotName = $"Slot{slotIndex}";
-        card         = root.Q<VisualElement>(slotName);
-        var panel    = root.Q<VisualElement>($"{slotName}Panel");
-        front        = card.Q<VisualElement>("front");
-        back         = card.Q<VisualElement>("back");
-        flipButton   = panel.Q<Button>("flip");
+        card = root.Q<VisualElement>(slotName);
+        var panel = root.Q<VisualElement>($"{slotName}Panel");
+        front = card.Q<VisualElement>("front");
+        back = card.Q<VisualElement>("back");
+        flipButton = panel.Q<Button>("flip");
         pickUpButton = panel.Q<Button>("pickUp");
 
+        // Busca dentro do card, não do panel
+        var nameLabel = card.Q<Label>("CardName");        // está no front
+        var descriptionLabel = card.Q<Label>("CardDescription"); // está no back
+
+        if (nameLabel != null) nameLabel.text = data.cardName;
+        if (descriptionLabel != null) descriptionLabel.text = data.description;
+
+        // resto do construtor continua igual...
         back.style.display = DisplayStyle.None;
 
         if (data.frontImage != null)
@@ -39,10 +47,10 @@ public class CardController
         if (data.backImage != null)
             back.style.backgroundImage = new StyleBackground(data.backImage);
 
-        flipButton.focusable   = true;
+        flipButton.focusable = true;
         pickUpButton.focusable = true;
 
-        flipButton.clicked   += TryFlip;
+        flipButton.clicked += TryFlip;
         pickUpButton.clicked += () => OnPickUp?.Invoke(data);
         card.RegisterCallback<ClickEvent>(_ => TryFlip());
     }
@@ -63,7 +71,7 @@ public class CardController
 
         isFlipped = !isFlipped;
         front.style.display = isFlipped ? DisplayStyle.None : DisplayStyle.Flex;
-        back.style.display  = isFlipped ? DisplayStyle.Flex  : DisplayStyle.None;
+        back.style.display = isFlipped ? DisplayStyle.Flex : DisplayStyle.None;
 
         yield return Animate(0f, 1f, 0.2f);
 

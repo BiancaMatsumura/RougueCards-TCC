@@ -10,7 +10,7 @@ public class Health : MonoBehaviour
 
     public event Action<int, int, int> OnHealthChanged;
     public event Action OnDeath; // 👈 NOVO
-    
+
     private Animation anim;
 
     void Awake()
@@ -29,7 +29,10 @@ public class Health : MonoBehaviour
 
         OnHealthChanged?.Invoke(playerID, currentHealth, maxHealth);
 
-        anim.Play("DAMAGEVFX");
+        if (GetComponent<Enemy>() != null && anim != null)
+        {
+            anim.Play("DAMAGEVFX");
+        }
 
         if (currentHealth <= 0)
             Die();
