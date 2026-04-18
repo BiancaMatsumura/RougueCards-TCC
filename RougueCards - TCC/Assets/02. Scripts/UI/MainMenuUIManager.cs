@@ -23,9 +23,15 @@ public class MainMenuUIManager : MonoBehaviour
         optionButton.clicked += OpenOptionsMenu;
         creditsButton.clicked += OpenCreditsMenu;
         quitButton.clicked += QuitGame;
-    }
-    private void PlayLevel(string levelToLoad) { Time.timeScale = 1; SceneManager.LoadScene(levelToLoad); }
 
+        playButton.Focus();
+    }
+    private void PlayLevel(string levelToLoad)
+    {
+        Time.timeScale = 1;
+        SceneManager.LoadScene(levelToLoad);
+    }
+    
     private void OpenOptionsMenu()
     {
         Debug.Log("Abrir opções");

@@ -20,24 +20,25 @@ public class UI_Controller : MonoBehaviour
 
     // Qual tela de opções abriu as opções (para saber para onde voltar)
     private bool optionsOpenedFromPause = false;
+    [SerializeField] private CardManager cardManager;
 
     void Awake()
     {
         inputModule = FindFirstObjectByType<InputSystemUIInputModule>();
         var root = GetComponent<UIDocument>().rootVisualElement;
 
-        pauseScreen    = new PauseScreen(root.Q<VisualElement>("PauseMenu"));
+        pauseScreen = new PauseScreen(root.Q<VisualElement>("PauseMenu"));
         gameOverScreen = new GameOverScreen(root.Q<VisualElement>("GameOverMenu"));
         //optionsScreen  = new OptionsScreen(root.Q<VisualElement>("OptionsMenu"));
 
         // Pause
-        pauseScreen.OnResume   += HandleResume;
-        pauseScreen.OnRestart  += HandleRestart;
+        pauseScreen.OnResume += HandleResume;
+        pauseScreen.OnRestart += HandleRestart;
         pauseScreen.OnMainMenu += HandleMainMenu;
-        pauseScreen.OnOptions  += () => { optionsOpenedFromPause = true; OpenOptions(); };
+        pauseScreen.OnOptions += () => { optionsOpenedFromPause = true; OpenOptions(); };
 
         // Game Over
-        gameOverScreen.OnRestart  += HandleRestart;
+        gameOverScreen.OnRestart += HandleRestart;
         gameOverScreen.OnMainMenu += HandleMainMenu;
 
         // Options
@@ -46,7 +47,7 @@ public class UI_Controller : MonoBehaviour
         pauseAction = inputActions.FindAction("Pause", true);
     }
 
-    private void OnEnable()  => pauseAction.Enable();
+    private void OnEnable() => pauseAction.Enable();
     private void OnDisable() => pauseAction.Disable();
 
     private void Update()
@@ -55,6 +56,10 @@ public class UI_Controller : MonoBehaviour
         if (pressing && !pauseHeld)
         {
             pauseHeld = true;
+
+            // Não pausa se o painel de cartas estiver aberto
+            if (cardManager != null && cardManager.isPanelVisible) return;
+
             if (!isPaused) Pause();
             else HandleResume();
         }
@@ -63,7 +68,6 @@ public class UI_Controller : MonoBehaviour
             pauseHeld = false;
         }
     }
-
     // --- Controle de telas ---
 
     private void Pause()

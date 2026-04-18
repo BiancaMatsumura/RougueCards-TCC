@@ -33,25 +33,6 @@
     scale: 1.1 1.1;
 }
 
-.Button:active {
-    background-image: url("project://database/Assets/05.%20Sprites/UI/Buttons/Button_Clicked.png?fileID=2800000&guid=7088efb8f4825454c91ce1222c90bf61&type=3#Button_Clicked");
-    background-color: rgba(188, 188, 188, 0);
-    border-left-color: rgba(149, 149, 149, 0);
-    border-right-color: rgba(149, 149, 149, 0);
-    border-top-color: rgba(149, 149, 149, 0);
-    border-bottom-color: rgba(149, 149, 149, 0);
-    margin-top: 0;
-    margin-right: 0;
-    margin-bottom: 0;
-    margin-left: 0;
-    width: 430px;
-    height: 80px;
-    font-size: 45px;
-    transition-timing-function: ease-in-out-back;
-    transition-duration: 0.2s;
-    scale: 0.8 0.8;
-}
-
 .Button:focus {
     background-image: url("project://database/Assets/05.%20Sprites/UI/Buttons/Button_Hover-Focus.png?fileID=2800000&guid=27b754667071fe747b3ca1fffd6db38c&type=3#Button_Hover-Focus");
     background-color: rgba(188, 188, 188, 0);
@@ -69,4 +50,23 @@
     transition-timing-function: ease-in-out-back;
     transition-duration: 0.5s;
     scale: 1.1 1.1;
+}
+
+.Button:active {
+    background-image: url("project://database/Assets/05.%20Sprites/UI/Buttons/Button_Clicked.png?fileID=2800000&guid=7088efb8f4825454c91ce1222c90bf61&type=3#Button_Clicked");
+    background-color: rgba(188, 188, 188, 0);
+    border-left-color: rgba(149, 149, 149, 0);
+    border-right-color: rgba(149, 149, 149, 0);
+    border-top-color: rgba(149, 149, 149, 0);
+    border-bottom-color: rgba(149, 149, 149, 0);
+    margin-top: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    margin-left: 0;
+    width: 430px;
+    height: 80px;
+    font-size: 45px;
+    transition-duration: 0.2s;
+    transition-timing-function: ease-out-back;
+    scale: 0.8 0.8;
 }

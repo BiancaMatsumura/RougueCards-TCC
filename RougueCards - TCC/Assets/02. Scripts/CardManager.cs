@@ -15,7 +15,7 @@ public class CardManager : MonoBehaviour
 
     private CardController[] controllers;
     private VisualElement cardPanel;
-    private bool isPanelVisible = false;
+    public bool isPanelVisible = false;
     private VisualElement root;
 
     private System.Action<int> onStageCompletedHandler;
