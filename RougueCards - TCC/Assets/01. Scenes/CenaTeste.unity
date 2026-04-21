@@ -475,6 +475,7 @@ GameObject:
   - component: {fileID: 1243163937}
   - component: {fileID: 1243163938}
   - component: {fileID: 1243163939}
+  - component: {fileID: 1243163940}
   m_Layer: 0
   m_Name: '-- GAME CONTROLLER  -- '
   m_TagString: Untagged
@@ -631,6 +632,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   uiController: {fileID: 1962024337}
+--- !u!114 &1243163940
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1243163932}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45479c5e8ba5ec047ad5deac5a5d44fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mainCamera: {fileID: 1534837037}
+  distanceToSplit: 8
+  distanceToMerge: 6
+  isSplitScreen: 0
 --- !u!1 &1534837035
 GameObject:
   m_ObjectHideFlags: 0
@@ -726,7 +743,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 60
+  field of view: 70
   orthographic: 0
   orthographic size: 5
   m_Depth: 0
@@ -894,6 +911,7 @@ GameObject:
   - component: {fileID: 1962024335}
   - component: {fileID: 1962024336}
   - component: {fileID: 1962024337}
+  - component: {fileID: 1962024338}
   m_Layer: 5
   m_Name: '-- UI  -- '
   m_TagString: Untagged
@@ -950,6 +968,7 @@ MonoBehaviour:
   cardDatabase: {fileID: 11400000, guid: a7b1e506f0124584aa07ae2c55049283, type: 2}
   playerProgress: {fileID: 11400000, guid: 00a38000d9bba5a42b1cef107458d7c8, type: 2}
   toggleAction: {fileID: -6450635596403456157, guid: 6e778180076408648b21a1e54c02c1a0, type: 3}
+  isPanelVisible: 0
 --- !u!114 &1962024335
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -988,6 +1007,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inputActions: {fileID: -944628639613478452, guid: 6e778180076408648b21a1e54c02c1a0, type: 3}
+  cardManager: {fileID: 1962024334}
+--- !u!114 &1962024338
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1962024329}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53e7dd4e61b60974a885bccff2615a04, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cameraController: {fileID: 1243163940}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

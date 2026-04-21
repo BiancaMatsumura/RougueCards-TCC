@@ -15,8 +15,8 @@
             <engine:Button text="Main Menu" name="MainMenu" enable-rich-text="false" class="Button" style="width: 400px; height: 60px; font-size: 30px;" />
         </engine:VisualElement>
     </engine:VisualElement>
-    <engine:VisualElement name="PlayerContainers" style="flex-grow: 1; flex-direction: row; justify-content: center;">
-        <engine:VisualElement name="Player01" class="player01" style="flex-grow: 1; align-self: auto; background-color: rgba(255, 0, 0, 0.06);">
+    <engine:VisualElement name="PlayerContainers" style="flex-grow: 1; flex-direction: row; justify-content: center; background-color: rgba(50, 0, 50, 0);">
+        <engine:VisualElement name="Player01" class="player01" style="flex-grow: 1; align-self: auto; background-color: rgba(255, 0, 0, 0.06); display: flex;">
             <engine:VisualElement name="LifeContainer" style="flex-grow: 1; width: 900px; position: absolute; height: 106px; align-self: center; align-items: stretch; justify-content: center; top: 30px;">
                 <engine:VisualElement name="Life" style="flex-grow: 1; position: absolute; width: 900px; height: 40px; align-self: flex-start; background-color: rgb(48, 48, 48); border-top-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; border-bottom-left-radius: 5px;" />
                 <engine:VisualElement name="FillP1" style="flex-grow: 1; position: absolute; width: 900px; height: 40px; align-self: flex-start; background-color: rgb(108, 0, 0); border-top-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; border-bottom-left-radius: 5px;" />
