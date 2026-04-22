@@ -71,7 +71,7 @@ public class CameraController : MonoBehaviour
     {
         players.Clear();
 
-        PlayerInput[] foundPlayers = FindObjectsOfType<PlayerInput>();
+        PlayerInput[] foundPlayers = FindObjectsByType<PlayerInput>(FindObjectsSortMode.None);
 
         foreach (PlayerInput player in foundPlayers)
         {
