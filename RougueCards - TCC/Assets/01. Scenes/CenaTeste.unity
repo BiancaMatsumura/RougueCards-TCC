@@ -647,7 +647,10 @@ MonoBehaviour:
   mainCamera: {fileID: 1534837037}
   distanceToSplit: 8
   distanceToMerge: 6
+  cameraSpeed: 2.5
   isSplitScreen: 0
+  cameraOffset: {x: 0, y: 10, z: -10}
+  cameraStartOffset: {x: 0, y: 15, z: -15}
 --- !u!1 &1534837035
 GameObject:
   m_ObjectHideFlags: 0

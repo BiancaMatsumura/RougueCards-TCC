@@ -12,136 +12,115 @@ public class CameraController : MonoBehaviour
     [SerializeField] private float distanceToSplit = 8f;
     [SerializeField] private float distanceToMerge = 6f;
 
+    [Header("Transition")]
+    [SerializeField] private float cameraSpeed = 5f;
+
     private List<PlayerInput> players = new List<PlayerInput>();
     public bool isSplitScreen;
 
     public event Action<bool> OnSplitScreenChanged;
 
-    private void OnEnableMainCamera()
-    {
-        isSplitScreen = false;
-        OnSplitScreenChanged?.Invoke(isSplitScreen);
-    }
-
-    private void OnEnableSplitScreen()
-    {
-        isSplitScreen = true;
-        OnSplitScreenChanged?.Invoke(isSplitScreen);
-    }
+    [Header("Camera Offset")]
+    [SerializeField] private Vector3 cameraOffset = new Vector3(0f, 10f, -10f);
+    [SerializeField] private Vector3 cameraStartOffset = new Vector3(0f, 20f, -20f);
 
     private void Start()
     {
         FindPlayers();
-        EnableMainCamera();
+
     }
 
     private void Update()
     {
-        // Caso os players ainda não tenham sido instanciados
-        if (players.Count < 2)
-        {
-            FindPlayers();
-            return;
-        }
+        if (players.Count < 2) { FindPlayers(); return; }
 
         Transform player1 = players[0].transform;
         Transform player2 = players[1].transform;
-
         float distance = Vector3.Distance(player1.position, player2.position);
 
         if (!isSplitScreen)
         {
             UpdateMainCameraPosition(player1, player2);
-
-            if (distance > distanceToSplit)
-            {
-                EnableSplitScreen();
-            }
+            if (distance > distanceToSplit) EnableSplitScreen();
         }
         else
         {
-            if (distance < distanceToMerge)
-            {
-                EnableMainCamera();
-            }
-        }
-    }
-
-    private void FindPlayers()
-    {
-        players.Clear();
-
-        PlayerInput[] foundPlayers = FindObjectsByType<PlayerInput>(FindObjectsSortMode.None);
-
-        foreach (PlayerInput player in foundPlayers)
-        {
-            players.Add(player);
+            UpdatePlayerCameraPositions();
+            if (distance < distanceToMerge) EnableMainCamera();
         }
     }
 
     private void EnableMainCamera()
     {
         isSplitScreen = false;
-        OnSplitScreenChanged?.Invoke(isSplitScreen);
+        OnSplitScreenChanged?.Invoke(false);
 
-        if (players.Count < 2)
-        {
-            mainCamera.gameObject.SetActive(true);
-            return;
-        }
-
-        Transform player1 = players[0].transform;
-        Transform player2 = players[1].transform;
-
-        Vector3 middlePoint = (player1.position + player2.position) / 2f;
-        Vector3 desiredPosition = middlePoint + new Vector3(0f, 10f, -10f);
-
-        mainCamera.transform.position = desiredPosition;
-        mainCamera.transform.LookAt(middlePoint);
+        Vector3 mid = (players[0].transform.position + players[1].transform.position) / 2f;
+        mainCamera.transform.position = mid + cameraStartOffset;
 
         mainCamera.gameObject.SetActive(true);
 
         foreach (PlayerInput player in players)
         {
-            Camera playerCamera = player.GetComponentInChildren<Camera>(true);
-
-            if (playerCamera != null)
-            {
-                playerCamera.gameObject.SetActive(false);
-            }
+            Camera cam = player.GetComponentInChildren<Camera>(true);
+            if (cam != null) cam.gameObject.SetActive(false);
         }
     }
 
     private void EnableSplitScreen()
     {
         isSplitScreen = true;
-        OnSplitScreenChanged?.Invoke(isSplitScreen);
+        OnSplitScreenChanged?.Invoke(true);
 
         mainCamera.gameObject.SetActive(false);
 
         foreach (PlayerInput player in players)
         {
-            Camera playerCamera = player.GetComponentInChildren<Camera>(true);
-
-            if (playerCamera != null)
+            Camera cam = player.GetComponentInChildren<Camera>(true);
+            if (cam != null)
             {
-                playerCamera.gameObject.SetActive(true);
+                cam.transform.position = player.transform.position + cameraStartOffset;
+                cam.gameObject.SetActive(true);
             }
         }
     }
 
     private void UpdateMainCameraPosition(Transform player1, Transform player2)
     {
-        Vector3 middlePoint = (player1.position + player2.position) / 2f;
-
-        Vector3 desiredPosition = middlePoint + new Vector3(0f, 10f, -10f);
+        Vector3 mid = (player1.position + player2.position) / 2f;
 
         mainCamera.transform.position = Vector3.Lerp(
             mainCamera.transform.position,
-            desiredPosition,
-            Time.deltaTime * 5f
+            mid + cameraOffset,
+            Time.deltaTime * cameraSpeed
         );
 
-        mainCamera.transform.LookAt(middlePoint);
+        mainCamera.transform.LookAt(mid);
     }
+
+    private void UpdatePlayerCameraPositions()
+    {
+        foreach (PlayerInput player in players)
+        {
+            Camera cam = player.GetComponentInChildren<Camera>(true);
+            if (cam == null) continue;
+
+            cam.transform.position = Vector3.Lerp(
+                cam.transform.position,
+                player.transform.position + cameraOffset,
+                Time.deltaTime * cameraSpeed
+            );
+
+            cam.transform.LookAt(player.transform.position);
+        }
+    }
+
+    private void FindPlayers()
+    {
+        players.Clear();
+        foreach (var p in FindObjectsByType<PlayerInput>(FindObjectsSortMode.None))
+            players.Add(p);
+    }
+
+
 }
