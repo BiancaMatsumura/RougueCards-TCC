@@ -181,3 +181,19 @@
     padding-bottom: 30px;
     display: none;
 }
+
+.HUD_P {
+    flex-grow: 1;
+    position: absolute;
+    width: 900px;
+    height: 100px;
+    top: 30px;
+    left: 50px;
+    flex-direction: row-reverse;
+    align-items: flex-start;
+    align-content: flex-start;
+    align-self: flex-start;
+    justify-content: flex-end;
+    margin-left: 0;
+    margin-right: 0;
+}

@@ -10,6 +10,8 @@ public class HealthUIManager : MonoBehaviour
     private Label currentHealthLabel2;
     private Label maxHealthLabel2;
 
+    private const float BAR_WIDTH = 860f;
+
     void Awake()
     {
         var root = GetComponent<UIDocument>().rootVisualElement;
@@ -20,9 +22,6 @@ public class HealthUIManager : MonoBehaviour
         maxHealthLabel1 = root.Q<Label>("MaxLife1");
         currentHealthLabel2 = root.Q<Label>("CurrentLife2");
         maxHealthLabel2 = root.Q<Label>("MaxLife2");
-
-        //UpdateHealth(1, 100, 100);
-        //UpdateHealth(2, 100, 100);
     }
 
     public void RegisterPlayer(Health health)
@@ -35,14 +34,17 @@ public class HealthUIManager : MonoBehaviour
         float percent = (float)current / max;
 
         if (playerID == 1)
-            fillP1.style.width = Length.Percent(percent * 100);
+        {
+            fillP1.style.width = percent * BAR_WIDTH;
             currentHealthLabel1.text = current.ToString();
-            maxHealthLabel1.text = max.ToString();
-
+            maxHealthLabel1.text = $"/ {max}";
+        }
 
         if (playerID == 2)
-            fillP2.style.width = Length.Percent(percent * 100);
+        {
+            fillP2.style.width = percent * BAR_WIDTH;
             currentHealthLabel2.text = current.ToString();
-            maxHealthLabel2.text = max.ToString();
+            maxHealthLabel2.text = $"/ {max}";
+        }
     }
 }

@@ -9,6 +9,10 @@ public class PlayerInputManager : MonoBehaviour
     [SerializeField] private GameObject player01Prefab;
     [SerializeField] private GameObject player02Prefab;
     [SerializeField] private Transform[] spawnPoints;
+    [SerializeField] private CameraGroupManager cameraGroupManager;
+    [SerializeField] private SplitScreenManager splitScreenManager;
+
+    private Transform _p1Transform; // adiciona esse campo privado
 
     private bool player01Joined = false;
     private bool player02Joined = false;
@@ -71,6 +75,18 @@ public class PlayerInputManager : MonoBehaviour
         if (spawnPoints.Length > spawnIndex)
             obj.transform.position = spawnPoints[spawnIndex].position;
 
+
+        cameraGroupManager.AddPlayer(obj.transform);
+        // guarda P1 quando entra, registra os dois quando P2 entra
+        if (!player01Joined)
+        {
+            _p1Transform = obj.transform;
+        }
+        else
+        {
+            splitScreenManager.RegisterPlayers(_p1Transform, obj.transform);
+        }
+
         // Atribui ao Maestro dependendo de quem está entrando
         if (AttributeMaestro.Instance != null)
         {
@@ -87,6 +103,7 @@ public class PlayerInputManager : MonoBehaviour
         }
 
         var playerInput = obj.GetComponent<PlayerInput>();
+
 
         if (inputType == InputType.Gamepad)
         {

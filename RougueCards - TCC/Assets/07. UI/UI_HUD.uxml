@@ -16,26 +16,24 @@
         </engine:VisualElement>
     </engine:VisualElement>
     <engine:VisualElement name="PlayerContainers" style="flex-grow: 1; flex-direction: row; justify-content: center; background-color: rgba(50, 0, 50, 0);">
-        <engine:VisualElement name="Player01" class="player01" style="flex-grow: 1; align-self: auto; background-color: rgba(255, 0, 0, 0.06); display: flex;">
-            <engine:VisualElement name="LifeContainer" style="flex-grow: 1; width: 900px; position: absolute; height: 106px; align-self: center; align-items: stretch; justify-content: center; top: 30px;">
-                <engine:VisualElement name="Life" style="flex-grow: 1; position: absolute; width: 900px; height: 40px; align-self: flex-start; background-color: rgb(48, 48, 48); border-top-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; border-bottom-left-radius: 5px;" />
-                <engine:VisualElement name="FillP1" style="flex-grow: 1; position: absolute; width: 900px; height: 40px; align-self: flex-start; background-color: rgb(108, 0, 0); border-top-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; border-bottom-left-radius: 5px;" />
-                <engine:VisualElement name="LifeCounter" style="flex-grow: 1; flex-direction: row;">
-                    <engine:Label text="00" name="CurrentLife1" style="color: rgb(255, 255, 255); margin-top: 0; margin-right: 0; margin-bottom: 0; font-size: 20px;" />
-                    <engine:Label text="/ 00" name="MaxLife1" style="color: rgb(255, 255, 255); margin-top: 0; margin-right: 0; margin-bottom: 0; font-size: 15px;" />
-                </engine:VisualElement>
+        <engine:VisualElement name="HUD_P1" style="position: absolute; left: 0; top: 30px; width: 50%; height: 106px;">
+            <engine:VisualElement name="Life" style="position: absolute; left: 30px; top: 0; width: 860px; height: 40px; background-color: rgb(48, 48, 48); border-radius: 5px;" />
+            <engine:VisualElement name="FillP1" style="position: absolute; left: 30px; top: 0; width: 860px; height: 40px; background-color: rgb(108, 0, 0); border-radius: 5px;" />
+            <engine:VisualElement name="LifeCounter" style="flex-direction: row; position: absolute; left: 30px; top: 45px;">
+                <engine:Label text="00" name="CurrentLife1" style="color: rgb(255, 255, 255); font-size: 20px;" />
+                <engine:Label text="/ 00" name="MaxLife1" style="color: rgb(255, 255, 255); font-size: 15px;" />
             </engine:VisualElement>
         </engine:VisualElement>
-        <engine:VisualElement name="Player02" class="player02" style="flex-grow: 1; background-color: rgba(0, 0, 255, 0.06);">
-            <engine:VisualElement name="LifeContainer" style="flex-grow: 1; width: 900px; position: absolute; height: 106px; align-self: center; align-items: stretch; justify-content: center; top: 30px;">
-                <engine:VisualElement name="Life" style="flex-grow: 1; position: absolute; width: 900px; height: 40px; align-self: flex-start; background-color: rgb(48, 48, 48); border-top-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; border-bottom-left-radius: 5px;" />
-                <engine:VisualElement name="FillP2" style="flex-grow: 1; position: absolute; width: 900px; height: 40px; align-self: flex-start; background-color: rgb(9, 0, 108); border-top-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; border-bottom-left-radius: 5px;" />
-                <engine:VisualElement name="LifeCounter" style="flex-grow: 1; flex-direction: row;">
-                    <engine:Label text="00" name="CurrentLife2" style="color: rgb(255, 255, 255); margin-top: 0; margin-right: 0; margin-bottom: 0; font-size: 20px;" />
-                    <engine:Label text="/ 00" name="MaxLife2" style="color: rgb(255, 255, 255); margin-top: 0; margin-right: 0; margin-bottom: 0; font-size: 15px;" />
-                </engine:VisualElement>
+        <engine:VisualElement name="HUD_P2" style="position: absolute; right: 0; top: 30px; width: 50%; height: 106px;">
+            <engine:VisualElement name="Life" style="position: absolute; left: 30px; top: 0; width: 860px; height: 40px; background-color: rgb(48, 48, 48); border-radius: 5px;" />
+            <engine:VisualElement name="FillP2" style="position: absolute; left: 30px; top: 0; width: 860px; height: 40px; background-color: rgb(9, 0, 108); border-radius: 5px;" />
+            <engine:VisualElement name="LifeCounter" style="flex-direction: row; position: absolute; left: 30px; top: 45px;">
+                <engine:Label text="00" name="CurrentLife2" style="color: rgb(255, 255, 255); font-size: 20px;" />
+                <engine:Label text="/ 00" name="MaxLife2" style="color: rgb(255, 255, 255); font-size: 15px;" />
             </engine:VisualElement>
         </engine:VisualElement>
+        <engine:VisualElement name="Player01" class="player01" style="flex-grow: 1; background-color: rgba(255, 0, 0, 0.06);" />
+        <engine:VisualElement name="Player02" class="player02" style="flex-grow: 1; background-color: rgba(0, 0, 255, 0.06);" />
         <engine:VisualElement name="XPContainer" style="flex-grow: 1; width: 1600px; position: absolute; height: 100px; align-self: flex-end; align-items: center; justify-content: center;">
             <engine:VisualElement name="XP" style="flex-grow: 1; position: absolute; width: 1600px; height: 40px; align-self: flex-start; background-color: rgb(48, 48, 48); border-top-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; border-bottom-left-radius: 5px;" />
             <engine:VisualElement name="FillXP" style="flex-grow: 1; position: absolute; width: 1600px; height: 40px; align-self: flex-start; background-color: rgb(253, 184, 80); border-top-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; border-bottom-left-radius: 5px;" />
