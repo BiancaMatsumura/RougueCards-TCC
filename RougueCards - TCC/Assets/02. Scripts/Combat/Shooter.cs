@@ -36,7 +36,6 @@ public class Shooter : MonoBehaviour
             {
                 StartCoroutine(ComboTimer());
                 Debug.Log("combo start");
-                //control.SetBool("isAttacking", true);
             }
 
             counter++;
@@ -74,7 +73,6 @@ public class Shooter : MonoBehaviour
 
             control.Play(Next);
 
-            Debug.Log(Next);
         }
     }
 

@@ -10,7 +10,7 @@ public class HealthUIManager : MonoBehaviour
     private Label currentHealthLabel2;
     private Label maxHealthLabel2;
 
-    private const float BAR_WIDTH = 860f;
+    private const float BAR_WIDTH = 839f;
 
     void Awake()
     {

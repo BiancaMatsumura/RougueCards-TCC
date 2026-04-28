@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7614008915930554044}
   - component: {fileID: 836151332041351916}
   - component: {fileID: 7997743081011053800}
-  - component: {fileID: 6138996996254611058}
+  - component: {fileID: 8455275725336763569}
   - component: {fileID: 555732341801166916}
   - component: {fileID: 800785824798947834}
   - component: {fileID: 754078657173125604}
@@ -111,7 +111,7 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -144,7 +144,7 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}
---- !u!54 &6138996996254611058
+--- !u!54 &8455275725336763569
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -360,6 +360,7 @@ MonoBehaviour:
   speed: 5
   jumpHeight: 2
   gravity: -9.8
+  rotationSpeed: 10
 --- !u!114 &754078657173125604
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -528,7 +529,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: 169b0ca7682781b4885b351d55a31fe2, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 0
+  m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_AnimatePhysics: 0
