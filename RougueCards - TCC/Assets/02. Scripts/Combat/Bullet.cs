@@ -14,6 +14,11 @@ public class Bullet : MonoBehaviour
         Destroy(gameObject, lifeTime);
     }
 
+    public void SetDamage(int newDamage)
+    {
+        damage = newDamage;
+    }
+
     void Update()
     {
         transform.position += direction * speed * Time.deltaTime;

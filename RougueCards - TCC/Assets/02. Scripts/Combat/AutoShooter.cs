@@ -2,21 +2,21 @@ using UnityEngine;
 
 public class AutoShooter : MonoBehaviour
 {
-    [Header("Tiro")]
-    [SerializeField] private GameObject bulletPrefab;
-    [SerializeField] private Transform firePoint;
-    [SerializeField] private float fireRate = 1f;
+    [Header("Weapon Data")]
+    public RangedWeaponData weaponData;
 
-    [Header("Alvo")]
-    [SerializeField] private float range = 10f;
+    [Header("Tiro")]
+    [SerializeField] private Transform firePoint;
 
     private float timer;
 
     void Update()
     {
+        if (weaponData == null) return;
+
         timer += Time.deltaTime;
 
-        if (timer >= fireRate)
+        if (timer >= weaponData.fireRate)
         {
             Transform target = FindClosestEnemy();
 
@@ -26,6 +26,12 @@ public class AutoShooter : MonoBehaviour
                 timer = 0f;
             }
         }
+    }
+
+    // 🔥 ADICIONADO (CORREÇÃO DO ERRO)
+    public void SetWeapon(RangedWeaponData newWeapon)
+    {
+        weaponData = newWeapon;
     }
 
     Transform FindClosestEnemy()
@@ -41,7 +47,7 @@ public class AutoShooter : MonoBehaviour
 
             float dist = Vector3.Distance(transform.position, enemy.transform.position);
 
-            if (dist < minDist && dist <= range)
+            if (dist < minDist && dist <= weaponData.range)
             {
                 minDist = dist;
                 closest = enemy.transform;
@@ -53,10 +59,31 @@ public class AutoShooter : MonoBehaviour
 
     void Shoot(Transform target)
     {
-        GameObject bullet = Instantiate(bulletPrefab, firePoint.position, Quaternion.identity);
+        Vector3 baseDir = (target.position - firePoint.position).normalized;
 
-        Vector3 dir = (target.position - firePoint.position).normalized;
+        int pellets = Mathf.Max(1, weaponData.pellets);
 
-        bullet.GetComponent<Bullet>().Init(dir);
+        for (int i = 0; i < pellets; i++)
+        {
+            GameObject bullet = Instantiate(
+                weaponData.bulletPrefab,
+                firePoint.position,
+                Quaternion.identity
+            );
+
+            Vector3 dir = ApplySpread(baseDir, weaponData.spread);
+
+            Bullet b = bullet.GetComponent<Bullet>();
+            b.Init(dir);
+            b.SetDamage(weaponData.damage);
+        }
+    }
+
+    Vector3 ApplySpread(Vector3 direction, float spread)
+    {
+        if (spread <= 0f) return direction;
+
+        float angle = Random.Range(-spread, spread);
+        return Quaternion.Euler(0, angle, 0) * direction;
     }
 }
