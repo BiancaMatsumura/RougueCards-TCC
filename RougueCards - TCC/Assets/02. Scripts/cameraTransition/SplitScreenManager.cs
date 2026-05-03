@@ -35,6 +35,7 @@ public class SplitScreenManager : MonoBehaviour
     // alpha atual dos painéis de split
     private float _splitAlpha = 0f;
     public bool isSplitScreen => _isSplit;
+    public (Transform p1, Transform p2) Players => (_p1, _p2);
     public event System.Action<bool> OnSplitScreenChanged;
 
     void Start()

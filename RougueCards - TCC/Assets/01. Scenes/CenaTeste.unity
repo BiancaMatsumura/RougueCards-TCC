@@ -403,7 +403,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &514466844
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2071,6 +2071,8 @@ GameObject:
   - component: {fileID: 1962024336}
   - component: {fileID: 1962024337}
   - component: {fileID: 1962024338}
+  - component: {fileID: 1962024339}
+  - component: {fileID: 1962024340}
   m_Layer: 5
   m_Name: '-- UI  -- '
   m_TagString: Untagged
@@ -2180,6 +2182,36 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraController: {fileID: 1243163941}
+--- !u!114 &1962024339
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1962024329}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 406639f03206e7e4da84ceb3e6ade5a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  splitManager: {fileID: 1243163941}
+  powerGainSpeed: 10
+  powerLossSpeed: 40
+  maxPower: 100
+--- !u!114 &1962024340
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1962024329}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b957d0763d740f34dae3f3e624da03d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uiDocument: {fileID: 1962024330}
+  splitManager: {fileID: 1243163941}
 --- !u!1 &1995627884
 GameObject:
   m_ObjectHideFlags: 0
