@@ -28,33 +28,13 @@ namespace RougueCards.Attributes
             {
                 var stat = player1.GetStat(type);
                 stat?.AddModifier(value, isPercentage);
-
-                // Se o upgrade for de vida, avisa o componente Health
-                if (type == StatType.MaxHP)
-                {
-                    player1.GetComponent<Health>().RefreshMaxHP();
-                }
             }
 
             if (player2 != null)
             {
                 var stat = player2.GetStat(type);
                 stat?.AddModifier(value, isPercentage);
-
-                if (type == StatType.MaxHP)
-                {
-                    player2.GetComponent<Health>().RefreshMaxHP();
-                }
             }
-
-            // Se o upgrade for de Tamanho, avisa o Controller
-            if (type == StatType.Size)
-            {
-                player1?.GetComponent<PlayerController>().RefreshSize();
-                player2?.GetComponent<PlayerController>().RefreshSize();
-            }
-
-            Debug.Log($"Upgrade de {type} aplicado! Novo valor P1: {player1.GetStat(type).Value}");
         }
 
         /// <summary>

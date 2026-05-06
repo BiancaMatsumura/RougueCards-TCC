@@ -1,8 +1,6 @@
-using RougueCards.Attributes;
-using System;
 using UnityEngine;
+using System;
 
-[RequireComponent(typeof(PlayerStats))]
 public class Health : MonoBehaviour
 {
     public int playerID;
@@ -13,59 +11,20 @@ public class Health : MonoBehaviour
     public event Action<int, int, int> OnHealthChanged;
     public event Action OnDeath; // 👈 NOVO
 
-    private PlayerStats pStats;
-
     private Animation anim;
-
-    void Start()
-    {
-        // Alteração: Agora busca o valor inicial do MaxHP nos atributos em vez de usar fixo
-        RefreshMaxHP();
-
-        // Inicia o jogo com a vida cheia
-        currentHealth = maxHealth;
-        OnHealthChanged?.Invoke(playerID, currentHealth, maxHealth);
-    }
 
     void Awake()
     {
         currentHealth = maxHealth;
         OnHealthChanged?.Invoke(playerID, currentHealth, maxHealth);
 
-        pStats = GetComponent<PlayerStats>();
         GameOverWatcher.Instance?.RegisterPlayer(this);
         anim = GetComponent<Animation>();
     }
 
-    /// <summary>
-    /// Processa o dano recebido.
-    /// Primeiro verifica a chance de Evasão (esquiva total).
-    /// Se falhar, aplica a redução por Armadura e subtrai da vida.
-    /// </summary>
     public void TakeDamage(int amount)
     {
-        // 1. Verificação de Evasão (Atributo dinâmico)
-        if (pStats != null)
-        {
-            float evasionChance = pStats.stats.Evasion.Value;
-
-            if (UnityEngine.Random.Range(0f, 100f) < evasionChance)
-            {
-                Debug.Log($"[Health] Player {playerID} ESQUIVOU do dano! (Chance: {evasionChance}%)");
-                return;
-            }
-        }
-
-        int finalDamage = amount;
-
-        // 2. Verificação de Armadura (Atributo dinâmico)
-        if (pStats != null)
-        {
-            float armorValue = pStats.stats.Armor.Value;
-            finalDamage = Mathf.Max(1, amount - (int)armorValue);
-        }
-
-        currentHealth -= finalDamage;
+        currentHealth -= amount;
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
 
         OnHealthChanged?.Invoke(playerID, currentHealth, maxHealth);
@@ -76,9 +35,7 @@ public class Health : MonoBehaviour
         }
 
         if (currentHealth <= 0)
-        {
             Die();
-        }
     }
 
     private void Die()
@@ -86,30 +43,4 @@ public class Health : MonoBehaviour
         OnDeath?.Invoke(); // 👈 dispara evento
         Destroy(gameObject); // melhor que SetActive(false)
     }
-
-    /// <summary>
-    /// Sincroniza a vida máxima com a ficha de atributos (PlayerStats).
-    /// Chamado pelo AttributeMaestro sempre que uma carta de MaxHP é coletada.
-    /// </summary>
-    public void RefreshMaxHP()
-    {
-        if (pStats != null)
-        {
-            int oldMax = maxHealth;
-
-            // Atualiza o valor de maxHealth baseado no cálculo final da StatSheet (Base + Bônus)
-            maxHealth = (int)pStats.stats.MaxHP.Value;
-
-            // Lógica de Cura: Se a vida máxima aumentou, o jogador é curado pela diferença
-            if (maxHealth > oldMax && oldMax != 0)
-            {
-                currentHealth += (maxHealth - oldMax);
-            }
-
-            // Notifica a UI sobre a mudança na barra de vida
-            OnHealthChanged?.Invoke(playerID, currentHealth, maxHealth);
-            Debug.Log($"Player {playerID} MaxHP atualizado para: {maxHealth}");
-        }
-    }
-
 }

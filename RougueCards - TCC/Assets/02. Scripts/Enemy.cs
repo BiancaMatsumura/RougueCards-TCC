@@ -8,21 +8,11 @@ public class Enemy : MonoBehaviour
     private Transform target;
     private float timer;
 
-    // Variáveis de Knockback
-    private Vector3 knockbackVelocity;
-    [SerializeField] private float knockbackResistance = 5f; // Quão rápido ele para de deslizar
-
     void Update()
     {
-        // 1. Processa o decaimento do Knockback (atrito)
-        if (knockbackVelocity.magnitude > 0.01f)
-        {
-            transform.position += knockbackVelocity * Time.deltaTime;
-            knockbackVelocity = Vector3.Lerp(knockbackVelocity, Vector3.zero, Time.deltaTime * knockbackResistance);
-        }
-
-        // 2. Movimento normal de perseguição
         timer += Time.deltaTime;
+
+        // Atualiza alvo a cada X tempo
         if (timer >= updateTargetRate)
         {
             FindClosestPlayer();
@@ -32,18 +22,7 @@ public class Enemy : MonoBehaviour
         if (target == null) return;
 
         Vector3 dir = (target.position - transform.position).normalized;
-
-        // O inimigo continua tentando andar, mas a força do knockback se soma ao movimento
         transform.position += dir * speed * Time.deltaTime;
-    }
-
-    /// <summary>
-    /// Aplica uma força de repulsão instantânea ao inimigo.
-    /// </summary>
-    public void ApplyKnockback(Vector3 direction, float force)
-    {
-        // Define a velocidade de empurrão baseada na direção da bala e na força do atributo
-        knockbackVelocity = direction * force;
     }
 
     void FindClosestPlayer()

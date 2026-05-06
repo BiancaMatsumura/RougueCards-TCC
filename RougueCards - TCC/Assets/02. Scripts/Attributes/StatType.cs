@@ -7,7 +7,6 @@ namespace RougueCards.Attributes
     {
         MaxHP, HPRegen, Armor, Evasion, LifeSteal, Thorns,
         Damage, CritChance, CritDamage, AttackSpeed,
-        MoveSpeed, Luck, CollectionRange, XPBoost,
-        ProjectileQty, Duration, Size, Knockback
+        MoveSpeed, Luck, CollectionRange, XPBoost
     }
 }
