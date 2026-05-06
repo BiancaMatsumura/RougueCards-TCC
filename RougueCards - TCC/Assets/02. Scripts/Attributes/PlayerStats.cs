@@ -77,12 +77,30 @@ namespace RougueCards.Attributes
                 StatType.MoveSpeed => stats.MoveSpeed,
                 StatType.Luck => stats.Luck,
                 StatType.CritChance => stats.CritChance,
+                StatType.CritDamage => stats.CritDamage,
                 StatType.LifeSteal => stats.LifeSteal,
                 StatType.Thorns => stats.Thorns,
                 StatType.CollectionRange => stats.CollectionRange,
+                StatType.XPBoost => stats.XPMultiplier,
+                StatType.Armor => stats.Armor,
+                StatType.ProjectileQty => stats.ProjectileQty,
+                StatType.Duration => stats.Duration,
+                StatType.Evasion => stats.Evasion,
+                StatType.Size => stats.Size,
+                StatType.Knockback => stats.Knockback,
                 // Adicione os outros atributos da StatSheet aqui conforme precisar
                 _ => null
             };
+        }
+
+        private void OnValidate()
+        {
+            // Isso garante que, se você resetar ou mexer no Inspetor, 
+            // o multiplicador nunca seja zero por acidente.
+            if (stats.MoveSpeed.multiplierBonus == 0)
+            {
+                stats.MoveSpeed.multiplierBonus = 1;
+            }
         }
     }
 }

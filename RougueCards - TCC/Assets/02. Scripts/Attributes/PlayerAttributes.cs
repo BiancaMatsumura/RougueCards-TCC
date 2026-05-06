@@ -23,7 +23,7 @@ namespace RougueCards.Attributes
         {
             if (isMultiplier)
             {
-                additiveBonus += amount;
+                multiplierBonus += amount;
             }
             else
             { 
@@ -37,7 +37,7 @@ namespace RougueCards.Attributes
         public void ResetModifiers()
         {
             this.additiveBonus = 0;
-            this.multiplierBonus = 0;
+            this.multiplierBonus = 1f;
         }
     }
 }

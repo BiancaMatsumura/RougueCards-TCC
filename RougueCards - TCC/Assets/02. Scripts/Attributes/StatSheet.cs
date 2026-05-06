@@ -12,7 +12,7 @@ namespace RougueCards.Attributes
     public class StatSheet
     {
         [Header("Sobrevivência")]
-        public PlayerAttributes MaxHP = new() { BaseValue = 134 };
+        public PlayerAttributes MaxHP = new() { BaseValue = 100 };
         public PlayerAttributes HPRegen = new() { BaseValue = 10 };
         public PlayerAttributes Overheal = new() { BaseValue = 0 };
         public PlayerAttributes Shield = new() { BaseValue = 0 };
@@ -35,7 +35,7 @@ namespace RougueCards.Attributes
         public PlayerAttributes Duration = new() { BaseValue = 1.0f };
         public PlayerAttributes EliteDamage = new() { BaseValue = 1.0f };
         public PlayerAttributes Knockback = new() { BaseValue = 1.0f };
-        public PlayerAttributes MoveSpeed = new() { BaseValue = 1.0f };
+        public PlayerAttributes MoveSpeed = new() { BaseValue = 5.0f };
         public PlayerAttributes ExtraJumps = new() { BaseValue = 0 };
         public PlayerAttributes JumpHeight = new() { BaseValue = 9 };
         public PlayerAttributes Luck = new() { BaseValue = 7 }; // 7%
