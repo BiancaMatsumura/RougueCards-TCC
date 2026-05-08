@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: -4453271482895477748}
   - component: {fileID: -1223435608833976042}
   - component: {fileID: -489652007919317186}
+  - component: {fileID: 842011746551490357}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Enemy
@@ -54,6 +55,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 3
   updateTargetRate: 0.5
+  knockbackResistance: 5
 --- !u!114 &1687639552385032344
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -214,3 +216,143 @@ Animation:
   m_AnimatePhysics: 0
   m_UpdateMode: 0
   m_CullingType: 0
+--- !u!114 &842011746551490357
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 64197260445343202}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa888aaa94e688543aff2755b8f4abb8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerID: 0
+  stats:
+    MaxHP:
+      BaseValue: 100
+      additiveBonus: 0
+      multiplierBonus: 1
+    HPRegen:
+      BaseValue: 10
+      additiveBonus: 0
+      multiplierBonus: 1
+    Overheal:
+      BaseValue: 0
+      additiveBonus: 0
+      multiplierBonus: 1
+    Shield:
+      BaseValue: 0
+      additiveBonus: 0
+      multiplierBonus: 1
+    Armor:
+      BaseValue: 0
+      additiveBonus: 0
+      multiplierBonus: 1
+    Evasion:
+      BaseValue: 1
+      additiveBonus: 0
+      multiplierBonus: 1
+    LifeSteal:
+      BaseValue: 7
+      additiveBonus: 0
+      multiplierBonus: 1
+    Thorns:
+      BaseValue: 5
+      additiveBonus: 0
+      multiplierBonus: 1
+    Damage:
+      BaseValue: 1.7
+      additiveBonus: 0
+      multiplierBonus: 1
+    CritChance:
+      BaseValue: 1
+      additiveBonus: 0
+      multiplierBonus: 1
+    CritDamage:
+      BaseValue: 1
+      additiveBonus: 0
+      multiplierBonus: 1
+    AttackSpeed:
+      BaseValue: 106
+      additiveBonus: 0
+      multiplierBonus: 1
+    ProjectileQty:
+      BaseValue: 0
+      additiveBonus: 0
+      multiplierBonus: 1
+    Ricochet:
+      BaseValue: 0
+      additiveBonus: 0
+      multiplierBonus: 1
+    Size:
+      BaseValue: 1
+      additiveBonus: 0
+      multiplierBonus: 1
+    ProjectileSpeed:
+      BaseValue: 1.2
+      additiveBonus: 0
+      multiplierBonus: 1
+    Duration:
+      BaseValue: 1
+      additiveBonus: 0
+      multiplierBonus: 1
+    EliteDamage:
+      BaseValue: 1
+      additiveBonus: 0
+      multiplierBonus: 1
+    Knockback:
+      BaseValue: 1
+      additiveBonus: 0
+      multiplierBonus: 1
+    MoveSpeed:
+      BaseValue: 5
+      additiveBonus: 0
+      multiplierBonus: 1
+    ExtraJumps:
+      BaseValue: 0
+      additiveBonus: 0
+      multiplierBonus: 1
+    JumpHeight:
+      BaseValue: 9
+      additiveBonus: 0
+      multiplierBonus: 1
+    Luck:
+      BaseValue: 7
+      additiveBonus: 0
+      multiplierBonus: 1
+    Difficulty:
+      BaseValue: 32
+      additiveBonus: 0
+      multiplierBonus: 1
+    CollectionRange:
+      BaseValue: 5
+      additiveBonus: 0
+      multiplierBonus: 1
+    XPMultiplier:
+      BaseValue: 1
+      additiveBonus: 0
+      multiplierBonus: 1
+    GoldMultiplier:
+      BaseValue: 1
+      additiveBonus: 0
+      multiplierBonus: 1
+    SilverMultiplier:
+      BaseValue: 1
+      additiveBonus: 0
+      multiplierBonus: 1
+    EliteSpawnRate:
+      BaseValue: 1.2
+      additiveBonus: 0
+      multiplierBonus: 1
+    PowerupMultiplier:
+      BaseValue: 1
+      additiveBonus: 0
+      multiplierBonus: 1
+    PowerupChance:
+      BaseValue: 1
+      additiveBonus: 0
+      multiplierBonus: 1
+  currentCombo: 0
+  comboDuration: 2

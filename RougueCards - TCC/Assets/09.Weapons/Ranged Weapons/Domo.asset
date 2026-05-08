@@ -10,12 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b1ca167d7e7d115468a37a78619e8983, type: 3}
-  m_Name: Estilingue
+  m_Name: Domo
   m_EditorClassIdentifier: 
-  bulletPrefab: {fileID: 2591478938443851655, guid: 0e38d492efbe8ac4c9d661fd333e2850, type: 3}
-  fireRate: 3
-  range: 10
-  damage: 10
-  BM: 0
-  pellets: 0
-  spread: 0
+  bulletPrefab: {fileID: 2591478938443851655, guid: 554698d7742a080469ba696775ab72e4, type: 3}
+  fireRate: 15
+  range: 7
+  damage: 100
+  lifetime: 10
+  BM: 4
+  DestroyOnContact: 0
+  pellets: 1
+  spread: 20

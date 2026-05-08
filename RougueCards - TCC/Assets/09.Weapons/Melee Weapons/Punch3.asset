@@ -9,13 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b1ca167d7e7d115468a37a78619e8983, type: 3}
-  m_Name: Estilingue
+  m_Script: {fileID: 11500000, guid: e7c886899ec6d5443bedd579c8aac027, type: 3}
+  m_Name: Punch3
   m_EditorClassIdentifier: 
-  bulletPrefab: {fileID: 2591478938443851655, guid: 0e38d492efbe8ac4c9d661fd333e2850, type: 3}
-  fireRate: 3
-  range: 10
-  damage: 10
-  BM: 0
-  pellets: 0
-  spread: 0
+  controler: {fileID: 22100000, guid: 9bdc659e9054cda48bd1b990b7c8bb77, type: 2}
+  baseDamage: 10
+  comboWindowMultiplier: 1
+  comboMaxBonus: 0

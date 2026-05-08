@@ -8,9 +8,11 @@ public class RangedWeaponData : ScriptableObject
     public float fireRate = 1f;
     public float range = 10f;
     public int damage = 10;
+    public float lifetime = 3f;
 
     [Header("Comportamento do Disparo")] //isso aqui vai mudar os projeteis por tiro e o angulo respectivamente
-
+    public BulletMoviment BM;
+    public bool DestroyOnContact = true;
     public int pellets = 1;
     public float spread = 0f;
 }

@@ -4,7 +4,8 @@ using RougueCards.Attributes;
 public class AutoShooter : MonoBehaviour
 {
     [Header("Weapon Data")]
-    public RangedWeaponData weaponData;
+    public RangedWeaponData weaponData; //seria interessante depois transfomrar em array
+
 
     [Header("Tiro")]
     [SerializeField] private Transform firePoint;
@@ -39,6 +40,7 @@ public class AutoShooter : MonoBehaviour
                 timer = 0f;
             }
         }
+      
     }
 
     // 🔥 ADICIONADO (CORREÇÃO DO ERRO)
@@ -101,8 +103,9 @@ public class AutoShooter : MonoBehaviour
         }
 
         float finalProjSpeed = pStats != null ? pStats.stats.ProjectileSpeed.Value : 10f;
+
         float durationMod = pStats != null ? pStats.stats.Duration.Value : 1f;
-        float finalLifeTime = 3f * durationMod;
+        float finalLifeTime = weaponData.lifetime * durationMod;
 
         for (int i = 0; i < totalPellets; i++)
         {
@@ -113,8 +116,12 @@ public class AutoShooter : MonoBehaviour
             if (b != null)
             {
                 // Passamos o dano (que pode ser crítico ou não) para a bala
-                b.Init(dir, (int)finalDamage, finalProjSpeed, finalLifeTime, finalKnockback);
-            }
+                b.Init(dir, (int)finalDamage, finalProjSpeed, finalLifeTime, finalKnockback, weaponData.DestroyOnContact); //aaaaaaaaaaaaaa
+                b.ApplyMovimentType(weaponData.BM, this);
+    {
+
+    }
+}
         }
     }
 
@@ -124,5 +131,10 @@ public class AutoShooter : MonoBehaviour
 
         float angle = Random.Range(-spread, spread);
         return Quaternion.Euler(0, angle, 0) * direction;
+    }
+
+    public Vector3 GetTrasform() 
+    { 
+        return this.transform.position;
     }
 }

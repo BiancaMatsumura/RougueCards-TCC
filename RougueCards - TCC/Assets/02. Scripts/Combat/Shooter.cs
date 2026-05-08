@@ -23,6 +23,8 @@ public class Shooter : MonoBehaviour
 
     void Start()
     {
+        ApplyWeaponAnimations();
+
         if (weaponData != null)
         {
             ComboLengthMax += weaponData.comboMaxBonus;
@@ -67,6 +69,7 @@ public class Shooter : MonoBehaviour
 
     void ComboSteps(int StepsLength)
     {
+        
         if (!IsInCombo) return;
 
         if (counter > StepsLength)
@@ -87,5 +90,13 @@ public class Shooter : MonoBehaviour
     void BacktoTrigger()
     {
         control.SetTrigger("Back");
+        
+    }
+    void ApplyWeaponAnimations() 
+    {
+        if (control != null && weaponData != null)
+        {
+            weaponData.ApplyOverride(control);
+        }
     }
 }
