@@ -46,7 +46,9 @@ public class SplitScreenManager : MonoBehaviour
 
     void Update()
     {
+        // Só checa split se os dois estiverem vivos
         if (_p1 == null || _p2 == null) return;
+        if (!_p1.gameObject.activeSelf || !_p2.gameObject.activeSelf) return;
 
         float dist = Vector3.Distance(_p1.position, _p2.position);
         bool shouldSplit = dist > splitDistance;
@@ -57,7 +59,6 @@ public class SplitScreenManager : MonoBehaviour
             SetCameraMode(_isSplit);
         }
 
-        // blend suave da UI de split
         float targetAlpha = _isSplit ? 1f : 0f;
         _splitAlpha = Mathf.Lerp(_splitAlpha, targetAlpha, Time.deltaTime * uiBlendSpeed);
         ApplySplitUI(_splitAlpha);
@@ -116,5 +117,42 @@ public class SplitScreenManager : MonoBehaviour
         targetGroup.Targets.Clear();
         targetGroup.Targets.Add(new CinemachineTargetGroup.Target { Object = p1, Weight = 1f, Radius = 2f });
         targetGroup.Targets.Add(new CinemachineTargetGroup.Target { Object = p2, Weight = 1f, Radius = 2f });
+    }
+
+    public void OnPlayerDied(Transform deadPlayer)
+    {
+        targetGroup.Targets.RemoveAll(t => t.Object == deadPlayer);
+        ForceSingleCamera();
+    }
+
+    // Chame isso quando ressuscitar
+    public void OnPlayerRevived(Transform revivedPlayer)
+    {
+        targetGroup.Targets.Add(new CinemachineTargetGroup.Target
+        {
+            Object = revivedPlayer,
+            Weight = 1f,
+            Radius = 2f
+        });
+    }
+
+    private void ForceSingleCamera()
+    {
+        _isSplit = false;
+        _splitAlpha = 0f;
+        ApplySplitUI(0f);
+        ClearRenderTexture(rawImageP1);
+        ClearRenderTexture(rawImageP2);
+        SetCameraMode(false);
+    }
+    private void ClearRenderTexture(RawImage rawImage)
+    {
+        if (rawImage.texture is RenderTexture rt)
+        {
+            RenderTexture prev = RenderTexture.active;
+            RenderTexture.active = rt;
+            GL.Clear(true, true, Color.black);
+            RenderTexture.active = prev;
+        }
     }
 }

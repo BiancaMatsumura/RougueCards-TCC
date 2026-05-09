@@ -84,7 +84,12 @@ public class Health : MonoBehaviour
     private void Die()
     {
         OnDeath?.Invoke(); // 👈 dispara evento
-        Destroy(gameObject); // melhor que SetActive(false)
+        gameObject.SetActive(false);
+        //Destroy(gameObject); // melhor que SetActive(false)
+    }
+    public void Revive()
+    {
+        currentHealth = maxHealth / 2;
     }
 
     /// <summary>

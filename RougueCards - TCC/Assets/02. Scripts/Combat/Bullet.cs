@@ -62,7 +62,7 @@ public class Bullet : MonoBehaviour
 
     void Update()
     {
-        if(bm != null) { Moviment(bm); }
+        if(autoshooterscript != null) { Moviment(bm); }
     }
 
     private void OnTriggerEnter(Collider other)

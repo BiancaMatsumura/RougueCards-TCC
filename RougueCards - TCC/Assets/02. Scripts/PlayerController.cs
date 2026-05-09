@@ -9,12 +9,14 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float jumpHeight = 3f;
     [SerializeField] private float gravity = -9.8f;
 
+
     private CharacterController controller;
     private Vector2 moveInput;
     private Vector3 velocity;
     private bool jumpRequested;
     private HealthUIManager healthUI;
     private PlayerStats pStats;
+    private Animator animator;
 
     // Variáveis para armazenar as dimensões originais do colisor
     private float baseHeight;
@@ -46,6 +48,10 @@ public class PlayerController : MonoBehaviour
         var health = GetComponent<Health>();
         var ui = FindFirstObjectByType<HealthUIManager>();
         pStats = GetComponent<PlayerStats>();
+        if (animator == null)
+        {
+            animator = GetComponentInChildren<Animator>();
+        }
 
         if (ui != null && health != null)
         {
@@ -84,29 +90,52 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        if (controller.isGrounded && velocity.y < 0)
+        bool grounded = controller.isGrounded;
+
+        if (grounded && velocity.y < 0)
             velocity.y = -2f;
 
         float currentSpeed = pStats != null ? pStats.stats.MoveSpeed.Value : speed;
         Vector3 move = new(moveInput.x, 0, moveInput.y);
-        controller.Move(currentSpeed * Time.deltaTime * move);
 
-        if (jumpRequested)
+        if (move != Vector3.zero)
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(move);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 10f);
+        }
+
+        if (jumpRequested && grounded)
         {
             float h = pStats != null ? pStats.stats.JumpHeight.Value : jumpHeight;
             velocity.y = Mathf.Sqrt(h * -2f * gravity);
+            animator?.SetBool("IsJumping", true);
             jumpRequested = false;
         }
 
         velocity.y += gravity * Time.deltaTime;
-        // Aplica movimento vertical
-        controller.Move(velocity * Time.deltaTime);
+
+        Vector3 finalMove = (currentSpeed * move) + new Vector3(0, velocity.y, 0);
+        controller.Move(finalMove * Time.deltaTime);
+
+
+        UpdateAnimator(move, currentSpeed); //grounded
     }
+
+    private void UpdateAnimator(Vector3 move, float currentSpeed) //bool grounded)
+    {
+        animator.SetFloat("Speed", move.magnitude * currentSpeed, 0.1f, Time.deltaTime);
+        //animator.SetBool("IsGrounded", grounded);
+
+        if ( velocity.y < 0) // grounded &&
+            animator.SetBool("IsJumping", false);
+    }
+
 
     public void Move(InputAction.CallbackContext context) => moveInput = context.ReadValue<Vector2>();
 
     public void Jump(InputAction.CallbackContext context)
     {
-        if (context.performed && controller.isGrounded) jumpRequested = true;
+        if (context.performed) jumpRequested = true;
     }
+
 }

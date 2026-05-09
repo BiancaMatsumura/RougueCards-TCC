@@ -85,6 +85,17 @@ public class PlayerInputManager : MonoBehaviour
         else
         {
             splitScreenManager.RegisterPlayers(_p1Transform, obj.transform);
+            // ── Conecta morte dos dois players ao SplitScreenManager ──
+            var p1Health = _p1Transform.GetComponent<Health>();
+            var p2Health = obj.GetComponent<Health>();
+
+            if (p1Health != null)
+                p1Health.OnDeath += () => splitScreenManager.OnPlayerDied(_p1Transform);
+
+            if (p2Health != null)
+                p2Health.OnDeath += () => splitScreenManager.OnPlayerDied(obj.transform);
+            // ──────────────────────────────────────────────────────────
+
         }
 
         // Atribui ao Maestro dependendo de quem está entrando
@@ -135,5 +146,7 @@ public class PlayerInputManager : MonoBehaviour
             case InputType.KeyboardWASD: wasdUsed = true; break;
             case InputType.KeyboardArrows: arrowsUsed = true; break;
         }
+
+
     }
 }
