@@ -14,8 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardName: Carta de Velocidade
   description: +5 Velocidade
-  frontImage: {fileID: 21300000, guid: 6aec468adc59d2c459e7bb6b143c8804, type: 3}
-  backImage: {fileID: 21300000, guid: 48851e5951035d349a9093ab3834c21b, type: 3}
+  cardImage: {fileID: 21300000, guid: 6aec468adc59d2c459e7bb6b143c8804, type: 3}
   xpRequired: 0
   statToUpgrade: 10
   upgradeValue: 5

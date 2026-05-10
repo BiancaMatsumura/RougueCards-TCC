@@ -6,8 +6,7 @@ public class CardData : ScriptableObject
 {
     public string cardName;
     public string description;
-    public Sprite frontImage;
-    public Sprite backImage;
+    public Sprite cardImage; 
 
     [Header("Progressão")]
     public int xpRequired;

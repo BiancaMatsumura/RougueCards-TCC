@@ -1,3 +1,4 @@
+using System.Collections;
 using RougueCards.Attributes;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -19,6 +20,7 @@ public class CardManager : MonoBehaviour
     private VisualElement root;
 
     private System.Action<int> onStageCompletedHandler;
+    private bool isLoadingCards = false;
 
     void Awake()
     {
@@ -27,11 +29,28 @@ public class CardManager : MonoBehaviour
 
         SetPanelVisible(false);
 
-        root.RegisterCallback<GeometryChangedEvent>(_ =>
-        {
-            if (isPanelVisible && controllers != null && controllers.Length > 0)
-                controllers[0].FocusFlip();
-        });
+        // Escuta no cardPanel, não no root
+        cardPanel.RegisterCallback<GeometryChangedEvent>(_ =>
+            {
+                if (!isPanelVisible || isLoadingCards) return;
+
+                if (controllers == null)
+                {
+                    isLoadingCards = true;
+                    // adia um frame para garantir que os slots filhos também fizeram layout
+                    StartCoroutine(LoadCardsNextFrame());
+                }
+            });
+    }
+    private IEnumerator LoadCardsNextFrame()
+    {
+        yield return null; // espera um frame
+
+        LoadCards();
+        isLoadingCards = false;
+
+        if (controllers != null && controllers.Length > 0)
+            controllers[0].FocusFlip();
     }
 
     void OnEnable()
@@ -64,6 +83,7 @@ public class CardManager : MonoBehaviour
         ShowPanel();
     }
 
+
     // — Chamado pelo input —
     private void OnToggleInput(InputAction.CallbackContext ctx) => TogglePanel();
 
@@ -75,6 +95,7 @@ public class CardManager : MonoBehaviour
     // Novo método — chame sempre que quiser redefinir as cartas
     private void LoadCards()
     {
+        Debug.Log("LoadCards chamado");
         var availableCards = cardDatabase.GetAvailableCards(playerProgress, maxCards: 3, randomize: true);
 
         controllers = new CardController[availableCards.Length];
@@ -96,21 +117,14 @@ public class CardManager : MonoBehaviour
 
         if (visible)
         {
-            LoadCards();
+            controllers = null;
 
-            // Regra da Imagem: Quem tem o maior combo tem o poder de escolha.
-            // Checamos se o Maestro existe antes de usar
             if (AttributeMaestro.Instance != null)
             {
                 PlayerStats decider = AttributeMaestro.Instance.GetDecidingPlayer();
                 if (decider != null)
-                {
                     Debug.Log($"O jogador {decider.playerID} decide qual carta pegar!");
-                }
             }
-
-            if (controllers != null && controllers.Length > 0)
-                controllers[0].FocusFlip();
 
             Time.timeScale = 0f;
         }

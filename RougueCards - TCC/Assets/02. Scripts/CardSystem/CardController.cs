@@ -18,7 +18,6 @@ public class CardController
     private bool isFlipped = false;
     private bool isAnimating = false;
 
-    // slotIndex = 0, 1, 2 — independente do nome da carta
     public CardController(MonoBehaviour host, VisualElement root, CardData data, int slotIndex)
     {
         this.host = host;
@@ -32,20 +31,10 @@ public class CardController
         flipButton = panel.Q<Button>("flip");
         pickUpButton = panel.Q<Button>("pickUp");
 
-        // Busca dentro do card, não do panel
-        var nameLabel = card.Q<Label>("CardName");        // está no front
-        var descriptionLabel = card.Q<Label>("CardDescription"); // está no back
+        PopulateSide(front, data);
+        PopulateSide(back, data);
 
-        if (nameLabel != null) nameLabel.text = data.cardName;
-        if (descriptionLabel != null) descriptionLabel.text = data.description;
-
-        // resto do construtor continua igual...
         back.style.display = DisplayStyle.None;
-
-        if (data.frontImage != null)
-            front.style.backgroundImage = new StyleBackground(data.frontImage);
-        if (data.backImage != null)
-            back.style.backgroundImage = new StyleBackground(data.backImage);
 
         flipButton.focusable = true;
         pickUpButton.focusable = true;
@@ -53,6 +42,22 @@ public class CardController
         flipButton.clicked += TryFlip;
         pickUpButton.clicked += () => OnPickUp?.Invoke(data);
         card.RegisterCallback<ClickEvent>(_ => TryFlip());
+    }
+
+    // Preenche nome, descrição e imagem num lado do card
+    private void PopulateSide(VisualElement side, CardData d)
+    {
+        var nameLabel = side.Q<Label>("CardName");
+        var descLabel = side.Q<Label>("CardDescription");
+        var imageEl = side.Q<VisualElement>("CardImage");
+
+        if (nameLabel != null) nameLabel.text = d.cardName;
+        if (descLabel != null) descLabel.text = d.description;
+        if (imageEl != null && d.cardImage != null)
+        {
+            imageEl.style.backgroundImage = new StyleBackground(d.cardImage);
+            imageEl.MarkDirtyRepaint(); // força o Unity a redesenhar
+        }
     }
 
     public void FocusFlip() => flipButton.Focus();
