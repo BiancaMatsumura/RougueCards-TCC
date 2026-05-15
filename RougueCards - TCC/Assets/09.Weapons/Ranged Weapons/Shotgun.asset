@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1ca167d7e7d115468a37a78619e8983, type: 3}
   m_Name: Shotgun
   m_EditorClassIdentifier: 
-  bulletPrefab: {fileID: 2591478938443851655, guid: 0e38d492efbe8ac4c9d661fd333e2850, type: 3}
+  bulletPrefab: {fileID: 7856817073036134209, guid: faf1a051722e80d46822c56f5005a061, type: 3}
   fireRate: 3
   range: 7
   damage: 7

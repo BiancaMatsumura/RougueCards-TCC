@@ -9,6 +9,9 @@ public class MainMenuUIManager : MonoBehaviour
     private Button optionButton;
     private Button creditsButton;
     private Button quitButton;
+    private Button updateButton;
+    private Button closeUpdatePanel;
+    private VisualElement updatePanel;
     public string levelToLoad = "NomeDaCena";
     void Awake()
     {
@@ -18,20 +21,36 @@ public class MainMenuUIManager : MonoBehaviour
         optionButton = root.Q<Button>("OptionButton");
         creditsButton = root.Q<Button>("CreditsButton");
         quitButton = root.Q<Button>("QuitButton");
+        updateButton = root.Q<Button>("AttButton");
+        updatePanel = root.Q<VisualElement>("AttPanel");
+        closeUpdatePanel = root.Q<Button>("CloseUpdatePanel");
 
         playButton.clicked += () => PlayLevel(levelToLoad);
         optionButton.clicked += OpenOptionsMenu;
         creditsButton.clicked += OpenCreditsMenu;
         quitButton.clicked += QuitGame;
+        updateButton.clicked += OpenUpdatePanel;
+        closeUpdatePanel.clicked += CloseUpdatePanel;
 
-        playButton.Focus();
     }
     private void PlayLevel(string levelToLoad)
     {
         Time.timeScale = 1;
         SceneManager.LoadScene(levelToLoad);
     }
+
+    private void OpenUpdatePanel()
+    {
+
+        updatePanel.style.display = DisplayStyle.Flex;
+    }
+
     
+    private void CloseUpdatePanel()
+    {
+        updatePanel.style.display = DisplayStyle.None;
+    }
+
     private void OpenOptionsMenu()
     {
         Debug.Log("Abrir opções");

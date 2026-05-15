@@ -6,6 +6,10 @@
             <engine:Button text="Resume" name="ResumeButton" class="Button" />
             <engine:Button text="Restart" name="RestartButton" enable-rich-text="false" class="Button" style="width: 400px; height: 60px; font-size: 30px;" />
             <engine:Button text="Main Menu" name="MainMenu" enable-rich-text="false" class="Button" style="width: 400px; height: 60px; font-size: 30px;" />
+            <engine:VisualElement name="InstructionPanel" style="flex-grow: 1; position: absolute; width: 500px; height: 500px; align-items: flex-start; align-self: center; left: -441px; justify-content: center; display: flex; top: 49px;">
+                <engine:Label text="INSTRUÇÕES" name="Title" style="background-color: rgba(0, 0, 0, 0); color: rgb(255, 255, 255); left: 20px; -unity-font-style: bold;" />
+                <engine:Label text="Iniciar com Espaço = WASD&#10;Iniciar com Control Direito = SETAS&#10;Iniciar com Botão A ou X = Gamepad&#10;&#10;Esc | Enter Numpad | Start ou Option = Pause&#10;&#10;-- Controles WASD --&#10;WASD = Move&#10;Espaço = Pula&#10;E = Ataca&#10;&#10;-- Controle SETRAS -- &#10;SETAS = Move&#10;0 Numpad = Pula&#10;Control Direito  = Ataca&#10;&#10;-- Controle GAMEPAD -- &#10;Analógio = Move&#10;South Button (A ou X) = Pula&#10;West Button (X ou Quadrado) = Ataca&#10;&#10;Player 01 = Ataque Manual&#10;Player 02 = Ataque Automático" name="Text" style="flex-wrap: wrap; color: rgb(255, 255, 255); left: 15px;" />
+            </engine:VisualElement>
         </engine:VisualElement>
     </engine:VisualElement>
     <engine:VisualElement name="GameOverContainer" style="flex-grow: 1; height: 1080px; width: 1920px; opacity: 1; visibility: visible; position: absolute; background-color: rgba(0, 0, 0, 0); align-items: center; justify-content: center; align-self: center;">
@@ -21,13 +25,13 @@
                 <engine:VisualElement name="setaP1" style="flex-grow: 1; position: absolute; width: 36px; height: 36px; background-image: url(&quot;project://database/Assets/05.%20Sprites/UI/seta.png?fileID=21300000&amp;guid=e4b5a5e27b856f44498f1ed6a8370dca&amp;type=3#seta&quot;); top: 100px; left: 840px; -unity-background-image-tint-color: rgb(14, 17, 37); border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0; border-top-left-radius: 0; border-top-right-radius: 0; border-bottom-right-radius: 0; border-bottom-left-radius: 0; border-left-color: rgb(0, 0, 0); border-right-color: rgb(0, 0, 0); border-top-color: rgb(0, 0, 0); border-bottom-color: rgb(0, 0, 0);" />
             </engine:VisualElement>
             <engine:VisualElement name="Player02" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/05.%20Sprites/UI/P2_HUD%201.png?fileID=21300000&amp;guid=848286b34b756ad49930764275861e3f&amp;type=3#P2_HUD 1&quot;); background-size: 100% 100%; align-items: flex-end; width: 51.1%; height: 100%; right: 0; position: absolute;">
-                <engine:VisualElement name="setaP2" style="flex-grow: 1; position: absolute; width: 36px; height: 36px; background-image: url(&quot;project://database/Assets/05.%20Sprites/UI/seta.png?fileID=21300000&amp;guid=e4b5a5e27b856f44498f1ed6a8370dca&amp;type=3#seta&quot;); top: 100px; left: 840px; -unity-background-image-tint-color: rgb(42, 10, 31); border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0; border-top-left-radius: 0; border-top-right-radius: 0; border-bottom-right-radius: 0; border-bottom-left-radius: 0; border-left-color: rgb(0, 0, 0); border-right-color: rgb(0, 0, 0); border-top-color: rgb(0, 0, 0); border-bottom-color: rgb(0, 0, 0);" />
+                <engine:VisualElement name="setaP2" style="flex-grow: 1; position: absolute; width: 36px; height: 36px; background-image: url(&quot;project://database/Assets/05.%20Sprites/UI/seta.png?fileID=21300000&amp;guid=e4b5a5e27b856f44498f1ed6a8370dca&amp;type=3#seta&quot;); top: 100px; left: 70px; -unity-background-image-tint-color: rgb(42, 10, 31); border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0; border-top-left-radius: 0; border-top-right-radius: 0; border-bottom-right-radius: 0; border-bottom-left-radius: 0; border-left-color: rgb(0, 0, 0); border-right-color: rgb(0, 0, 0); border-top-color: rgb(0, 0, 0); border-bottom-color: rgb(0, 0, 0);" />
             </engine:VisualElement>
         </engine:VisualElement>
         <engine:VisualElement name="HUD_P1" style="position: absolute; left: 0; top: 40px; width: 50%; height: 106px;">
             <engine:VisualElement name="Life" style="position: absolute; left: 30px; top: 0; width: 860px; height: 35px; background-color: rgba(255, 255, 255, 0); border-radius: 5px; background-image: url(&quot;project://database/Assets/05.%20Sprites/UI/LIFE_BAR.png?fileID=21300000&amp;guid=afa8baf39fb52e74b8ec4766dbdcf797&amp;type=3#LIFE_BAR&quot;); -unity-background-image-tint-color: rgb(42, 42, 42);" />
             <engine:VisualElement name="FillP1" style="position: absolute; left: 41px; top: 2px; width: 839px; height: 31px; background-color: rgba(255, 255, 255, 0); border-radius: 5px; background-image: url(&quot;project://database/Assets/05.%20Sprites/UI/FILL_LIFE.png?fileID=21300000&amp;guid=8b14aedaaa1a38c49be89af7d1c64968&amp;type=3#FILL_LIFE&quot;); -unity-background-image-tint-color: rgb(14, 17, 37); display: flex;" />
-            <engine:VisualElement name="LifeCounter" style="flex-direction: row; position: absolute; left: 30px; top: 45px;">
+            <engine:VisualElement name="LifeCounter" style="flex-direction: row; position: absolute; left: 45px; top: 45px;">
                 <engine:Label text="00" name="CurrentLife1" style="color: rgb(255, 255, 255); font-size: 20px;" />
                 <engine:Label text="/ 00" name="MaxLife1" style="color: rgb(255, 255, 255); font-size: 15px;" />
             </engine:VisualElement>
@@ -37,7 +41,7 @@
         <engine:VisualElement name="HUD_P2" style="position: absolute; right: 0; top: 40px; width: 50%; height: 106px;">
             <engine:VisualElement name="Life" style="position: absolute; left: 30px; top: 0; width: 860px; height: 35px; background-color: rgba(255, 255, 255, 0); border-radius: 5px; background-image: url(&quot;project://database/Assets/05.%20Sprites/UI/LIFE_BAR.png?fileID=21300000&amp;guid=afa8baf39fb52e74b8ec4766dbdcf797&amp;type=3#LIFE_BAR&quot;); -unity-background-image-tint-color: rgb(41, 41, 41);" />
             <engine:VisualElement name="FillP2" style="position: absolute; left: 40px; top: 2px; width: 839px; height: 31px; background-color: rgba(255, 255, 255, 0); border-radius: 5px; background-image: url(&quot;project://database/Assets/05.%20Sprites/UI/FILL_LIFE.png?fileID=21300000&amp;guid=8b14aedaaa1a38c49be89af7d1c64968&amp;type=3#FILL_LIFE&quot;); -unity-background-image-tint-color: rgb(42, 10, 31);" />
-            <engine:VisualElement name="LifeCounter" style="flex-direction: row; position: absolute; left: 30px; top: 45px;">
+            <engine:VisualElement name="LifeCounter" style="flex-direction: row; position: absolute; left: auto; top: 45px; right: 84px;">
                 <engine:Label text="00" name="CurrentLife2" style="color: rgb(255, 255, 255); font-size: 20px;" />
                 <engine:Label text="/ 00" name="MaxLife2" style="color: rgb(255, 255, 255); font-size: 15px;" />
             </engine:VisualElement>
@@ -51,10 +55,6 @@
                 <engine:Label text="00" name="CurrentXP" style="color: rgb(255, 255, 255); margin-top: 0; margin-right: 0; margin-bottom: 0; font-size: 20px;" />
                 <engine:Label text="/ 00" name="MaxXP" style="color: rgb(255, 255, 255); margin-top: 0; margin-right: 0; margin-bottom: 0; font-size: 15px;" />
             </engine:VisualElement>
-        </engine:VisualElement>
-        <engine:VisualElement name="InstructionPanel" style="flex-grow: 1; position: absolute; width: 500px; height: 500px; align-items: flex-start; align-self: center; left: 20px; justify-content: center; display: none;">
-            <engine:Label text="INSTRUÇÕES" name="Title" style="background-color: rgba(0, 0, 0, 0); color: rgb(255, 255, 255); left: 20px; -unity-font-style: bold;" />
-            <engine:Label text="Iniciar com Espaço = WASD&#10;Iniciar com Control Direito = SETAS&#10;Iniciar com Botão A ou X = Gamepad&#10;&#10;Esc | Enter Numpad | Start ou Option = Pause&#10;&#10;-- Controles WASD --&#10;WASD = Move&#10;Espaço = Pula&#10;E = Ataca&#10;&#10;-- Controle SETRAS -- &#10;SETAS = Move&#10;0 Numpad = Pula&#10;Control Direito  = Ataca&#10;&#10;-- Controle GAMEPAD -- &#10;Analógio = Move&#10;South Button (A ou X) = Pula&#10;West Button (X ou Quadrado) = Ataca&#10;&#10;Player 01 = Ataque Manual&#10;Player 02 = Ataque Automático" name="Text" style="flex-wrap: wrap; color: rgb(255, 255, 255); left: 15px;" />
         </engine:VisualElement>
     </engine:VisualElement>
     <engine:VisualElement name="CardsContainer" style="flex-grow: 1; position: absolute; width: 1920px; height: 1080px; margin-left: 0; background-color: rgba(0, 0, 0, 0); top: 0; left: 1px; border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px;">

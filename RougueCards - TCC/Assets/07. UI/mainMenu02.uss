@@ -70,3 +70,107 @@
     transition-timing-function: ease-out-back;
     scale: 0.8 0.8;
 }
+
+.TAB {
+    flex-grow: 0;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+
+.ETAPA {
+    flex-grow: 1;
+    background-image: url("project://database/Assets/05.%20Sprites/UI/ETAPA2%201.png?fileID=21300000&guid=53051df54f56ecb47802e24b67d0d37c&type=3#ETAPA2 1");
+    -unity-background-image-tint-color: rgb(255, 255, 255);
+    width: auto;
+    height: auto;
+    -unity-background-scale-mode: scale-and-crop;
+    background-color: rgba(255, 255, 255, 0);
+    min-height: 698px;
+    display: flex;
+    background-size: cover;
+    -unity-slice-scale: 0;
+    margin-top: 52px;
+}
+
+.ETAPA_ATUAL {
+    margin-top: 0;
+    min-height: 643px;
+    -unity-background-scale-mode: scale-to-fit;
+    background-size: 89% 104%;
+}
+
+.unity-tab__header {
+    width: 220px;
+    height: 40px;
+    margin-left: 8px;
+    margin-right: 8px;
+    background-color: rgb(13, 16, 28);
+    color: white;
+    font-size: 18px;
+    -unity-font-style: bold;
+    border-top-width: 0;
+    border-right-width: 0;
+    border-bottom-width: 0;
+    border-left-width: 0;
+}
+
+.unity-tab__header:checked {
+    background-color: rgb(94, 58, 140);
+    color: white;
+}
+
+.unity-tab__header:hover {
+    background-color: rgb(44, 44, 44);
+}
+
+.ETAPA_FINAL {
+    background-size: 89% 120%;
+    min-height: 630px;
+}
+
+.Button_2 {
+    position: absolute;
+    width: 200px;
+    height: 60px;
+    bottom: 133px;
+    right: 145px;
+    background-image: url("project://database/Assets/05.%20Sprites/UI/Buttons/Button_Hover-Focus.png?fileID=21300000&guid=27b754667071fe747b3ca1fffd6db38c&type=3#Button_Hover-Focus");
+    -unity-background-image-tint-color: rgb(255, 255, 255);
+    background-color: rgba(255, 255, 255, 0);
+    background-size: 124% 88%;
+    border-top-width: 0;
+    border-right-width: 0;
+    border-bottom-width: 0;
+    border-left-width: 0;
+    -unity-font-style: bold;
+    color: rgb(0, 0, 0);
+    transition-property: all;
+    transition-duration: 0s;
+    transition-timing-function: ease;
+    transition-delay: 0s;
+}
+
+.Button_2:hover {
+    position: absolute;
+    width: 200px;
+    height: 60px;
+    bottom: 133px;
+    right: 145px;
+    background-image: url("project://database/Assets/05.%20Sprites/UI/Buttons/Button_Hover-Focus.png?fileID=21300000&guid=27b754667071fe747b3ca1fffd6db38c&type=3#Button_Hover-Focus");
+    -unity-background-image-tint-color: rgb(255, 255, 255);
+    background-color: rgba(255, 255, 255, 0);
+    background-size: 124% 88%;
+    border-top-width: 0;
+    border-right-width: 0;
+    border-bottom-width: 0;
+    border-left-width: 0;
+    -unity-font-style: bold;
+    color: rgb(0, 0, 0);
+    transition-property: all;
+    transition-duration: 0.5s;
+    transition-timing-function: ease-out-back;
+    transition-delay: 0s;
+    scale: 1.1 1.1;
+}
