@@ -189,6 +189,15 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Revive"",
+                    ""type"": ""Button"",
+                    ""id"": ""e91d2c77-4f9d-48f5-bfde-af982be0140c"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": ""Hold"",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -761,6 +770,39 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": "";Player01;Player02;Gamepad"",
                     ""action"": ""ATK"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""63f29dfd-49bb-4ef8-87d8-478f24c28148"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";WASD_Player"",
+                    ""action"": ""Revive"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""fc2fab83-1887-4f8e-a6e4-97e6707f1ac8"",
+                    ""path"": ""<Keyboard>/rightShift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";SETAS_Player"",
+                    ""action"": ""Revive"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""823455ac-d386-4007-86da-200140c60576"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad"",
+                    ""action"": ""Revive"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1501,6 +1543,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         m_Player01_Sprint = m_Player01.FindAction("Sprint", throwIfNotFound: true);
         m_Player01_Pause = m_Player01.FindAction("Pause", throwIfNotFound: true);
         m_Player01_ATK = m_Player01.FindAction("ATK", throwIfNotFound: true);
+        m_Player01_Revive = m_Player01.FindAction("Revive", throwIfNotFound: true);
         // Player02
         m_Player02 = asset.FindActionMap("Player02", throwIfNotFound: true);
         m_Player02_Move = m_Player02.FindAction("Move", throwIfNotFound: true);
@@ -1605,6 +1648,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player01_Sprint;
     private readonly InputAction m_Player01_Pause;
     private readonly InputAction m_Player01_ATK;
+    private readonly InputAction m_Player01_Revive;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player01".
     /// </summary>
@@ -1660,6 +1704,10 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Player01/ATK".
         /// </summary>
         public InputAction @ATK => m_Wrapper.m_Player01_ATK;
+        /// <summary>
+        /// Provides access to the underlying input action "Player01/Revive".
+        /// </summary>
+        public InputAction @Revive => m_Wrapper.m_Player01_Revive;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -1719,6 +1767,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @ATK.started += instance.OnATK;
             @ATK.performed += instance.OnATK;
             @ATK.canceled += instance.OnATK;
+            @Revive.started += instance.OnRevive;
+            @Revive.performed += instance.OnRevive;
+            @Revive.canceled += instance.OnRevive;
         }
 
         /// <summary>
@@ -1763,6 +1814,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @ATK.started -= instance.OnATK;
             @ATK.performed -= instance.OnATK;
             @ATK.canceled -= instance.OnATK;
+            @Revive.started -= instance.OnRevive;
+            @Revive.performed -= instance.OnRevive;
+            @Revive.canceled -= instance.OnRevive;
         }
 
         /// <summary>
@@ -2192,6 +2246,13 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnATK(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Revive" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnRevive(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "Player02" which allows adding and removing callbacks.

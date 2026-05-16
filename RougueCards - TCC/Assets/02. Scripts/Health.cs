@@ -11,12 +11,14 @@ public class Health : MonoBehaviour
     public int currentHealth;
 
     public event Action<int, int, int> OnHealthChanged;
-    public event Action OnDeath; // 👈 NOVO
+    public event Action OnDeath;
+    public event Action OnHit;
 
     private PlayerStats pStats;
 
     private Animation anim;
 
+    private bool _isDead = false;
     void Start()
     {
         // Alteração: Agora busca o valor inicial do MaxHP nos atributos em vez de usar fixo
@@ -69,6 +71,7 @@ public class Health : MonoBehaviour
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
 
         OnHealthChanged?.Invoke(playerID, currentHealth, maxHealth);
+        OnHit?.Invoke();
 
         if (GetComponent<Enemy>() != null && anim != null)
         {
@@ -83,13 +86,32 @@ public class Health : MonoBehaviour
 
     private void Die()
     {
-        OnDeath?.Invoke(); // 👈 dispara evento
-        gameObject.SetActive(false);
-        //Destroy(gameObject); // melhor que SetActive(false)
+        if (_isDead) return;   // <- guard
+        _isDead = true;
+
+        var downed = GetComponent<DownedState>();
+        if (downed != null)
+        {
+            // Game over só dispara se o timer expirar sem ser revivido
+            downed.OnDownedExpired += () =>
+            {
+                OnDeath?.Invoke();
+                gameObject.SetActive(false);
+            };
+            downed.EnterDownedState();
+        }
+        else
+        {
+            // Sem DownedState no objeto (ex: inimigo) → morte direta como antes
+            OnDeath?.Invoke();
+            gameObject.SetActive(false);
+        }
     }
-    public void Revive()
+    public void Revive(float hpPercent)
     {
-        currentHealth = maxHealth / 2;
+        _isDead = false;
+        currentHealth = (int)(maxHealth * hpPercent);
+        OnHealthChanged?.Invoke(playerID, currentHealth, maxHealth);
     }
 
     /// <summary>

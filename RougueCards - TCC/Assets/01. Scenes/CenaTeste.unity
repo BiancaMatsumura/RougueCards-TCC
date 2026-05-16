@@ -1967,7 +1967,7 @@ MonoBehaviour:
   enemyPrefab: {fileID: 64197260445343202, guid: 34a4e3d339beafa4f8a9bb7e659f6628, type: 3}
   areaSize: {x: 21.79, y: 0, z: 2.9}
   spawnDelay: 3
-  maxEnemies: 50
+  maxEnemies: 2
 --- !u!4 &1584813346
 Transform:
   m_ObjectHideFlags: 0

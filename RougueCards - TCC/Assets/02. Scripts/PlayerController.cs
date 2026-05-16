@@ -22,11 +22,15 @@ public class PlayerController : MonoBehaviour
     private float baseHeight;
     private float baseRadius;
     private Vector3 baseCenter;
+    private ReviveInteraction _reviveInteraction;
+    private DownedState _downedState;
 
     void Awake()
     {
         controller = GetComponent<CharacterController>();
         healthUI = FindFirstObjectByType<HealthUIManager>();
+        _reviveInteraction = GetComponent<ReviveInteraction>();
+        _downedState = GetComponent<DownedState>();
 
         // Salva as dimensões iniciais definidas no Inspector antes de qualquer upgrade
         if (controller != null)
@@ -41,6 +45,7 @@ public class PlayerController : MonoBehaviour
             healthUI.UpdateHealth(1, 100, 100);
             healthUI.UpdateHealth(2, 100, 100);
         }
+
     }
 
     private void Start()
@@ -90,6 +95,7 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        if (_downedState != null && _downedState.IsDowned) return;
         bool grounded = controller.isGrounded;
 
         if (grounded && velocity.y < 0)
@@ -126,7 +132,7 @@ public class PlayerController : MonoBehaviour
         animator.SetFloat("Speed", move.magnitude * currentSpeed, 0.1f, Time.deltaTime);
         //animator.SetBool("IsGrounded", grounded);
 
-        if ( velocity.y < 0) // grounded &&
+        if (velocity.y < 0) // grounded &&
             animator.SetBool("IsJumping", false);
     }
 
@@ -135,7 +141,15 @@ public class PlayerController : MonoBehaviour
 
     public void Jump(InputAction.CallbackContext context)
     {
+        if (_downedState != null && _downedState.IsDowned) return;
         if (context.performed) jumpRequested = true;
+    }
+    public void Revive(InputAction.CallbackContext context)
+    {
+        if (_reviveInteraction == null) return;
+
+        if (context.started) _reviveInteraction.OnReviveHeld(true);
+        if (context.canceled) _reviveInteraction.OnReviveHeld(false);
     }
 
 }

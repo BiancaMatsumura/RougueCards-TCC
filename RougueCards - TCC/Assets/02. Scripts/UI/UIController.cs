@@ -17,6 +17,7 @@ public class UIController : MonoBehaviour
     private InputAction pauseAction;
     private InputSystemUIInputModule inputModule;
     private bool isPaused = false;
+    private ReviveInteraction _reviveInteraction;
 
     void Awake()
     {
@@ -31,6 +32,7 @@ public class UIController : MonoBehaviour
         pauseVE.style.display = DisplayStyle.None;
 
         pauseAction = inputActions.FindAction("Pause", true);
+        _reviveInteraction = GetComponent<ReviveInteraction>();
     }
 
     private void OnEnable()
@@ -67,7 +69,7 @@ public class UIController : MonoBehaviour
         }
         else if (!pressing)
         {
-            pauseHeld = false; 
+            pauseHeld = false;
         }
     }
 
@@ -101,5 +103,16 @@ public class UIController : MonoBehaviour
     {
         Time.timeScale = 1;
         SceneManager.LoadScene(0);
+    }
+
+    public void Revive(InputAction.CallbackContext context)
+    {
+        if (_reviveInteraction == null) return;
+
+        if (context.performed)
+            _reviveInteraction.OnReviveHeld(true);
+
+        if (context.canceled)
+            _reviveInteraction.OnReviveHeld(false);
     }
 }
