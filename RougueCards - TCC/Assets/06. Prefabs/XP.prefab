@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 7846933632989575155}
   - component: {fileID: 1087627653831596464}
   - component: {fileID: 8206902228666822904}
+  - component: {fileID: 608426011767912948}
   m_Layer: 0
   m_Name: XP
   m_TagString: Untagged
@@ -126,3 +127,20 @@ MonoBehaviour:
   speed: 2
   updateTargetRate: 0.5
   isAttracted: 0
+--- !u!111 &608426011767912948
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7842632854057511571}
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Animation: {fileID: 7400000, guid: bea4eafa5d4c03f4e9075bea8812e2a4, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: bea4eafa5d4c03f4e9075bea8812e2a4, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_UpdateMode: 0
+  m_CullingType: 0

@@ -16,7 +16,7 @@ public enum BulletMoviment {
     Boomerang, // vai e volta
     FollowTarget, //segue o inimigo mais proximo
     Eletric, //Especificamente para eletricidade, ele vai de um inimigo ao outro dando dano, gerando um raio entre eles. Correntes magicas é uma boa ideia tambem
-    
+
 }
 public class Bullet : MonoBehaviour
 {
@@ -50,7 +50,7 @@ public class Bullet : MonoBehaviour
         DestroyOC = DestroyOnC;
 
         Destroy(gameObject, lifeTime);
-       
+
     }
 
     // Mantido por compatibilidade, mas o dano já é definido no Init
@@ -62,7 +62,7 @@ public class Bullet : MonoBehaviour
 
     void Update()
     {
-        if(autoshooterscript != null) { Moviment(bm); }
+        if (autoshooterscript != null) { Moviment(bm); }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -90,20 +90,20 @@ public class Bullet : MonoBehaviour
     }
     public void Moviment(BulletMoviment BM)
     {
-        if (autoshooterscript = null)
-            return;
-        switch (BM) {
+   
+        switch (BM)
+        {
 
             case BulletMoviment.Linear:
 
-                transform.position += direction * speed * Time.deltaTime;
+                transform.position += LinearMoviment();
 
                 break;
 
             case BulletMoviment.Curve:
 
                 Vector3 curvePos = Bezier(transform.position, direction, 10f);
-                    
+
 
                 transform.position = curvePos * speed;
 
@@ -147,7 +147,7 @@ public class Bullet : MonoBehaviour
                     accelDir * speed * Time.deltaTime;
 
                 break;
-                 
+
             case BulletMoviment.RandomFall:
                 if (IsSpawned)
                 {
@@ -159,7 +159,7 @@ public class Bullet : MonoBehaviour
 
                 transform.position += Vector3.down * 10f * Time.deltaTime;
 
-                
+
 
                 break;
 
@@ -191,31 +191,38 @@ public class Bullet : MonoBehaviour
 
                 break;
 
-       
+
         }
-        
+
     }
     public static Vector3 Bezier(Vector3 start, Vector3 end, float t)
     {
         return Vector3.Lerp(start, end, t);
     }
     Vector3 GetOrbitalPosition(Vector3 center, float radius)
-{
-    float angle = Time.time * speed;
+    {
+        float angle = Time.time * speed;
 
-    float x = Mathf.Cos(angle) * radius;
-    float z = Mathf.Sin(angle) * radius;
+        float x = Mathf.Cos(angle) * radius;
+        float z = Mathf.Sin(angle) * radius;
 
-    return center + new Vector3(x, 0f, z);
-}
+        return center + new Vector3(x, 0f, z);
+    }
     public Vector3 GetRandomPositionInCircle(Vector3 center, float radius)
     {
         Vector2 random = Random.insideUnitCircle * radius;
 
         return center + new Vector3(random.x, 1f, random.y);
     }
-    public void GetPlayerTransform(Vector3 trasnformPosition) 
+    public void GetPlayerTransform(Vector3 trasnformPosition)
     {
         playertrasform = trasnformPosition;
+    }
+
+    public Vector3 LinearMoviment() 
+    {
+        Vector3 alfa;
+        alfa = direction * speed * Time.deltaTime;
+        return alfa;
     }
 }
