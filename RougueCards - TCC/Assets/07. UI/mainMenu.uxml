@@ -16,7 +16,7 @@
                 <engine:VisualElement name="ETAPA2" class="ETAPA ETAPA_ATUAL ETAPA_FINAL" />
             </engine:Tab>
             <engine:Tab label="ETAPA 03" class="TAB" style="flex-grow: 1; margin-top: 10px; margin-right: 10px; margin-bottom: 10px; margin-left: 10px;">
-                <engine:VisualElement name="ETAPA3" class="ETAPA_FINAL" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/05.%20Sprites/UI/ETAPA3%201.png?fileID=2800000&amp;guid=3f3ee6e688f6f1443964c56a9d18f10d&amp;type=3#ETAPA3 1&quot;);" />
+                <engine:VisualElement name="ETAPA3" class="ETAPA_FINAL" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/05.%20Sprites/UI/etapa3%202.png?fileID=2800000&amp;guid=e828de435f5d5f44b8caf5ee10914cd0&amp;type=3#etapa3 2&quot;);" />
             </engine:Tab>
         </engine:TabView>
     </engine:VisualElement>

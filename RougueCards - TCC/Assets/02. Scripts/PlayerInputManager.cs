@@ -11,6 +11,8 @@ public class PlayerInputManager : MonoBehaviour
     [SerializeField] private Transform[] spawnPoints;
     [SerializeField] private CameraGroupManager cameraGroupManager;
     [SerializeField] private SplitScreenManager splitScreenManager;
+    [SerializeField] private GameObject playerEnterUI_1;
+    [SerializeField] private GameObject playerEnterUI_2;
 
     private Transform _p1Transform; // adiciona esse campo privado
 
@@ -133,10 +135,20 @@ public class PlayerInputManager : MonoBehaviour
         }
 
         // Atualiza flags
-        if (!player01Joined) player01Joined = true;
+        if (!player01Joined)
+        {
+            player01Joined = true;
+
+            if (playerEnterUI_1 != null)
+                playerEnterUI_1.SetActive(false);
+        }
         else
         {
             player02Joined = true;
+
+            if (playerEnterUI_2 != null)
+                playerEnterUI_2.SetActive(false);
+
             this.enabled = false;
         }
 

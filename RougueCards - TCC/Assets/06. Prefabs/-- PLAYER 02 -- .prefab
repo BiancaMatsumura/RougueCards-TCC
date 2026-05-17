@@ -6313,7 +6313,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6fd59486e16373408247a122e3059a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponData: {fileID: 11400000, guid: f15594d16ea8d4b4fb5f61bd6ea5fd58, type: 2}
+  weaponData: {fileID: 11400000, guid: 397891c723cc57a43bb6fd5cd9dc3ddf, type: 2}
   firePoint: {fileID: 887448683358562105}
 --- !u!95 &2846131901169197089
 Animator:
