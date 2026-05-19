@@ -4,8 +4,7 @@ using RougueCards.Attributes;
 public class AutoShooter : MonoBehaviour
 {
     [Header("Weapon Data")]
-    public RangedWeaponData weaponData; //seria interessante depois transfomrar em array
-
+    public RangedWeaponData weaponData;
 
     [Header("Tiro")]
     [SerializeField] private Transform firePoint;
@@ -15,7 +14,6 @@ public class AutoShooter : MonoBehaviour
 
     void Start()
     {
-        // Busca os atributos no jogador (geralmente no mesmo objeto ou no pai)
         pStats = GetComponentInParent<PlayerStats>();
     }
 
@@ -23,8 +21,6 @@ public class AutoShooter : MonoBehaviour
     {
         if (weaponData == null) return;
 
-        // --- CÁLCULO DE ATRIBUTO ---
-        // Ajusta a cadência de tiro com base no atributo AttackSpeed (ex: 100% = normal)
         float attackSpeedMod = pStats != null ? (pStats.stats.AttackSpeed.Value / 100f) : 1f;
         float adjustedFireRate = weaponData.fireRate / attackSpeedMod;
 
@@ -40,10 +36,8 @@ public class AutoShooter : MonoBehaviour
                 timer = 0f;
             }
         }
-      
     }
 
-    // 🔥 ADICIONADO (CORREÇÃO DO ERRO)
     public void SetWeapon(RangedWeaponData newWeapon)
     {
         weaponData = newWeapon;
@@ -72,10 +66,6 @@ public class AutoShooter : MonoBehaviour
         return closest;
     }
 
-
-    /// <summary>
-    /// Calcula e instancia os projéteis aplicando bônus de quantidade, dano, velocidade e duração.
-    /// </summary>
     void Shoot(Transform target)
     {
         if (firePoint == null || weaponData == null) return;
@@ -85,22 +75,15 @@ public class AutoShooter : MonoBehaviour
         int extraPellets = pStats != null ? (int)pStats.stats.ProjectileQty.Value : 0;
         int totalPellets = Mathf.Max(1, weaponData.pellets + extraPellets);
 
-        // 1. Cálculo de Dano Base
         float baseDamage = weaponData.damage + (pStats != null ? pStats.stats.Damage.Value : 0);
 
         float chance = pStats != null ? pStats.stats.CritChance.Value : 0f;
         float multiplier = pStats != null ? pStats.stats.CritDamage.Value : 1f;
 
-        // Sorteio: se o número (0-100) for menor que a chance, é um Crítico!
         bool isCrit = UnityEngine.Random.Range(0f, 100f) < chance;
         float finalDamage = isCrit ? baseDamage * (1f + multiplier) : baseDamage;
 
         float finalKnockback = pStats != null ? pStats.stats.Knockback.Value : 0f;
-
-        if (isCrit)
-        {
-            Debug.Log($"[AutoShooter] ACERTO CRÍTICO! Dano: {finalDamage}");
-        }
 
         float finalProjSpeed = pStats != null ? pStats.stats.ProjectileSpeed.Value : 10f;
 
@@ -109,19 +92,29 @@ public class AutoShooter : MonoBehaviour
 
         for (int i = 0; i < totalPellets; i++)
         {
-            GameObject bulletObj = Instantiate(weaponData.bulletPrefab, firePoint.position, Quaternion.identity);
+            GameObject bulletObj = Instantiate(
+                weaponData.bulletPrefab,
+                firePoint.position,
+                Quaternion.identity
+            );
+
             Vector3 dir = ApplySpread(baseDir, weaponData.spread);
 
             Bullet b = bulletObj.GetComponent<Bullet>();
+
             if (b != null)
             {
-                // Passamos o dano (que pode ser crítico ou não) para a bala
-                b.Init(dir, (int)finalDamage, finalProjSpeed, finalLifeTime, finalKnockback, weaponData.DestroyOnContact); //aaaaaaaaaaaaaa
-                b.ApplyMovimentType(weaponData.BM, this);
-    {
+                b.Init(
+                    dir,
+                    (int)finalDamage,
+                    finalProjSpeed,
+                    finalLifeTime,
+                    finalKnockback,
+                    weaponData.DestroyOnContact
+                );
 
-    }
-}
+                b.ApplyMovimentType(weaponData.BM, this);
+            }
         }
     }
 
@@ -130,11 +123,12 @@ public class AutoShooter : MonoBehaviour
         if (spread <= 0f) return direction;
 
         float angle = Random.Range(-spread, spread);
+
         return Quaternion.Euler(0, angle, 0) * direction;
     }
 
-    public Vector3 GetTrasform() 
-    { 
+    public Vector3 GetTrasform()
+    {
         return this.transform.position;
     }
 }

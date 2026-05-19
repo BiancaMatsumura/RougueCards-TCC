@@ -6,19 +6,20 @@ public class CardData : ScriptableObject
 {
     public string cardName;
     public string description;
-    public Sprite cardImage; 
+    public Sprite cardImage;
 
     [Header("Progressão")]
     public int xpRequired;
 
-    [Header("Efeito de Upgrade")]
+    [Header("Tipo de Efeito")]
+    public CardEffectType effectType;
 
-    /// <summary> Qual atributo esta carta melhora? </summary>
+    [Header("Stat Upgrade")]
     public StatType statToUpgrade;
-
-    /// <summary> Quanto ela melhora? </summary>
     public float upgradeValue;
-
-    /// <summary> É um bônus percentual (multiplicador)? </summary>
     public bool isPercentage;
+
+    [Header("Weapon Unlock")]
+    public RangedWeaponData rangedWeapon;
+    public MeleeWeaponData meleeWeapon;
 }

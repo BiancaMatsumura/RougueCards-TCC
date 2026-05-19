@@ -4,9 +4,6 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
 
-/// <summary>
-/// Gerencia o painel de seleção de cartas e aplica os upgrades escolhidos.
-/// </summary>
 [RequireComponent(typeof(UIDocument))]
 public class CardManager : MonoBehaviour
 {
@@ -29,22 +26,21 @@ public class CardManager : MonoBehaviour
 
         SetPanelVisible(false);
 
-        // Escuta no cardPanel, não no root
         cardPanel.RegisterCallback<GeometryChangedEvent>(_ =>
-            {
-                if (!isPanelVisible || isLoadingCards) return;
+        {
+            if (!isPanelVisible || isLoadingCards) return;
 
-                if (controllers == null)
-                {
-                    isLoadingCards = true;
-                    // adia um frame para garantir que os slots filhos também fizeram layout
-                    StartCoroutine(LoadCardsNextFrame());
-                }
-            });
+            if (controllers == null)
+            {
+                isLoadingCards = true;
+                StartCoroutine(LoadCardsNextFrame());
+            }
+        });
     }
+
     private IEnumerator LoadCardsNextFrame()
     {
-        yield return null; // espera um frame
+        yield return null;
 
         LoadCards();
         isLoadingCards = false;
@@ -83,22 +79,20 @@ public class CardManager : MonoBehaviour
         ShowPanel();
     }
 
-
-    // — Chamado pelo input —
     private void OnToggleInput(InputAction.CallbackContext ctx) => TogglePanel();
 
-    // — Chamado por script externo —
     public void TogglePanel() => SetPanelVisible(!isPanelVisible);
     public void ShowPanel() => SetPanelVisible(true);
     public void HidePanel() => SetPanelVisible(false);
 
-    // Novo método — chame sempre que quiser redefinir as cartas
     private void LoadCards()
     {
         Debug.Log("LoadCards chamado");
+
         var availableCards = cardDatabase.GetAvailableCards(playerProgress, maxCards: 3, randomize: true);
 
         controllers = new CardController[availableCards.Length];
+
         for (int i = 0; i < availableCards.Length; i++)
         {
             var controller = new CardController(this, root, availableCards[i], slotIndex: i);
@@ -107,9 +101,6 @@ public class CardManager : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Liga ou desliga o painel de cartas.
-    /// </summary>
     private void SetPanelVisible(bool visible)
     {
         isPanelVisible = visible;
@@ -122,6 +113,7 @@ public class CardManager : MonoBehaviour
             if (AttributeMaestro.Instance != null)
             {
                 PlayerStats decider = AttributeMaestro.Instance.GetDecidingPlayer();
+
                 if (decider != null)
                     Debug.Log($"O jogador {decider.playerID} decide qual carta pegar!");
             }
@@ -135,18 +127,52 @@ public class CardManager : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Chamado quando uma carta é selecionada pelo jogador.
-    /// </summary>
     private void HandlePickUp(CardData data)
     {
         if (AttributeMaestro.Instance != null)
         {
-            AttributeMaestro.Instance.ApplySharedUpgrade(data.statToUpgrade, data.upgradeValue, data.isPercentage);
+            if (data.effectType == CardEffectType.StatUpgrade)
+            {
+                AttributeMaestro.Instance.ApplySharedUpgrade(
+                    data.statToUpgrade,
+                    data.upgradeValue,
+                    data.isPercentage
+                );
+            }
+            else if (data.effectType == CardEffectType.UnlockWeapon)
+            {
+                EquipWeapon(data);
+            }
         }
 
         HidePanel();
-        Debug.Log($"Carta coletada: {data.name}");
 
+        Debug.Log($"Carta coletada: {data.name}");
     }
+
+ private void EquipWeapon(CardData data)
+{
+    PlayerStats player = AttributeMaestro.Instance.GetDecidingPlayer();
+
+    if (player == null)
+    {
+        Debug.LogError("Player não encontrado!");
+        return;
+    }
+
+    AutoShooter autoShooter = FindFirstObjectByType<AutoShooter>();
+
+    if (autoShooter == null)
+    {
+        Debug.LogError("AutoShooter não encontrado!");
+        return;
+    }
+
+    if (data.rangedWeapon != null)
+    {
+        autoShooter.SetWeapon(data.rangedWeapon);
+
+        Debug.Log("Nova arma equipada: " + data.rangedWeapon.name);
+    }
+}
 }
