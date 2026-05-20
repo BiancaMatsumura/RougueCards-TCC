@@ -109,15 +109,6 @@ public class CardManager : MonoBehaviour
         if (visible)
         {
             controllers = null;
-
-            if (AttributeMaestro.Instance != null)
-            {
-                PlayerStats decider = AttributeMaestro.Instance.GetDecidingPlayer();
-
-                if (decider != null)
-                    Debug.Log($"O jogador {decider.playerID} decide qual carta pegar!");
-            }
-
             Time.timeScale = 0f;
         }
         else
@@ -127,10 +118,19 @@ public class CardManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Processa a escolha da carta, adiciona ao inventário e checa combos.
+    /// </summary>
     private void HandlePickUp(CardData data)
     {
-        if (AttributeMaestro.Instance != null)
+        PlayerStats decider = AttributeMaestro.Instance.GetDecidingPlayer();
+
+        if (decider != null)
         {
+            // --- REINTEGRADO: Adiciona a carta ao inventário do jogador para checar combos ---
+            decider.AddCardToInventory(data);
+
+            // Processa o efeito da carta
             if (data.effectType == CardEffectType.StatUpgrade)
             {
                 AttributeMaestro.Instance.ApplySharedUpgrade(
@@ -143,36 +143,24 @@ public class CardManager : MonoBehaviour
             {
                 EquipWeapon(data);
             }
+
+            // Avisa o Maestro para checar se formou um COMBO
+            AttributeMaestro.Instance.CheckForCardCombos();
         }
 
         HidePanel();
-
-        Debug.Log($"Carta coletada: {data.name}");
+        Debug.Log($"Carta coletada: {data.cardName}");
     }
 
- private void EquipWeapon(CardData data)
-{
-    PlayerStats player = AttributeMaestro.Instance.GetDecidingPlayer();
-
-    if (player == null)
+    private void EquipWeapon(CardData data)
     {
-        Debug.LogError("Player não encontrado!");
-        return;
+        // Encontra o shooter do jogador que decidiu (ou global se for compartilhado)
+        AutoShooter autoShooter = FindFirstObjectByType<AutoShooter>();
+
+        if (autoShooter != null && data.rangedWeapon != null)
+        {
+            autoShooter.SetWeapon(data.rangedWeapon);
+            Debug.Log("Nova arma equipada: " + data.rangedWeapon.name);
+        }
     }
-
-    AutoShooter autoShooter = FindFirstObjectByType<AutoShooter>();
-
-    if (autoShooter == null)
-    {
-        Debug.LogError("AutoShooter não encontrado!");
-        return;
-    }
-
-    if (data.rangedWeapon != null)
-    {
-        autoShooter.SetWeapon(data.rangedWeapon);
-
-        Debug.Log("Nova arma equipada: " + data.rangedWeapon.name);
-    }
-}
 }
