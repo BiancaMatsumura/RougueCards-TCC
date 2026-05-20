@@ -1,3 +1,5 @@
+using RougueCards.Combo;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace RougueCards.Attributes
@@ -13,6 +15,10 @@ namespace RougueCards.Attributes
         [Header("Referências dos Jogadores")]
         public PlayerStats player1;
         public PlayerStats player2;
+
+        [Header("Sistema de Sinergia")]
+        public ComboDatabase comboDatabase;
+        private List<ComboData> activeCombos = new List<ComboData>();
 
         private void Awake()
         {
@@ -88,6 +94,56 @@ namespace RougueCards.Attributes
             {
                 friend.stats.Damage.AddModifier(0.1f, true);
             }
+        }
+
+        /// <summary>
+        /// Checa se algum combo foi formado após pegar uma nova carta.
+        /// </summary>
+        public void CheckForCardCombos()
+        {
+            if (comboDatabase == null) return;
+
+            // Criamos uma lista com TODAS as cartas da dupla (Sinergia Cooperativa)
+            List<CardData> combinedCards = new List<CardData>();
+            if (player1 != null) combinedCards.AddRange(player1.inventoryCards);
+            if (player2 != null) combinedCards.AddRange(player2.inventoryCards);
+
+            foreach (var combo in comboDatabase.allPossibleCombos)
+            {
+                // Se já estiver ativo, pula (para não acumular o mesmo combo)
+                if (activeCombos.Contains(combo)) continue;
+
+                if (combo.IsSatisifed(combinedCards))
+                {
+                    ActivateCombo(combo);
+                }
+            }
+        }
+
+        private void ActivateCombo(ComboData combo)
+        {
+            activeCombos.Add(combo);
+            Debug.Log($"<color=yellow>COMBO ATIVADO: {combo.comboName}!</color>");
+
+            // Aplica o upgrade do combo
+            ApplySharedUpgrade(combo.statToUpgrade, combo.upgradeValue, combo.isPercentage);
+
+            // Se o combo tiver tempo limite, inicia a remoção
+            if (combo.comboDuration > 0)
+            {
+                StartCoroutine(RemoveComboAfterTime(combo));
+            }
+        }
+
+        private System.Collections.IEnumerator RemoveComboAfterTime(ComboData combo)
+        {
+            yield return new WaitForSecondsRealtime(combo.comboDuration);
+
+            // Remove o bônus (aplica o valor negativo)
+            ApplySharedUpgrade(combo.statToUpgrade, -combo.upgradeValue, combo.isPercentage);
+            activeCombos.Remove(combo);
+
+            Debug.Log($"Combo expirado: {combo.comboName}");
         }
     }
 }

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace RougueCards.Attributes
@@ -24,6 +25,10 @@ namespace RougueCards.Attributes
 
         /// <summary> Tempo de tolerância entre abates (ex: 2 segundos). </summary>
         [SerializeField] private float comboDuration = 2.0f;
+
+        // Adicione isso dentro da classe PlayerStats
+        [Header("Cartas Coletadas")]
+        public List<CardData> inventoryCards = new List<CardData>();
 
         private void Awake()
         {
@@ -100,6 +105,17 @@ namespace RougueCards.Attributes
             if (stats.MoveSpeed.multiplierBonus == 0)
             {
                 stats.MoveSpeed.multiplierBonus = 1;
+            }
+        }
+
+        /// <summary>
+        /// Adiciona uma carta ao inventário e verifica sinergias.
+        /// </summary>
+        public void AddCardToInventory(CardData card)
+        {
+            if (!inventoryCards.Contains(card))
+            {
+                inventoryCards.Add(card);
             }
         }
     }
