@@ -31,9 +31,7 @@ public class CardController
         flipButton = panel.Q<Button>("flip");
         pickUpButton = panel.Q<Button>("pickUp");
 
-        PopulateSide(front, data);
-        PopulateSide(back, data);
-
+        PopulateFront(front, data);
         back.style.display = DisplayStyle.None;
 
         flipButton.focusable = true;
@@ -44,20 +42,29 @@ public class CardController
         card.RegisterCallback<ClickEvent>(_ => TryFlip());
     }
 
-    // Preenche nome, descrição e imagem num lado do card
-    private void PopulateSide(VisualElement side, CardData d)
+    private void PopulateFront(VisualElement side, CardData d)
     {
         var nameLabel = side.Q<Label>("CardName");
-        var descLabel = side.Q<Label>("CardDescription");
-        var imageEl = side.Q<VisualElement>("CardImage");
+        var imageEl = side.Q<VisualElement>("cardImage");
 
         if (nameLabel != null) nameLabel.text = d.cardName;
-        if (descLabel != null) descLabel.text = d.description;
+
         if (imageEl != null && d.cardImage != null)
         {
-            imageEl.style.backgroundImage = new StyleBackground(d.cardImage);
-            imageEl.MarkDirtyRepaint(); // força o Unity a redesenhar
+            var sprite = d.cardImage;
+            imageEl.style.backgroundImage = new StyleBackground(sprite);
+            imageEl.schedule.Execute(() =>
+            {
+                imageEl.style.backgroundImage = new StyleBackground(sprite);
+                imageEl.MarkDirtyRepaint();
+            });
         }
+    }
+
+    private void PopulateBack(VisualElement side, CardData d)
+    {
+        var descLabel = side.Q<Label>("CardDescription");
+        if (descLabel != null) descLabel.text = d.description;
     }
 
     public void FocusFlip() => flipButton.Focus();
@@ -71,12 +78,16 @@ public class CardController
     private IEnumerator Flip()
     {
         isAnimating = true;
-
         yield return Animate(1f, 0f, 0.2f);
 
         isFlipped = !isFlipped;
         front.style.display = isFlipped ? DisplayStyle.None : DisplayStyle.Flex;
         back.style.display = isFlipped ? DisplayStyle.Flex : DisplayStyle.None;
+
+        if (isFlipped)
+            PopulateBack(back, data);
+        else
+            PopulateFront(front, data);
 
         yield return Animate(0f, 1f, 0.2f);
 

@@ -2346,6 +2346,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player1: {fileID: 0}
   player2: {fileID: 0}
+  comboDatabase: {fileID: 11400000, guid: 9267da9dc6f1e9d4384c2ddbca448caf, type: 2}
 --- !u!114 &1243163939
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3017,9 +3018,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   splitManager: {fileID: 1243163941}
-  powerGainSpeed: 10
   powerLossSpeed: 40
   maxPower: 100
+  boostMultiplier: 2
+  facingAngleThreshold: 45
+  rechargeTime: 2
+  rechargeSpeed: 50
 --- !u!114 &1962024340
 MonoBehaviour:
   m_ObjectHideFlags: 0

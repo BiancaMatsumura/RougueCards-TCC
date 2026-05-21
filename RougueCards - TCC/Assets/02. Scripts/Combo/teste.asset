@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff38280a5a609df4aadb9b29140fc670, type: 3}
   m_Name: teste
   m_EditorClassIdentifier: Assembly-CSharp::RougueCards.Combo.ComboData
-  comboName: 
+  comboName: Muita Vida
   requiredCards:
   - {fileID: 11400000, guid: 213ee05ad72fb7f4ea02749ab87bf75a, type: 2}
   - {fileID: 11400000, guid: 343c6d4a07713c0478de2bb210bcd4cc, type: 2}
   comboDuration: 5
   statToUpgrade: 0
-  upgradeValue: 0
+  upgradeValue: 200
   isPercentage: 0

@@ -124,7 +124,7 @@ public class PlayerController : MonoBehaviour
         controller.Move(finalMove * Time.deltaTime);
 
 
-        UpdateAnimator(move, currentSpeed); //grounded
+        UpdateAnimator(move, currentSpeed); //grounded  
     }
 
     private void UpdateAnimator(Vector3 move, float currentSpeed) //bool grounded)
