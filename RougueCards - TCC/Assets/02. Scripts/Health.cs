@@ -2,7 +2,11 @@ using RougueCards.Attributes;
 using System;
 using UnityEngine;
 
-[RequireComponent(typeof(PlayerStats))]
+/// <summary>
+/// Gerencia a vitalidade de jogadores e inimigos.
+/// Alteração: O PlayerStats tornou-se opcional. Se presente (Player), usa lógica de atributos.
+/// Se ausente (Inimigo), usa apenas os valores base definidos no script ou EnemyData.
+/// </summary>
 public class Health : MonoBehaviour
 {
     public int playerID;
@@ -15,59 +19,54 @@ public class Health : MonoBehaviour
     public event Action OnHit;
 
     private PlayerStats pStats;
-
     private Animation anim;
-
     private bool _isDead = false;
-    void Start()
-    {
-        // Alteração: Agora busca o valor inicial do MaxHP nos atributos em vez de usar fixo
-        RefreshMaxHP();
-
-        // Inicia o jogo com a vida cheia
-        currentHealth = maxHealth;
-        OnHealthChanged?.Invoke(playerID, currentHealth, maxHealth);
-    }
 
     void Awake()
     {
-        currentHealth = maxHealth;
-        OnHealthChanged?.Invoke(playerID, currentHealth, maxHealth);
-
+        // Alteração: Tenta pegar o componente, mas não o exige mais via [RequireComponent]
         pStats = GetComponent<PlayerStats>();
+
         GameOverWatcher.Instance?.RegisterPlayer(this);
         anim = GetComponent<Animation>();
+
+        if (currentHealth <= 0) currentHealth = maxHealth;
+    }
+
+    void Start()
+    {
+        // Alteração: Só sincroniza MaxHP se for um objeto com PlayerStats (Jogador)
+        if (pStats != null)
+        {
+            RefreshMaxHP();
+        }
+
+        OnHealthChanged?.Invoke(playerID, currentHealth, maxHealth);
     }
 
     /// <summary>
     /// Processa o dano recebido.
-    /// Primeiro verifica a chance de Evasão (esquiva total).
-    /// Se falhar, aplica a redução por Armadura e subtrai da vida.
+    /// Alteração: Evasão e Armadura agora só são calculadas se o objeto for um Jogador (tiver PlayerStats).
     /// </summary>
     public void TakeDamage(int amount)
     {
-        // 1. Verificação de Evasão (Atributo dinâmico)
+        if (_isDead) return;
+
+        // 1. Lógica exclusiva de Jogador
         if (pStats != null)
         {
             float evasionChance = pStats.stats.Evasion.Value;
-
             if (UnityEngine.Random.Range(0f, 100f) < evasionChance)
             {
-                Debug.Log($"[Health] Player {playerID} ESQUIVOU do dano! (Chance: {evasionChance}%)");
+                Debug.Log($"[Health] Player {playerID} ESQUIVOU!");
                 return;
             }
-        }
 
-        int finalDamage = amount;
-
-        // 2. Verificação de Armadura (Atributo dinâmico)
-        if (pStats != null)
-        {
             float armorValue = pStats.stats.Armor.Value;
-            finalDamage = Mathf.Max(1, amount - (int)armorValue);
+            amount = Mathf.Max(1, amount - (int)armorValue);
         }
 
-        currentHealth -= finalDamage;
+        currentHealth -= amount;
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
 
         OnHealthChanged?.Invoke(playerID, currentHealth, maxHealth);
@@ -78,65 +77,57 @@ public class Health : MonoBehaviour
             anim.Play("DAMAGEVFX");
         }
 
-        if (currentHealth <= 0)
-        {
-            Die();
-        }
+        if (currentHealth <= 0) Die();
     }
 
     private void Die()
     {
-        if (_isDead) return;   // <- guard
+        if (_isDead) return;
         _isDead = true;
 
         var downed = GetComponent<DownedState>();
         if (downed != null)
         {
-            // Game over só dispara se o timer expirar sem ser revivido
-            downed.OnDownedExpired += () =>
-            {
-                OnDeath?.Invoke();
-                gameObject.SetActive(false);
-            };
+            downed.OnDownedExpired += () => { OnDeath?.Invoke(); gameObject.SetActive(false); };
             downed.EnterDownedState();
         }
         else
         {
-            // Sem DownedState no objeto (ex: inimigo) → morte direta como antes
             OnDeath?.Invoke();
             gameObject.SetActive(false);
         }
     }
-    public void Revive(float hpPercent)
-    {
-        _isDead = false;
-        currentHealth = (int)(maxHealth * hpPercent);
-        OnHealthChanged?.Invoke(playerID, currentHealth, maxHealth);
-    }
 
     /// <summary>
-    /// Sincroniza a vida máxima com a ficha de atributos (PlayerStats).
-    /// Chamado pelo AttributeMaestro sempre que uma carta de MaxHP é coletada.
+    /// Atualiza a vida máxima baseada nos atributos.
+    /// Alteração: Adicionado filtro para logar apenas se for um Jogador real (ID > 0).
     /// </summary>
     public void RefreshMaxHP()
     {
         if (pStats != null)
         {
             int oldMax = maxHealth;
-
-            // Atualiza o valor de maxHealth baseado no cálculo final da StatSheet (Base + Bônus)
             maxHealth = (int)pStats.stats.MaxHP.Value;
 
-            // Lógica de Cura: Se a vida máxima aumentou, o jogador é curado pela diferença
             if (maxHealth > oldMax && oldMax != 0)
             {
                 currentHealth += (maxHealth - oldMax);
             }
 
-            // Notifica a UI sobre a mudança na barra de vida
             OnHealthChanged?.Invoke(playerID, currentHealth, maxHealth);
-            Debug.Log($"Player {playerID} MaxHP atualizado para: {maxHealth}");
+
+            // Só loga no console se for o Player 1 ou Player 2
+            if (playerID > 0)
+            {
+                Debug.Log($"[Health] Player {playerID} MaxHP sincronizado: {maxHealth}");
+            }
         }
     }
 
+    public void Revive(float hpPercent)
+    {
+        _isDead = false;
+        currentHealth = (int)(maxHealth * hpPercent);
+        OnHealthChanged?.Invoke(playerID, currentHealth, maxHealth);
+    }
 }

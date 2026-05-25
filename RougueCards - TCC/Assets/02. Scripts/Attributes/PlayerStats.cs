@@ -32,6 +32,7 @@ namespace RougueCards.Attributes
 
         private void Awake()
         {
+            inventoryCards ??= new List<CardData>();
             stats.ResetAllAttributes();
         }
 
@@ -113,6 +114,8 @@ namespace RougueCards.Attributes
         /// </summary>
         public void AddCardToInventory(CardData card)
         {
+            inventoryCards ??= new List<CardData>();
+
             if (!inventoryCards.Contains(card))
             {
                 inventoryCards.Add(card);

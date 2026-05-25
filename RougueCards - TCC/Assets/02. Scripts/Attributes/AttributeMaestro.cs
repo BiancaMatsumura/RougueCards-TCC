@@ -6,28 +6,43 @@ namespace RougueCards.Attributes
 {
     /// <summary>
     /// O Maestro orquestra a comunicação entre os dois jogadores.
-    /// Aplica upgrades de cartas para ambos e gerencia boosts de combo.
+    /// É responsável por aplicar upgrades compartilhados, gerenciar a prioridade de escolha de cartas
+    /// e processar as sinergias (combos) entre as cartas coletadas pela dupla.
     /// </summary>
     public class AttributeMaestro : MonoBehaviour
     {
+        /// <summary> Instância estática para acesso global (Padrão Singleton). </summary>
         public static AttributeMaestro Instance;
 
         [Header("Referências dos Jogadores")]
+        /// <summary> Referência aos atributos e estado do Jogador 1. </summary>
         public PlayerStats player1;
+
+        /// <summary> Referência aos atributos e estado do Jogador 2. </summary>
         public PlayerStats player2;
 
         [Header("Sistema de Sinergia")]
+        /// <summary> Banco de dados contendo todas as combinações de cartas que geram bônus especiais. </summary>
         public ComboDatabase comboDatabase;
+
+        /// <summary> Lista interna de combos que estão atualmente ativos para evitar duplicatas. </summary>
         private List<ComboData> activeCombos = new List<ComboData>();
 
+        /// <summary>
+        /// Configura a instância Singleton no início da cena.
+        /// </summary>
         private void Awake()
         {
             if (Instance == null) Instance = this;
         }
 
         /// <summary>
-        /// Regra da Imagem: Aplica o upgrade da carta escolhida para ambos os jogadores (Efeito Compartilhado).
+        /// Aplica um upgrade de atributo para ambos os jogadores simultaneamente (Regra de Efeito Compartilhado).
+        /// Notifica componentes específicos (Health, PlayerController) caso o atributo exija atualização visual ou física.
         /// </summary>
+        /// <param name="type">O tipo de atributo a ser modificado.</param>
+        /// <param name="value">O valor do bônus ou penalidade.</param>
+        /// <param name="isPercentage">Define se o valor é um multiplicador (true) ou um bônus fixo (false).</param>
         public void ApplySharedUpgrade(StatType type, float value, bool isPercentage)
         {
             if (player1 != null)
@@ -35,7 +50,6 @@ namespace RougueCards.Attributes
                 var stat = player1.GetStat(type);
                 stat?.AddModifier(value, isPercentage);
 
-                // Se o upgrade for de vida, avisa o componente Health
                 if (type == StatType.MaxHP)
                 {
                     player1.GetComponent<Health>().RefreshMaxHP();
@@ -53,26 +67,25 @@ namespace RougueCards.Attributes
                 }
             }
 
-            // Se o upgrade for de Tamanho, avisa o Controller
             if (type == StatType.Size)
             {
                 player1?.GetComponent<PlayerController>().RefreshSize();
                 player2?.GetComponent<PlayerController>().RefreshSize();
             }
 
-            Debug.Log($"Upgrade de {type} aplicado! Novo valor P1: {player1.GetStat(type).Value}");
+            Debug.Log($"[Maestro] Upgrade de {type} aplicado! Valor P1: {player1.GetStat(type).Value}");
         }
 
         /// <summary>
-        /// Regra da Imagem: Determina quem tem o direito de escolha baseado no maior COMBO atual.
+        /// Determina qual jogador tem o direito de escolha no painel de cartas.
+        /// A decisão é baseada em quem possui o maior combo de eliminações atual.
         /// </summary>
+        /// <returns>A instância de PlayerStats do jogador decisor.</returns>
         public PlayerStats GetDecidingPlayer()
         {
-            // Se um dos jogadores for nulo, retorna o outro
             if (player1 == null) return player2;
             if (player2 == null) return player1;
 
-            // Quem tem o maior combo decide. Em caso de empate, Player 1 decide.
             if (player1.currentCombo >= player2.currentCombo)
             {
                 return player1;
@@ -84,33 +97,51 @@ namespace RougueCards.Attributes
         }
 
         /// <summary>
-        /// Regra da Imagem: Quando um jogador entra em combo, dá um bônus automático para o amigo.
+        /// Acionado quando um jogador atinge o estado de combo (múltiplas mortes rápidas).
+        /// Concede um bônus de dano temporário ao parceiro (Sinergia de Combate).
         /// </summary>
+        /// <param name="comboOwnerID">O ID do jogador que iniciou o combo.</param>
         public void OnPlayerComboStarted(int comboOwnerID)
         {
             PlayerStats friend = (comboOwnerID == 1) ? player2 : player1;
 
             if (friend != null)
             {
-                friend.stats.Damage.AddModifier(0.1f, true);
+                StartCoroutine(TemporaryKillBoost(friend));
             }
         }
 
         /// <summary>
-        /// Checa se algum combo foi formado após pegar uma nova carta.
+        /// Corrotina que gerencia o bônus de dano temporário concedido por mortes em sequência.
+        /// Garante que o bônus seja removido após o tempo de expiração.
+        /// </summary>
+        /// <param name="target">O jogador que receberá o boost.</param>
+        private IEnumerator<WaitForSecondsRealtime> TemporaryKillBoost(PlayerStats target)
+        {
+            float boostValue = 0.1f; // +10% de Dano
+            target.stats.Damage.AddModifier(boostValue, true);
+            Debug.Log($"[Combo] Player {target.playerID} recebeu boost de dano por ação do parceiro!");
+
+            yield return new WaitForSecondsRealtime(2.0f);
+
+            target.stats.Damage.AddModifier(-boostValue, true);
+            Debug.Log($"[Combo] Boost de dano do Player {target.playerID} expirou.");
+        }
+
+        /// <summary>
+        /// Varre o banco de dados de sinergias para verificar se a combinação de cartas atual da dupla
+        /// desbloqueia algum combo de ScriptableObject.
         /// </summary>
         public void CheckForCardCombos()
         {
             if (comboDatabase == null) return;
 
-            // Criamos uma lista com TODAS as cartas da dupla (Sinergia Cooperativa)
             List<CardData> combinedCards = new List<CardData>();
             if (player1 != null) combinedCards.AddRange(player1.inventoryCards);
             if (player2 != null) combinedCards.AddRange(player2.inventoryCards);
 
             foreach (var combo in comboDatabase.allPossibleCombos)
             {
-                // Se já estiver ativo, pula (para não acumular o mesmo combo)
                 if (activeCombos.Contains(combo)) continue;
 
                 if (combo.IsSatisifed(combinedCards))
@@ -120,30 +151,36 @@ namespace RougueCards.Attributes
             }
         }
 
+        /// <summary>
+        /// Ativa um combo de sinergia de cartas, aplicando o bônus e iniciando o temporizador se necessário.
+        /// </summary>
+        /// <param name="combo">Os dados do combo a ser ativado.</param>
         private void ActivateCombo(ComboData combo)
         {
             activeCombos.Add(combo);
-            Debug.Log($"<color=yellow>COMBO ATIVADO: {combo.comboName}!</color>");
+            Debug.Log($"<color=yellow>[Sinergia] COMBO ATIVADO: {combo.comboName}!</color>");
 
-            // Aplica o upgrade do combo
             ApplySharedUpgrade(combo.statToUpgrade, combo.upgradeValue, combo.isPercentage);
 
-            // Se o combo tiver tempo limite, inicia a remoção
             if (combo.comboDuration > 0)
             {
                 StartCoroutine(RemoveComboAfterTime(combo));
             }
         }
 
+        /// <summary>
+        /// Corrotina que remove os bônus de um combo de sinergia após o tempo definido no ScriptableObject.
+        /// </summary>
+        /// <param name="combo">O combo que irá expirar.</param>
         private System.Collections.IEnumerator RemoveComboAfterTime(ComboData combo)
         {
             yield return new WaitForSecondsRealtime(combo.comboDuration);
 
-            // Remove o bônus (aplica o valor negativo)
+            // Remove o bônus aplicando o valor negativo correspondente
             ApplySharedUpgrade(combo.statToUpgrade, -combo.upgradeValue, combo.isPercentage);
             activeCombos.Remove(combo);
 
-            Debug.Log($"Combo expirado: {combo.comboName}");
+            Debug.Log($"[Sinergia] Combo expirado: {combo.comboName}");
         }
     }
 }
