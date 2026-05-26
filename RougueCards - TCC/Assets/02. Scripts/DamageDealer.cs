@@ -9,6 +9,8 @@ public class DamageDealer : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
+        if (other.CompareTag(gameObject.tag)) return; // mesma tag = ignora
+
         var health = other.GetComponent<Health>();
 
         if (health != null)

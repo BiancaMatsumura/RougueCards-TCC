@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float speed = 5f;
     [SerializeField] private float jumpHeight = 3f;
     [SerializeField] private float gravity = -9.8f;
+    private DistancePowerController distancePower;
 
 
     private CharacterController controller;
@@ -31,6 +32,7 @@ public class PlayerController : MonoBehaviour
         healthUI = FindFirstObjectByType<HealthUIManager>();
         _reviveInteraction = GetComponent<ReviveInteraction>();
         _downedState = GetComponent<DownedState>();
+        distancePower = FindFirstObjectByType<DistancePowerController>();
 
         // Salva as dimensões iniciais definidas no Inspector antes de qualquer upgrade
         if (controller != null)
@@ -102,6 +104,10 @@ public class PlayerController : MonoBehaviour
             velocity.y = -2f;
 
         float currentSpeed = pStats != null ? pStats.stats.MoveSpeed.Value : speed;
+        
+        if (distancePower != null && pStats != null)
+            currentSpeed *= distancePower.GetSpeedMultiplier(pStats.playerID);
+
         Vector3 move = new(moveInput.x, 0, moveInput.y);
 
         if (move != Vector3.zero)

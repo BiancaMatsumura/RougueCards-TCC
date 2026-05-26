@@ -22,26 +22,23 @@ public class DistancePowerController : MonoBehaviour
     public float facingAngleThreshold = 45f;
 
     [Header("Configuração de Recarga")]
-    [Tooltip("Tempo (s) que os players precisam ficar juntos antes de ativar o poder")]
-    public float rechargeTime = 2f;
-
     [Tooltip("Velocidade de preenchimento da barra durante a recarga (units/s)")]
     public float rechargeSpeed = 50f;
 
-    // ── eventos ──────────────────────────────────────────────────────────────
-    /// <summary>Disparado quando a recarga completa. Assine para ativar efeitos especiais.</summary>
-    public event System.Action OnPowerActivated;
+    [Tooltip("Porcentagem mínima que o power precisa cair antes de poder recarregar (0-1)")]
+    public float rechargeThreshold = 0.5f; // 50% = precisa cair até metade
+    private bool _canRecharge = false; // começa false para não ativar logo de início
 
-    // ── estado público (leitura) ──────────────────────────────────────────────
     public float PowerP1 => _powerP1;
     public float PowerP2 => _powerP2;
     public bool IsBoostActiveP1 { get; private set; }
     public bool IsBoostActiveP2 { get; private set; }
     public bool IsRecharging { get; private set; }
 
-    // ── privados ─────────────────────────────────────────────────────────────
     private VisualElement _fillP1;
     private VisualElement _fillP2;
+    private VisualElement _powerContainerP1;
+    private VisualElement _powerContainerP2;
     private const float BAR_HEIGHT = 522f;
 
     private float _powerP1;
@@ -50,15 +47,22 @@ public class DistancePowerController : MonoBehaviour
     private bool _togetherLastFrame;
     private Coroutine _rechargeCoroutine;
 
-    // ── Unity ────────────────────────────────────────────────────────────────
+    [Header("Poder Especial")]
+    public PowerWave powerWave;
+    public event System.Action<Vector3> OnPowerActivated;
+
     void Awake()
     {
         var root = GetComponent<UIDocument>().rootVisualElement;
         _fillP1 = root.Q<VisualElement>("Fill_PowerP1");
         _fillP2 = root.Q<VisualElement>("Fill_PowerP2");
+        _powerContainerP1 = root.Q<VisualElement>("PowerContainer01");
+        _powerContainerP2 = root.Q<VisualElement>("PowerContainer02");
 
         _powerP1 = maxPower;
         _powerP2 = maxPower;
+
+        OnPowerActivated += powerWave.Activate;
     }
 
     void Update()
@@ -93,8 +97,12 @@ public class DistancePowerController : MonoBehaviour
         IsBoostActiveP1 = !together && hasPowerP1 && IsFacingTarget(p1, p2);
         IsBoostActiveP2 = !together && hasPowerP2 && IsFacingTarget(p2, p1);
 
-        // ── Inicia recarga ao se juntar ──────────────────────────────────────
-        if (together && !_togetherLastFrame && _rechargeCoroutine == null)
+        // Verifica se baixou o suficiente para liberar recarga
+        if (!_canRecharge && _powerP1 <= maxPower * (1f - rechargeThreshold))
+            _canRecharge = true;
+
+        // Inicia recarga ao se juntar, só se liberado
+        if (together && !_togetherLastFrame && _rechargeCoroutine == null && _canRecharge)
             _rechargeCoroutine = StartCoroutine(RechargeRoutine());
 
         _togetherLastFrame = together;
@@ -104,7 +112,6 @@ public class DistancePowerController : MonoBehaviour
         ApplyBar(_fillP2, _powerP2);
     }
 
-    // ── Boost ────────────────────────────────────────────────────────────────
 
     /// <summary>
     /// Retorna o multiplicador de velocidade que deve ser aplicado ao player (1 = normal, >1 = boost).
@@ -116,16 +123,13 @@ public class DistancePowerController : MonoBehaviour
         return boosted ? boostMultiplier : 1f;
     }
 
-    // ── Recarga ──────────────────────────────────────────────────────────────
 
     private IEnumerator RechargeRoutine()
     {
         IsRecharging = true;
-        float elapsed = 0f;
 
-        while (elapsed < rechargeTime)
+        while (_powerP1 < maxPower || _powerP2 < maxPower)
         {
-            // Se se afastarem, cancela (o Update já para a coroutine, mas por segurança)
             var (p1, p2) = splitManager.Players;
             if (p1 == null || p2 == null || Vector3.Distance(p1.position, p2.position) >= splitManager.splitDistance)
             {
@@ -134,27 +138,64 @@ public class DistancePowerController : MonoBehaviour
                 yield break;
             }
 
-            // Enche o poder gradualmente
             float gain = rechargeSpeed * Time.deltaTime;
             _powerP1 = Mathf.Min(maxPower, _powerP1 + gain);
             _powerP2 = Mathf.Min(maxPower, _powerP2 + gain);
 
-            elapsed += Time.deltaTime;
             yield return null;
         }
 
-        // Garante que chegou ao máximo
         _powerP1 = maxPower;
         _powerP2 = maxPower;
+
+        ApplyBar(_fillP1, _powerP1);
+        ApplyBar(_fillP2, _powerP2);
 
         IsRecharging = false;
         _rechargeCoroutine = null;
 
-        // Dispara o poder especial
-        OnPowerActivated?.Invoke();
+        StartCoroutine(PowerRoutine());
     }
 
-    // ── Helpers ──────────────────────────────────────────────────────────────
+    private IEnumerator PowerRoutine()
+    {
+        float pulseDuration = 0.4f;
+
+        for (int i = 0; i < 3; i++)
+        {
+            float elapsed = 0f;
+            while (elapsed < pulseDuration)
+            {
+                float smooth = Mathf.SmoothStep(0f, 1f, elapsed / pulseDuration);
+                float scale = Mathf.Lerp(1f, 1.1f, smooth);
+                _powerContainerP1.style.scale = new Scale(new Vector3(scale, scale, 1f));
+                _powerContainerP2.style.scale = new Scale(new Vector3(scale, scale, 1f));
+                elapsed += Time.deltaTime;
+                yield return null;
+            }
+
+            elapsed = 0f;
+            while (elapsed < pulseDuration)
+            {
+                float smooth = Mathf.SmoothStep(0f, 1f, elapsed / pulseDuration);
+                float scale = Mathf.Lerp(1.1f, 1f, smooth);
+                _powerContainerP1.style.scale = new Scale(new Vector3(scale, scale, 1f));
+                _powerContainerP2.style.scale = new Scale(new Vector3(scale, scale, 1f));
+                elapsed += Time.deltaTime;
+                yield return null;
+            }
+
+            yield return new WaitForSeconds(0.15f);
+        }
+
+        _powerContainerP1.style.scale = new Scale(new Vector3(1f, 1f, 1f));
+        _powerContainerP2.style.scale = new Scale(new Vector3(1f, 1f, 1f));
+
+        var (p1, p2) = splitManager.Players;
+        Vector3 center = (p1.position + p2.position) / 2f;
+        OnPowerActivated?.Invoke(center);
+        _canRecharge = false; // precisa drenar de novo antes do próximo uso
+    }
 
     /// <summary>Verifica se 'from' está com o forward apontando para 'to' dentro do threshold.</summary>
     private bool IsFacingTarget(Transform from, Transform to)

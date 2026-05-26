@@ -11,17 +11,21 @@ public class Enemy : MonoBehaviour
     // Variáveis de Knockback
     private Vector3 knockbackVelocity;
     [SerializeField] private float knockbackResistance = 5f; // Quão rápido ele para de deslizar
+    private bool _isKnockedBack;
 
     void Update()
     {
-        // 1. Processa o decaimento do Knockback (atrito)
         if (knockbackVelocity.magnitude > 0.01f)
         {
+            _isKnockedBack = true;
             transform.position += knockbackVelocity * Time.deltaTime;
             knockbackVelocity = Vector3.Lerp(knockbackVelocity, Vector3.zero, Time.deltaTime * knockbackResistance);
         }
+        else
+        {
+            _isKnockedBack = false;
+        }
 
-        // 2. Movimento normal de perseguição
         timer += Time.deltaTime;
         if (timer >= updateTargetRate)
         {
@@ -29,11 +33,9 @@ public class Enemy : MonoBehaviour
             timer = 0f;
         }
 
-        if (target == null) return;
+        if (target == null || _isKnockedBack) return; // para a perseguição durante knockback
 
         Vector3 dir = (target.position - transform.position).normalized;
-
-        // O inimigo continua tentando andar, mas a força do knockback se soma ao movimento
         transform.position += dir * speed * Time.deltaTime;
     }
 

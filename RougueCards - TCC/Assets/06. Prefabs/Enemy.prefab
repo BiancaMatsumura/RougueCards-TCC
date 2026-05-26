@@ -9,16 +9,16 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8505618911243116112}
+  - component: {fileID: 719878357296310022}
+  - component: {fileID: 4810324439911598007}
   - component: {fileID: 7431327743385352958}
   - component: {fileID: 5767922539996724424}
-  - component: {fileID: 4810324439911598007}
-  - component: {fileID: 719878357296310022}
   - component: {fileID: 542973585866644192}
   - component: {fileID: -4453271482895477748}
   - component: {fileID: -1223435608833976042}
   - component: {fileID: -489652007919317186}
   - component: {fileID: 842011746551490357}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Enemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -41,42 +41,14 @@ Transform:
   - {fileID: 1025933027573968084}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7431327743385352958
-MonoBehaviour:
+--- !u!33 &719878357296310022
+MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 64197260445343202}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 38d64446f70ba2b4f99ce6d0934ca754, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 3
-  updateTargetRate: 0.5
-  knockbackResistance: 5
---- !u!65 &5767922539996724424
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 64197260445343202}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 1
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!23 &4810324439911598007
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -122,14 +94,42 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!33 &719878357296310022
-MeshFilter:
+--- !u!114 &7431327743385352958
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 64197260445343202}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38d64446f70ba2b4f99ce6d0934ca754, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 3
+  updateTargetRate: 0.5
+  knockbackResistance: 5
+--- !u!65 &5767922539996724424
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 64197260445343202}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 1
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &542973585866644192
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -153,7 +153,7 @@ Rigidbody:
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 1
-  m_IsKinematic: 1
+  m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
@@ -342,6 +342,7 @@ MonoBehaviour:
       multiplierBonus: 1
   currentCombo: 0
   comboDuration: 2
+  inventoryCards: []
 --- !u!1 &7772125493041537897
 GameObject:
   m_ObjectHideFlags: 0
@@ -353,9 +354,9 @@ GameObject:
   - component: {fileID: 1025933027573968084}
   - component: {fileID: 2781329011722090268}
   - component: {fileID: 8725570047761057888}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: damageDeal
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
