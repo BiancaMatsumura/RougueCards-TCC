@@ -5770,6 +5770,7 @@ GameObject:
   - component: {fileID: 2846131901169197089}
   - component: {fileID: 7879264803869077036}
   - component: {fileID: 7803252270588501538}
+  - component: {fileID: 6202031934582509462}
   m_Layer: 7
   m_Name: '-- PLAYER 02 -- '
   m_TagString: Player
@@ -6286,6 +6287,7 @@ MonoBehaviour:
       multiplierBonus: 1
   currentCombo: 0
   comboDuration: 2
+  inventoryCards: []
 --- !u!114 &-3200988610258966888
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6368,6 +6370,21 @@ MonoBehaviour:
   playerLayer:
     serializedVersion: 2
     m_Bits: 64
+--- !u!114 &6202031934582509462
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6236625106383521709}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6d361aa2345dad4a9e0ca70ad6a0e66, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  flashColor: {r: 1, g: 0, b: 0, a: 1}
+  flashDuration: 0.1
+  flashIntensity: 3
 --- !u!1 &6248586488731768731
 GameObject:
   m_ObjectHideFlags: 0

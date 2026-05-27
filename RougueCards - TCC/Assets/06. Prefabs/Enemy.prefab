@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: -1223435608833976042}
   - component: {fileID: -489652007919317186}
   - component: {fileID: 842011746551490357}
+  - component: {fileID: 9063050185275164066}
   m_Layer: 8
   m_Name: Enemy
   m_TagString: Enemy
@@ -106,7 +107,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38d64446f70ba2b4f99ce6d0934ca754, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 3
+  data: {fileID: 0}
   updateTargetRate: 0.5
   knockbackResistance: 5
 --- !u!65 &5767922539996724424
@@ -343,6 +344,20 @@ MonoBehaviour:
   currentCombo: 0
   comboDuration: 2
   inventoryCards: []
+--- !u!114 &9063050185275164066
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 64197260445343202}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 577b11d8b7c653844b77fc8832ec4570, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 10
+  damageInterval: 1
 --- !u!1 &7772125493041537897
 GameObject:
   m_ObjectHideFlags: 0

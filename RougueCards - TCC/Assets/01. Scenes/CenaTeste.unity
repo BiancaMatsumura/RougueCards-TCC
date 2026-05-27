@@ -2935,7 +2935,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33094c6110975bc4aa0eaefe0ebc55d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyPrefab: {fileID: 64197260445343202, guid: 34a4e3d339beafa4f8a9bb7e659f6628, type: 3}
+  enemyBasePrefabs:
+  - {fileID: 64197260445343202, guid: 643ab63be91d49a45b9f9d1f5cfe66c1, type: 3}
+  availableEnemyData:
+  - {fileID: 11400000, guid: 735695ab05171f44d9136da4dfed93f4, type: 2}
+  - {fileID: 11400000, guid: 32c3e8d17e34d4844b879eaa86e2e182, type: 2}
   areaSize: {x: 21.79, y: 0, z: 2.9}
   spawnDelay: 2
   maxEnemies: 50

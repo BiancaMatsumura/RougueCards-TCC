@@ -25,6 +25,7 @@ public class Enemy : MonoBehaviour
     private float targetTimer;
     private Vector3 knockbackVelocity;
     private bool isKnockedBack;
+    private bool _initialized = false;
 
     void Awake()
     {
@@ -35,14 +36,17 @@ public class Enemy : MonoBehaviour
 
     void Start()
     {
-        if (data != null) Initialize(data);
+        if (!_initialized && data != null)
+            Initialize(data);
     }
+
 
     /// <summary>
     /// Configura o inimigo com base em um EnemyData. Permite reaproveitar o prefab.
     /// </summary>
     public void Initialize(EnemyData newData)
     {
+        _initialized = true;
         data = newData;
 
         // 1. Configuração Visual
@@ -70,6 +74,10 @@ public class Enemy : MonoBehaviour
         damageDealer.damage = data.damageToPlayer;
 
         if (enemyXP != null) enemyXP.SetXPValue(data.xpValue);
+
+        var hitFlash = GetComponent<HitFlash>();
+        if (hitFlash != null)
+            hitFlash.RefreshRenderers();
     }
 
     void Update()
@@ -100,6 +108,7 @@ public class Enemy : MonoBehaviour
     /// </summary>
     private void HandleAI()
     {
+        if (data == null) return;
         // Otimização: Busca o jogador apenas em intervalos definidos
         targetTimer += Time.deltaTime;
         if (targetTimer >= updateTargetRate)

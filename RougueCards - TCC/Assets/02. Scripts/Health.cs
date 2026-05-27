@@ -19,7 +19,6 @@ public class Health : MonoBehaviour
     public event Action OnHit;
 
     private PlayerStats pStats;
-    private Animation anim;
     private bool _isDead = false;
 
     void Awake()
@@ -28,7 +27,6 @@ public class Health : MonoBehaviour
         pStats = GetComponent<PlayerStats>();
 
         GameOverWatcher.Instance?.RegisterPlayer(this);
-        anim = GetComponent<Animation>();
 
         if (currentHealth <= 0) currentHealth = maxHealth;
     }
@@ -71,11 +69,6 @@ public class Health : MonoBehaviour
 
         OnHealthChanged?.Invoke(playerID, currentHealth, maxHealth);
         OnHit?.Invoke();
-
-        if (GetComponent<Enemy>() != null && anim != null)
-        {
-            anim.Play("DAMAGEVFX");
-        }
 
         if (currentHealth <= 0) Die();
     }
