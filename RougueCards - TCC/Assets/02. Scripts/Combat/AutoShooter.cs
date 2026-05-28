@@ -1,104 +1,132 @@
+using System.Collections.Generic;
 using UnityEngine;
 using RougueCards.Attributes;
 
 public class AutoShooter : MonoBehaviour
 {
-    [Header("Weapon Data")]
-    public RangedWeaponData weaponData;
+    [Header("Armas Equipadas")]
+    [SerializeField] private List<RangedWeaponData> weapons = new List<RangedWeaponData>();
 
     [Header("Tiro")]
     [SerializeField] private Transform firePoint;
 
-    private float timer;
     private PlayerStats pStats;
+    private float[] timers;
 
-    void Start()
+    // recoil interno (sem Rigidbody)
+    private Vector3 recoilOffset;
+
+    void Awake()
     {
         pStats = GetComponentInParent<PlayerStats>();
     }
 
+    void Start()
+    {
+        timers = new float[weapons.Count];
+    }
+
     void Update()
     {
-        if (weaponData == null) return;
+        if (weapons.Count == 0) return;
 
-        float attackSpeedMod = pStats != null ? (pStats.stats.AttackSpeed.Value / 100f) : 1f;
-        float adjustedFireRate = weaponData.fireRate / attackSpeedMod;
+        if (timers == null || timers.Length != weapons.Count)
+            timers = new float[weapons.Count];
 
-        timer += Time.deltaTime;
-
-        if (timer >= adjustedFireRate)
+        for (int i = 0; i < weapons.Count; i++)
         {
-            Transform target = FindClosestEnemy();
+            var weapon = weapons[i];
+            if (weapon == null) continue;
 
-            if (target != null)
+            float attackSpeedMod =
+                pStats != null ? (pStats.stats.AttackSpeed.Value / 100f) : 1f;
+
+            float fireRate = weapon.fireRate / attackSpeedMod;
+
+            timers[i] += Time.deltaTime;
+
+            if (timers[i] >= fireRate)
             {
-                Shoot(target);
-                timer = 0f;
+                Transform target = FindClosestEnemy(weapon);
+
+                if (target != null)
+                {
+                    Shoot(weapon, target);
+                    ApplyRecoil(weapon, target);
+                    timers[i] = 0f;
+                }
             }
         }
     }
 
-    public void SetWeapon(RangedWeaponData newWeapon)
+    void LateUpdate()
     {
-        weaponData = newWeapon;
+        transform.position += recoilOffset;
+        recoilOffset = Vector3.Lerp(recoilOffset, Vector3.zero, 10f * Time.deltaTime);
     }
 
-    Transform FindClosestEnemy()
+    // 🔥 ADD WEAPON (CARTAS)
+    public void AddWeapon(RangedWeaponData newWeapon)
     {
-        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        if (newWeapon == null) return;
 
-        float minDist = Mathf.Infinity;
-        Transform closest = null;
+        weapons.Add(newWeapon);
+        timers = new float[weapons.Count];
 
-        foreach (var enemy in enemies)
+        Debug.Log("Arma adicionada: " + newWeapon.name);
+    }
+
+    Transform FindClosestEnemy(RangedWeaponData weapon)
+{
+    GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+
+    float minDist = Mathf.Infinity;
+    Transform closest = null;
+
+    foreach (var e in enemies)
+    {
+        if (!e.activeInHierarchy) continue;
+
+        float dist = Vector3.Distance(transform.position, e.transform.position);
+
+        // 🔥 RESPEITA O RANGE DA ARMA
+        if (dist > weapon.range) continue;
+
+        if (dist < minDist)
         {
-            if (!enemy.activeInHierarchy) continue;
-
-            float dist = Vector3.Distance(transform.position, enemy.transform.position);
-
-            if (dist < minDist && dist <= weaponData.range)
-            {
-                minDist = dist;
-                closest = enemy.transform;
-            }
+            minDist = dist;
+            closest = e.transform;
         }
-
-        return closest;
     }
 
-    void Shoot(Transform target)
+    return closest;
+}
+
+    void Shoot(RangedWeaponData weapon, Transform target)
     {
-        if (firePoint == null || weaponData == null) return;
+        if (firePoint == null || weapon == null || weapon.bulletPrefab == null) return;
 
-        Vector3 baseDir = (target.position - firePoint.position).normalized;
+        Vector3 baseDir =
+            (target.position - firePoint.position).normalized;
 
-        int extraPellets = pStats != null ? (int)pStats.stats.ProjectileQty.Value : 0;
-        int totalPellets = Mathf.Max(1, weaponData.pellets + extraPellets);
+        int pellets = Mathf.Max(1, weapon.pellets);
 
-        float baseDamage = weaponData.damage + (pStats != null ? pStats.stats.Damage.Value : 0);
+        float projSpeed =
+            pStats != null ? pStats.stats.ProjectileSpeed.Value : 10f;
 
-        float chance = pStats != null ? pStats.stats.CritChance.Value : 0f;
-        float multiplier = pStats != null ? pStats.stats.CritDamage.Value : 1f;
-
-        bool isCrit = UnityEngine.Random.Range(0f, 100f) < chance;
-        float finalDamage = isCrit ? baseDamage * (1f + multiplier) : baseDamage;
-
-        float finalKnockback = pStats != null ? pStats.stats.Knockback.Value : 0f;
-
-        float finalProjSpeed = pStats != null ? pStats.stats.ProjectileSpeed.Value : 10f;
-
-        float durationMod = pStats != null ? pStats.stats.Duration.Value : 1f;
-        float finalLifeTime = weaponData.lifetime * durationMod;
-
-        for (int i = 0; i < totalPellets; i++)
+        for (int i = 0; i < pellets; i++)
         {
-            GameObject bulletObj = Instantiate(
-                weaponData.bulletPrefab,
-                firePoint.position,
-                Quaternion.identity
-            );
+            GameObject bulletObj =
+                Instantiate(weapon.bulletPrefab, firePoint.position, Quaternion.identity);
 
-            Vector3 dir = ApplySpread(baseDir, weaponData.spread);
+            Vector3 dir = baseDir;
+
+            // 🔥 spread da shotgun
+            if (weapon.spread > 0f)
+            {
+                float angle = Random.Range(-weapon.spread, weapon.spread);
+                dir = Quaternion.Euler(0, angle, 0) * baseDir;
+            }
 
             Bullet b = bulletObj.GetComponent<Bullet>();
 
@@ -106,29 +134,31 @@ public class AutoShooter : MonoBehaviour
             {
                 b.Init(
                     dir,
-                    (int)finalDamage,
-                    finalProjSpeed,
-                    finalLifeTime,
-                    finalKnockback,
-                    weaponData.DestroyOnContact
+                    weapon.damage,
+                    projSpeed,
+                    weapon.lifetime,
+                    0f,
+                    weapon.DestroyOnContact
                 );
 
-                b.ApplyMovimentType(weaponData.BM, this);
+                b.ApplyMovimentType(weapon.BM, this);
             }
         }
     }
 
-    Vector3 ApplySpread(Vector3 direction, float spread)
+    void ApplyRecoil(RangedWeaponData weapon, Transform target)
     {
-        if (spread <= 0f) return direction;
+        if (weapon.recoilForce <= 0f) return;
 
-        float angle = Random.Range(-spread, spread);
+        Vector3 dir =
+            (target.position - firePoint.position).normalized;
 
-        return Quaternion.Euler(0, angle, 0) * direction;
+        recoilOffset += -dir * weapon.recoilForce;
     }
 
+    // ⚠️ compatibilidade com Bullet.cs (nome legado)
     public Vector3 GetTrasform()
     {
-        return this.transform.position;
+        return transform.position;
     }
 }

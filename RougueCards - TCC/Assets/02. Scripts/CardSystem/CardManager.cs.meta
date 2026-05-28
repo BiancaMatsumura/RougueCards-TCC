@@ -1,2 +1,15 @@
 fileFormatVersion: 2
 guid: a1d2f19aa425c1f48850261eb583dfb8
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - cardDatabase: {fileID: 11400000, guid: a7b1e506f0124584aa07ae2c55049283, type: 2}
+  - playerProgress: {fileID: 11400000, guid: 00a38000d9bba5a42b1cef107458d7c8, type: 2}
+  - toggleAction: {fileID: -6450635596403456157, guid: 6e778180076408648b21a1e54c02c1a0, type: 3}
+  - autoShooter: {fileID: 8239322281545097670, guid: f6e000be4fe067a4597238054071cfe0, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

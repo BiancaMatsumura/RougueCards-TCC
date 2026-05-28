@@ -1,23 +1,35 @@
 using UnityEngine;
+
 public class DebugItemTrade : MonoBehaviour
 {
     public bool IsAutoShooter = true;
     public RangedWeaponData rangedweapondata;
     public MeleeWeaponData meleeweapondata;
+
     private AutoShooter autoshooter;
     private Shooter shooter;
 
     public void OnTriggerEnter(Collider other)
     {
-        if(other.CompareTag("Player") && IsAutoShooter)
+        if (!other.CompareTag("Player")) return;
+
+        if (IsAutoShooter)
         {
             autoshooter = other.GetComponent<AutoShooter>();
-            autoshooter.weaponData = rangedweapondata;
+
+            if (autoshooter != null && rangedweapondata != null)
+            {
+                autoshooter.AddWeapon(rangedweapondata);
+            }
         }
-        else if (other.CompareTag("Player")) 
-        { 
+        else
+        {
             shooter = other.GetComponent<Shooter>();
-            shooter.weaponData = meleeweapondata;
+
+            if (shooter != null && meleeweapondata != null)
+            {
+                shooter.weaponData = meleeweapondata;
+            }
         }
     }
 }

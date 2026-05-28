@@ -11,12 +11,13 @@ public class CardManager : MonoBehaviour
     [SerializeField] private PlayerProgress playerProgress;
     [SerializeField] private InputActionReference toggleAction;
 
+    [SerializeField] private AutoShooter autoShooter;
+
     private CardController[] controllers;
     private VisualElement cardPanel;
     public bool isPanelVisible = false;
     private VisualElement root;
 
-    private System.Action<int> onStageCompletedHandler;
     private bool isLoadingCards = false;
 
     void Awake()
@@ -59,8 +60,7 @@ public class CardManager : MonoBehaviour
 
         if (playerProgress != null)
         {
-            onStageCompletedHandler = OnStageCompleted;
-            playerProgress.OnStageCompleted += onStageCompletedHandler;
+            playerProgress.OnStageCompleted += OnStageCompleted;
         }
     }
 
@@ -70,32 +70,48 @@ public class CardManager : MonoBehaviour
             toggleAction.action.performed -= OnToggleInput;
 
         if (playerProgress != null)
-            playerProgress.OnStageCompleted -= onStageCompletedHandler;
+            playerProgress.OnStageCompleted -= OnStageCompleted;
     }
 
     private void OnStageCompleted(int stage)
     {
-        Debug.Log($"Estágio {stage} completo! Abrindo painel de cartas...");
+        Debug.Log($"Level up! Abrindo cartas...");
         ShowPanel();
     }
 
-    private void OnToggleInput(InputAction.CallbackContext ctx) => TogglePanel();
+    private void OnToggleInput(InputAction.CallbackContext ctx)
+    {
+        TogglePanel();
+    }
 
-    public void TogglePanel() => SetPanelVisible(!isPanelVisible);
-    public void ShowPanel() => SetPanelVisible(true);
-    public void HidePanel() => SetPanelVisible(false);
+    public void TogglePanel()
+    {
+        if (isPanelVisible)
+            HidePanel();
+        else
+            ShowPanel();
+    }
+
+    public void ShowPanel()
+    {
+        SetPanelVisible(true);
+    }
+
+    public void HidePanel()
+    {
+        SetPanelVisible(false);
+    }
 
     private void LoadCards()
     {
-        Debug.Log("LoadCards chamado");
-
-        var availableCards = cardDatabase.GetAvailableCards(playerProgress, maxCards: 3, randomize: true);
+        var availableCards =
+            cardDatabase.GetAvailableCards(playerProgress, 3, true);
 
         controllers = new CardController[availableCards.Length];
 
         for (int i = 0; i < availableCards.Length; i++)
         {
-            var controller = new CardController(this, root, availableCards[i], slotIndex: i);
+            var controller = new CardController(this, root, availableCards[i], i);
             controller.OnPickUp += HandlePickUp;
             controllers[i] = controller;
         }
@@ -106,31 +122,23 @@ public class CardManager : MonoBehaviour
         isPanelVisible = visible;
         cardPanel.style.display = visible ? DisplayStyle.Flex : DisplayStyle.None;
 
-        if (visible)
-        {
+        Time.timeScale = visible ? 0f : 1f;
+
+        if (!visible)
             controllers = null;
-            Time.timeScale = 0f;
-        }
-        else
-        {
-            cardPanel.Blur();
-            Time.timeScale = 1f;
-        }
     }
 
-    /// <summary>
-    /// Processa a escolha da carta, adiciona ao inventário e checa combos.
-    /// </summary>
     private void HandlePickUp(CardData data)
     {
-        PlayerStats decider = AttributeMaestro.Instance.GetDecidingPlayer();
+        Debug.Log($"Carta coletada: {data.cardName}");
+
+        PlayerStats decider =
+            AttributeMaestro.Instance.GetDecidingPlayer();
 
         if (decider != null)
         {
-            // --- REINTEGRADO: Adiciona a carta ao inventário do jogador para checar combos ---
             decider.AddCardToInventory(data);
 
-            // Processa o efeito da carta
             if (data.effectType == CardEffectType.StatUpgrade)
             {
                 AttributeMaestro.Instance.ApplySharedUpgrade(
@@ -144,23 +152,25 @@ public class CardManager : MonoBehaviour
                 EquipWeapon(data);
             }
 
-            // Avisa o Maestro para checar se formou um COMBO
             AttributeMaestro.Instance.CheckForCardCombos();
         }
 
         HidePanel();
-        Debug.Log($"Carta coletada: {data.cardName}");
     }
 
     private void EquipWeapon(CardData data)
     {
-        // Encontra o shooter do jogador que decidiu (ou global se for compartilhado)
-        AutoShooter autoShooter = FindFirstObjectByType<AutoShooter>();
+        if (autoShooter == null)
+            autoShooter = FindFirstObjectByType<AutoShooter>();
 
         if (autoShooter != null && data.rangedWeapon != null)
         {
-            autoShooter.SetWeapon(data.rangedWeapon);
-            Debug.Log("Nova arma equipada: " + data.rangedWeapon.name);
+            autoShooter.AddWeapon(data.rangedWeapon);
+            Debug.Log("Arma adicionada: " + data.rangedWeapon.name);
+        }
+        else
+        {
+            Debug.LogWarning("AutoShooter ou rangedWeapon não configurado corretamente na carta.");
         }
     }
 }

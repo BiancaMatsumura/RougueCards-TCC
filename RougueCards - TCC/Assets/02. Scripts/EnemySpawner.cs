@@ -1,79 +1,111 @@
 using UnityEngine;
+using System.Collections;
 using System.Collections.Generic;
 
 /// <summary>
-/// Gerencia a criação de inimigos em uma área específica.
-/// Alteração: Suporta múltiplos prefabs base e sorteio aleatório de tipos de inimigos.
+/// Spawner estilo Vampire Survivors:
+/// nova horda só começa quando todos os inimigos morrem.
 /// </summary>
 public class EnemySpawner : MonoBehaviour
 {
-    [Header("Configuração de Prefabs")]
-    /// <summary> Lista de prefabs base que podem ser instanciados (Inimigo, Boss, etc). </summary>
-    [SerializeField] private GameObject[] enemyBasePrefabs;
+    [Header("Prefabs de Inimigos")]
+    [SerializeField] private GameObject[] prefabsInimigos;
+    [SerializeField] private EnemyData[] dadosInimigosDisponiveis;
 
-    /// <summary> Lista de configurações (DNA) que podem ser aplicadas aos prefabs. </summary>
-    [SerializeField] private EnemyData[] availableEnemyData;
+    [Header("Jogadores")]
+    [SerializeField] private Transform jogador1;
+    [SerializeField] private Transform jogador2;
 
     [Header("Área de Spawn")]
-    [SerializeField] private Vector3 areaSize = new Vector3(10f, 0f, 10f);
+    [SerializeField] private float raioSpawn = 15f;
+    [SerializeField] private float distanciaMinimaJogador = 6f;
 
-    [Header("Controle de Quantidade")]
-    [SerializeField] private float spawnDelay = 3f;
-    [SerializeField] private int maxEnemies = 5;
+    [Header("Hordas")]
+    [SerializeField] private int inimigosPorHorda = 10;
+    [SerializeField] private float intervaloEntreSpawns = 0.1f;
 
-    /// <summary> Lista interna para rastrear inimigos vivos. </summary>
-    private List<GameObject> currentEnemies = new List<GameObject>();
-    private float timer;
+    private List<GameObject> inimigosAtivos = new List<GameObject>();
+
+    private bool spawnNoJogador1 = true;
+
+    void Start()
+    {
+        StartCoroutine(CicloDeHordas());
+    }
 
     void Update()
     {
-        timer += Time.deltaTime;
+        inimigosAtivos.RemoveAll(i => i == null || !i.activeInHierarchy);
+    }
 
-        // Alteração: Limpa a lista removendo objetos destruídos ou desativados
-        currentEnemies.RemoveAll(e => e == null || !e.activeInHierarchy);
-
-        if (timer >= spawnDelay && currentEnemies.Count < maxEnemies)
+    IEnumerator CicloDeHordas()
+    {
+        while (true)
         {
-            SpawnEnemy();
-            timer = 0f;
+            yield return new WaitUntil(() => inimigosAtivos.Count == 0);
+            yield return StartCoroutine(SpawnHorda(inimigosPorHorda));
         }
     }
 
-    /// <summary>
-    /// Instancia um inimigo aleatório e aplica uma configuração de dados aleatória.
-    /// </summary>
-    void SpawnEnemy()
+    IEnumerator SpawnHorda(int quantidade)
     {
-        if (enemyBasePrefabs.Length == 0 || availableEnemyData.Length == 0) return;
-
-        // Sorteia um Prefab e um Dado
-        GameObject randomPrefab = enemyBasePrefabs[Random.Range(0, enemyBasePrefabs.Length)];
-        EnemyData randomData = availableEnemyData[Random.Range(0, availableEnemyData.Length)];
-
-        Vector3 spawnPos = GetRandomPointInArea();
-        GameObject enemyObj = Instantiate(randomPrefab, spawnPos, Quaternion.identity);
-
-        // Inicializa o inimigo com os dados sorteados
-        Enemy enemyScript = enemyObj.GetComponent<Enemy>();
-        if (enemyScript != null)
+        for (int i = 0; i < quantidade; i++)
         {
-            enemyScript.Initialize(randomData);
+            SpawnInimigo();
+            yield return new WaitForSeconds(intervaloEntreSpawns);
+        }
+    }
+
+    void SpawnInimigo()
+    {
+        if (prefabsInimigos.Length == 0 || dadosInimigosDisponiveis.Length == 0)
+            return;
+
+        GameObject prefab =
+            prefabsInimigos[Random.Range(0, prefabsInimigos.Length)];
+
+        EnemyData dados =
+            dadosInimigosDisponiveis[Random.Range(0, dadosInimigosDisponiveis.Length)];
+
+        Transform jogadorAlvo =
+            spawnNoJogador1 ? jogador1 : jogador2;
+
+        spawnNoJogador1 = !spawnNoJogador1;
+
+        if (jogadorAlvo == null)
+            return;
+
+        Vector3 posicaoSpawn =
+            ObterPosicaoAleatoriaProxima(jogadorAlvo);
+
+        GameObject inimigo =
+            Instantiate(prefab, posicaoSpawn, Quaternion.identity);
+
+        Enemy scriptInimigo =
+            inimigo.GetComponent<Enemy>();
+
+        if (scriptInimigo != null)
+        {
+            scriptInimigo.Initialize(dados);
         }
 
-        currentEnemies.Add(enemyObj);
+        inimigosAtivos.Add(inimigo);
     }
 
-    Vector3 GetRandomPointInArea()
+    Vector3 ObterPosicaoAleatoriaProxima(Transform jogador)
     {
-        Vector3 center = transform.position;
-        float x = Random.Range(-areaSize.x / 2f, areaSize.x / 2f);
-        float z = Random.Range(-areaSize.z / 2f, areaSize.z / 2f);
-        return new Vector3(center.x + x, center.y, center.z + z);
-    }
+        Vector3 direcaoAleatoria =
+            Random.insideUnitSphere * raioSpawn;
 
-    private void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.green;
-        Gizmos.DrawWireCube(transform.position, areaSize);
+        direcaoAleatoria.y = 0f;
+
+        Vector3 posicao =
+            jogador.position + direcaoAleatoria;
+
+        Vector3 direcaoNormalizada =
+            (posicao - jogador.position).normalized;
+
+        return jogador.position +
+               direcaoNormalizada * distanciaMinimaJogador;
     }
 }

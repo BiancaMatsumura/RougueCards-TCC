@@ -8,9 +8,9 @@ public class WeaponPickup : MonoBehaviour
     {
         AutoShooter shooter = other.GetComponent<AutoShooter>();
 
-        if (shooter != null)
+        if (shooter != null && weaponToGive != null)
         {
-            shooter.SetWeapon(weaponToGive);
+            shooter.AddWeapon(weaponToGive);
             Destroy(gameObject);
         }
     }

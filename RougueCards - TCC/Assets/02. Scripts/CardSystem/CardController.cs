@@ -17,6 +17,7 @@ public class CardController
 
     private bool isFlipped = false;
     private bool isAnimating = false;
+    private bool picked = false;
 
     public CardController(MonoBehaviour host, VisualElement root, CardData data, int slotIndex)
     {
@@ -26,20 +27,32 @@ public class CardController
         var slotName = $"Slot{slotIndex}";
         card = root.Q<VisualElement>(slotName);
         var panel = root.Q<VisualElement>($"{slotName}Panel");
+
         front = card.Q<VisualElement>("front");
         back = card.Q<VisualElement>("back");
+
         flipButton = panel.Q<Button>("flip");
         pickUpButton = panel.Q<Button>("pickUp");
 
         PopulateFront(front, data);
         back.style.display = DisplayStyle.None;
 
-        flipButton.focusable = true;
-        pickUpButton.focusable = true;
-
         flipButton.clicked += TryFlip;
-        pickUpButton.clicked += () => OnPickUp?.Invoke(data);
+
+        pickUpButton.clicked += () =>
+        {
+            if (picked) return;
+
+            picked = true;
+
+            Debug.Log($"[CARD PICK] {data.cardName} | Weapon: {data.rangedWeapon}");
+
+            OnPickUp?.Invoke(data);
+        };
+
         card.RegisterCallback<ClickEvent>(_ => TryFlip());
+
+        Debug.Log($"[CARD SPAWN] {data.cardName} | Weapon: {data.rangedWeapon}");
     }
 
     private void PopulateFront(VisualElement side, CardData d)
@@ -47,37 +60,32 @@ public class CardController
         var nameLabel = side.Q<Label>("CardName");
         var imageEl = side.Q<VisualElement>("cardImage");
 
-        if (nameLabel != null) nameLabel.text = d.cardName;
+        if (nameLabel != null)
+            nameLabel.text = d.cardName;
 
         if (imageEl != null && d.cardImage != null)
-        {
-            var sprite = d.cardImage;
-            imageEl.style.backgroundImage = new StyleBackground(sprite);
-            imageEl.schedule.Execute(() =>
-            {
-                imageEl.style.backgroundImage = new StyleBackground(sprite);
-                imageEl.MarkDirtyRepaint();
-            });
-        }
+            imageEl.style.backgroundImage = new StyleBackground(d.cardImage);
     }
 
     private void PopulateBack(VisualElement side, CardData d)
     {
         var descLabel = side.Q<Label>("CardDescription");
-        if (descLabel != null) descLabel.text = d.description;
+        if (descLabel != null)
+            descLabel.text = d.description;
     }
 
     public void FocusFlip() => flipButton.Focus();
 
     private void TryFlip()
     {
-        if (isAnimating) return;
+        if (isAnimating || picked) return;
         host.StartCoroutine(Flip());
     }
 
     private IEnumerator Flip()
     {
         isAnimating = true;
+
         yield return Animate(1f, 0f, 0.2f);
 
         isFlipped = !isFlipped;
