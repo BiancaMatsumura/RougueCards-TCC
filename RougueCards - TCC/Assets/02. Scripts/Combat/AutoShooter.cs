@@ -138,7 +138,8 @@ public class AutoShooter : MonoBehaviour
                     projSpeed,
                     weapon.lifetime,
                     0f,
-                    weapon.DestroyOnContact
+                    weapon.DestroyOnContact,
+                    pStats 
                 );
 
                 b.ApplyMovimentType(weapon.BM, this);

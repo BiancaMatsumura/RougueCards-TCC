@@ -2348,6 +2348,7 @@ GameObject:
   - component: {fileID: 1243163938}
   - component: {fileID: 1243163939}
   - component: {fileID: 1243163941}
+  - component: {fileID: 1243163942}
   m_Layer: 0
   m_Name: '-- GAME CONTROLLER  -- '
   m_TagString: Untagged
@@ -2531,6 +2532,23 @@ MonoBehaviour:
   rawImageP2: {fileID: 1995627886}
   splitDistance: 15
   uiBlendSpeed: 15
+--- !u!114 &1243163942
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1243163932}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89f3a4bfd28c5034d89cccfeb47f254d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bosses:
+  - {fileID: 11400000, guid: d6b5f0ce2e7c1bf4baefa70f6f96eeee, type: 2}
+  playerProgress: {fileID: 11400000, guid: 00a38000d9bba5a42b1cef107458d7c8, type: 2}
+  cardManager: {fileID: 1962024334}
+  spawner: {fileID: 1584813345}
 --- !u!1 &1327042246
 GameObject:
   m_ObjectHideFlags: 0
@@ -2935,14 +2953,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33094c6110975bc4aa0eaefe0ebc55d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyBasePrefabs:
+  prefabsInimigos:
   - {fileID: 64197260445343202, guid: 643ab63be91d49a45b9f9d1f5cfe66c1, type: 3}
-  availableEnemyData:
+  dadosInimigosDisponiveis:
   - {fileID: 11400000, guid: 735695ab05171f44d9136da4dfed93f4, type: 2}
   - {fileID: 11400000, guid: 32c3e8d17e34d4844b879eaa86e2e182, type: 2}
-  areaSize: {x: 21.79, y: 0, z: 2.9}
-  spawnDelay: 2
-  maxEnemies: 50
+  jogador1: {fileID: 0}
+  jogador2: {fileID: 0}
+  raioSpawn: 20
+  distanciaMinimaJogador: 10
+  inimigosPorHorda: 5
+  intervaloEntreSpawns: 0.5
+  splitManager: {fileID: 1243163941}
 --- !u!4 &1584813346
 Transform:
   m_ObjectHideFlags: 0
@@ -3101,6 +3123,7 @@ GameObject:
   - component: {fileID: 1962024340}
   - component: {fileID: 1962024339}
   - component: {fileID: 1962024341}
+  - component: {fileID: 1962024342}
   m_Layer: 5
   m_Name: '-- UI  -- '
   m_TagString: Untagged
@@ -3158,6 +3181,7 @@ MonoBehaviour:
   cardDatabase: {fileID: 11400000, guid: a7b1e506f0124584aa07ae2c55049283, type: 2}
   playerProgress: {fileID: 11400000, guid: 00a38000d9bba5a42b1cef107458d7c8, type: 2}
   toggleAction: {fileID: -6450635596403456157, guid: 6e778180076408648b21a1e54c02c1a0, type: 3}
+  autoShooter: {fileID: 0}
   isPanelVisible: 0
 --- !u!114 &1962024335
 MonoBehaviour:
@@ -3255,6 +3279,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7723031bf530b86418dc0f527b93eb18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1962024342
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1962024329}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4bc2e07ca14f1949a9e121cef63209f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1995627884

@@ -1017,6 +1017,7 @@ MonoBehaviour:
   currentCombo: 0
   comboDuration: 2
   inventoryCards: []
+  kills: 0
 --- !u!114 &881652555557746211
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1032,6 +1033,8 @@ MonoBehaviour:
   playerID: 1
   maxHealth: 100
   currentHealth: 0
+  pStats: {fileID: 0}
+  lastAttacker: {fileID: 0}
 --- !u!95 &7197112135679768964
 Animator:
   serializedVersion: 7
@@ -1115,7 +1118,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6d361aa2345dad4a9e0ca70ad6a0e66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  flashColor: {r: 1, g: 0.68598413, b: 0, a: 1}
+  flashColor: {r: 1, g: 0, b: 0, a: 1}
   flashDuration: 0.1
   flashIntensity: 3
 --- !u!1 &1407896814079509567
@@ -1201,7 +1204,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -1219,7 +1222,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8509afbc8cc3f4f4e9a426b7511d048c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 20
+  damage: 10
+  pStats: {fileID: 0}
 --- !u!1 &1570303209562492770
 GameObject:
   m_ObjectHideFlags: 0
@@ -1493,7 +1497,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -1511,7 +1515,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8509afbc8cc3f4f4e9a426b7511d048c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 20
+  damage: 10
+  pStats: {fileID: 0}
 --- !u!1 &2209211818292205256
 GameObject:
   m_ObjectHideFlags: 0
@@ -2714,7 +2719,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -2732,7 +2737,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8509afbc8cc3f4f4e9a426b7511d048c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 20
+  damage: 10
+  pStats: {fileID: 0}
 --- !u!1 &4288222435443977718
 GameObject:
   m_ObjectHideFlags: 0
@@ -4872,7 +4878,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -4890,7 +4896,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8509afbc8cc3f4f4e9a426b7511d048c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 20
+  damage: 10
+  pStats: {fileID: 0}
 --- !u!1 &8367790713965300346
 GameObject:
   m_ObjectHideFlags: 0

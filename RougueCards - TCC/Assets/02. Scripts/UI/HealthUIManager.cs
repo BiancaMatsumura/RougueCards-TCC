@@ -44,7 +44,7 @@ public class HealthUIManager : MonoBehaviour
         {
             fillP2.style.width = percent * BAR_WIDTH;
             currentHealthLabel2.text = current.ToString();
-            maxHealthLabel2.text = $"/ {max}";
+            maxHealthLabel2.text = $"{max} /";
         }
     }
 }

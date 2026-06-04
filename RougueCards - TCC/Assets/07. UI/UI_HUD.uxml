@@ -16,6 +16,10 @@
                 <engine:Label text="00" name="CurrentLife1" style="color: rgb(255, 255, 255); font-size: 20px;" />
                 <engine:Label text="/ 00" name="MaxLife1" style="color: rgb(255, 255, 255); font-size: 15px;" />
             </engine:VisualElement>
+            <engine:VisualElement name="KillCounter" style="flex-direction: row; position: absolute; left: 150px; top: 45px;">
+                <engine:VisualElement name="KillImage" style="flex-grow: 1; width: 60px; background-image: url(&quot;project://database/Assets/05.%20Sprites/UI/morte1.png?fileID=21300000&amp;guid=afb5bf323ea941940bbf0b38a5be00fd&amp;type=3#morte1&quot;); -unity-background-scale-mode: scale-to-fit; height: 40px;" />
+                <engine:Label text="00" name="killsP1Label" style="color: rgb(255, 255, 255); font-size: 20px;" />
+            </engine:VisualElement>
             <engine:VisualElement name="PowerContainer01" style="flex-grow: 1; top: 225px; left: 35px; width: 35px; height: 545px; position: absolute; flex-direction: column; scale: 1 1;">
                 <engine:VisualElement name="Power" style="flex-grow: 1; position: absolute; width: 35px; height: 545px; align-self: flex-start; align-items: center; justify-content: center; align-content: center; left: 0; top: 0; background-image: url(&quot;project://database/Assets/05.%20Sprites/UI/BAR_VERTICAL.png?fileID=21300000&amp;guid=1729b255d7b8b6a439a623d1718351d1&amp;type=3#BAR_VERTICAL&quot;); -unity-background-image-tint-color: rgb(41, 41, 41);" />
                 <engine:VisualElement name="Fill_PowerP1" style="flex-grow: 1; position: absolute; width: 31px; height: 522px; align-self: flex-start; align-items: center; justify-content: space-around; align-content: center; left: 2px; top: auto; background-image: url(&quot;project://database/Assets/05.%20Sprites/UI/FILL_VERTICAL.png?fileID=21300000&amp;guid=add4c65ab55c3b343abc2632bc01d092&amp;type=3#FILL_VERTICAL&quot;); -unity-background-image-tint-color: rgb(104, 157, 150); bottom: 13px;" />
@@ -25,8 +29,12 @@
             <engine:VisualElement name="Life" style="position: absolute; left: 65px; top: 0; width: 860px; height: 35px; background-color: rgba(255, 255, 255, 0); border-radius: 5px; background-image: url(&quot;project://database/Assets/05.%20Sprites/UI/LIFE_BAR.png?fileID=21300000&amp;guid=afa8baf39fb52e74b8ec4766dbdcf797&amp;type=3#LIFE_BAR&quot;); -unity-background-image-tint-color: rgb(41, 41, 41);" />
             <engine:VisualElement name="FillP2" style="position: absolute; left: 74px; top: 2px; width: 839px; height: 31px; background-color: rgba(255, 255, 255, 0); border-radius: 5px; background-image: url(&quot;project://database/Assets/05.%20Sprites/UI/FILL_LIFE.png?fileID=21300000&amp;guid=8b14aedaaa1a38c49be89af7d1c64968&amp;type=3#FILL_LIFE&quot;); -unity-background-image-tint-color: rgb(42, 10, 31);" />
             <engine:VisualElement name="LifeCounter" style="flex-direction: row; position: absolute; left: auto; top: 45px; right: 84px;">
+                <engine:Label text="00 /" name="MaxLife2" style="color: rgb(255, 255, 255); font-size: 15px;" />
                 <engine:Label text="00" name="CurrentLife2" style="color: rgb(255, 255, 255); font-size: 20px;" />
-                <engine:Label text="/ 00" name="MaxLife2" style="color: rgb(255, 255, 255); font-size: 15px;" />
+            </engine:VisualElement>
+            <engine:VisualElement name="KillCounter" style="flex-direction: row; position: absolute; left: auto; top: 45px; right: 200px;">
+                <engine:Label text="00" name="killsP2Label" style="color: rgb(255, 255, 255); font-size: 20px;" />
+                <engine:VisualElement name="KillImage" style="flex-grow: 1; width: 60px; background-image: url(&quot;project://database/Assets/05.%20Sprites/UI/morte1.png?fileID=21300000&amp;guid=afb5bf323ea941940bbf0b38a5be00fd&amp;type=3#morte1&quot;); -unity-background-scale-mode: scale-to-fit; height: 40px;" />
             </engine:VisualElement>
             <engine:VisualElement name="PowerContainer02" style="flex-grow: 1; top: 225px; right: 35px; width: 35px; height: 545px; position: absolute;">
                 <engine:VisualElement name="Power" style="flex-grow: 1; position: absolute; width: 35px; height: 545px; align-self: flex-start; align-items: center; justify-content: center; align-content: center; left: auto; top: 0; background-image: url(&quot;project://database/Assets/05.%20Sprites/UI/BAR_VERTICAL.png?fileID=21300000&amp;guid=1729b255d7b8b6a439a623d1718351d1&amp;type=3#BAR_VERTICAL&quot;); -unity-background-image-tint-color: rgb(41, 41, 41); right: 0;" />
@@ -41,8 +49,8 @@
                 <engine:Label text="/ 00" name="MaxXP" style="color: rgb(255, 255, 255); margin-top: 0; margin-right: 0; margin-bottom: 0; font-size: 15px;" />
             </engine:VisualElement>
         </engine:VisualElement>
-        <engine:VisualElement name="Timer" style="flex-grow: 1; position: absolute; top: 57px; align-self: center; justify-content: space-between; align-items: center; align-content: flex-end; width: 110px; height: 50px; left: 50%; flex-direction: column; translate: -50% -50%;">
-            <engine:Label text="00:00" name="timerText" style="-unity-text-align: middle-center; font-size: 32px; color: rgb(0, 0, 0);" />
+        <engine:VisualElement name="Timer" style="flex-grow: 1; position: absolute; top: 57px; align-self: center; justify-content: space-between; align-items: center; align-content: flex-end; width: 110px; height: 50px; left: 50%; flex-direction: column; translate: -50% -50%; color: rgb(255, 255, 255);">
+            <engine:Label text="00:00" name="timerText" style="-unity-text-align: middle-center; font-size: 32px; color: rgb(255, 255, 255);" />
         </engine:VisualElement>
     </engine:VisualElement>
     <engine:VisualElement name="CardsContainer" style="flex-grow: 1; position: absolute; width: 1920px; height: 1080px; margin-left: 0; background-color: rgba(0, 0, 0, 0); top: 0; left: 1px; border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px;">

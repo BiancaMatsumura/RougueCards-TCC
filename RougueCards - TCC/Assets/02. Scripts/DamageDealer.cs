@@ -16,7 +16,7 @@ public class DamageDealer : MonoBehaviour
         // RÍGIDO: Só causa dano se o objeto atingido tiver EXATAMENTE a tag Player
         if (other.CompareTag("Player"))
         {
-        if (other.CompareTag(gameObject.tag)) return; // mesma tag = ignora
+            if (other.CompareTag(gameObject.tag)) return; // mesma tag = ignora
 
             var health = other.GetComponent<Health>();
             if (health != null)

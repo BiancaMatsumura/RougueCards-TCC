@@ -9,7 +9,7 @@ using System.Collections.Generic;
 public class EnemySpawner : MonoBehaviour
 {
     [Header("Prefabs de Inimigos")]
-    [SerializeField] private GameObject[] prefabsInimigos;
+    [SerializeField] public GameObject[] prefabsInimigos;
     [SerializeField] private EnemyData[] dadosInimigosDisponiveis;
 
     [Header("Jogadores")]
@@ -24,9 +24,13 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private int inimigosPorHorda = 10;
     [SerializeField] private float intervaloEntreSpawns = 0.1f;
 
+    [Header("Referências")]
+    public SplitScreenManager splitManager;
+
     private List<GameObject> inimigosAtivos = new List<GameObject>();
 
     private bool spawnNoJogador1 = true;
+    public event System.Action OnHordaCompleted;
 
     void Start()
     {
@@ -35,6 +39,13 @@ public class EnemySpawner : MonoBehaviour
 
     void Update()
     {
+        if (jogador1 == null || jogador2 == null)
+        {
+            var (p1, p2) = splitManager.Players;
+            jogador1 = p1;
+            jogador2 = p2;
+        }
+
         inimigosAtivos.RemoveAll(i => i == null || !i.activeInHierarchy);
     }
 
@@ -43,6 +54,7 @@ public class EnemySpawner : MonoBehaviour
         while (true)
         {
             yield return new WaitUntil(() => inimigosAtivos.Count == 0);
+            OnHordaCompleted?.Invoke(); // avisa que a horda terminou
             yield return StartCoroutine(SpawnHorda(inimigosPorHorda));
         }
     }
@@ -92,7 +104,7 @@ public class EnemySpawner : MonoBehaviour
         inimigosAtivos.Add(inimigo);
     }
 
-    Vector3 ObterPosicaoAleatoriaProxima(Transform jogador)
+    public Vector3 ObterPosicaoAleatoriaProxima(Transform jogador)
     {
         Vector3 direcaoAleatoria =
             Random.insideUnitSphere * raioSpawn;

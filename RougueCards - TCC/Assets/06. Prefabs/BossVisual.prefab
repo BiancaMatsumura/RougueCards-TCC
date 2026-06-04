@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6338575565048294045}
   - component: {fileID: 6297228485736025658}
   m_Layer: 0
-  m_Name: EnemyVisual_1
+  m_Name: BossVisual
   m_TagString: Visual
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -29,7 +29,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2.2, y: 2.2, z: 2.2}
+  m_LocalScale: {x: 10, y: 10, z: 10}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
@@ -65,7 +65,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a36c2a40880c33c4286db79c9e8f7ba8, type: 2}
+  - {fileID: 2100000, guid: af30d643c32e4bd4f94481e672a0840f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

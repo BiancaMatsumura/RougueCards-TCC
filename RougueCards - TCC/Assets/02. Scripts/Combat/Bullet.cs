@@ -1,11 +1,13 @@
 
+using RougueCards.Attributes;
 using UnityEngine;
 
 
 /// <summary>
 /// Tipos de movimentos que uma projetil pode ter
 /// </summary>
-public enum BulletMoviment {
+public enum BulletMoviment
+{
     Linear, // segue na direção que foi disparada
     Curve, // segue uma curva bezier
     Orbital, // gira em torno do player
@@ -24,6 +26,7 @@ public class Bullet : MonoBehaviour
     [SerializeField] private int damage = 10;
     [SerializeField] private float lifeTime = 3f;
     [SerializeField] private float knockbackForce;
+    private PlayerStats shooter;
 
     private Vector3 direction;
     Vector3 playertrasform;
@@ -39,18 +42,16 @@ public class Bullet : MonoBehaviour
     /// <param name="dmg">Dano causados ao impacto.</param>
     /// <param name="spd">Velocidade de deslocamento.</param>
     /// <param name="lTime">Tempo em segundos antes de se auto-destruir.</param>
-    public void Init(Vector3 dir, int dmg, float spd, float lTime, float kb, bool DestroyOnC)
+    public void Init(Vector3 dir, int dmg, float spd, float lTime, float kb, bool DestroyOnC, PlayerStats owner = null)
     {
         direction = dir;
         damage = dmg;
         speed = spd;
         lifeTime = lTime;
         knockbackForce = kb;
-
         DestroyOC = DestroyOnC;
-
+        shooter = owner;
         Destroy(gameObject, lifeTime);
-
     }
 
     // Mantido por compatibilidade, mas o dano já é definido no Init
@@ -73,7 +74,8 @@ public class Bullet : MonoBehaviour
 
             if (health != null)
             {
-                health.TakeDamage(damage);
+                health.pStats = shooter;
+                health.TakeDamage(damage, shooter);
             }
             if (DestroyOC || other.CompareTag("Ground"))
             {
@@ -90,7 +92,7 @@ public class Bullet : MonoBehaviour
     }
     public void Moviment(BulletMoviment BM)
     {
-   
+
         switch (BM)
         {
 
@@ -219,7 +221,7 @@ public class Bullet : MonoBehaviour
         playertrasform = trasnformPosition;
     }
 
-    public Vector3 LinearMoviment() 
+    public Vector3 LinearMoviment()
     {
         Vector3 alfa;
         alfa = direction * speed * Time.deltaTime;

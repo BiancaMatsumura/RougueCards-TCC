@@ -6288,6 +6288,7 @@ MonoBehaviour:
   currentCombo: 0
   comboDuration: 2
   inventoryCards: []
+  kills: 0
 --- !u!114 &-3200988610258966888
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6303,6 +6304,8 @@ MonoBehaviour:
   playerID: 2
   maxHealth: 100
   currentHealth: 0
+  pStats: {fileID: 0}
+  lastAttacker: {fileID: 0}
 --- !u!114 &8239322281545097670
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6316,7 +6319,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weapons:
-  - {fileID: 11400000, guid: d5533b58b8176a848b1d0a9287f1fcd2, type: 2}
+  - {fileID: 11400000, guid: 397891c723cc57a43bb6fd5cd9dc3ddf, type: 2}
   firePoint: {fileID: 887448683358562105}
 --- !u!95 &2846131901169197089
 Animator:

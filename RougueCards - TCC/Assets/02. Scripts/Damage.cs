@@ -1,19 +1,23 @@
+using RougueCards.Attributes;
 using UnityEngine;
 
 public class Damage : MonoBehaviour
 {
     public int damage = 20;
-  void OnTriggerEnter(Collider other)
+    [SerializeField] private PlayerStats pStats;
+
+    void Awake()
+    {
+        pStats = GetComponentInParent<PlayerStats>();
+    }
+
+    void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Enemy"))
         {
             var health = other.GetComponent<Health>();
-
             if (health != null)
-            {
-                health.TakeDamage(damage);
-            }
-
+                health.TakeDamage(damage, pStats);
         }
     }
 }

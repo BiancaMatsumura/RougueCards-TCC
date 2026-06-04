@@ -19,6 +19,7 @@ public class CardManager : MonoBehaviour
     private VisualElement root;
 
     private bool isLoadingCards = false;
+    public event System.Action OnPanelClosed;
 
     void Awake()
     {
@@ -125,7 +126,10 @@ public class CardManager : MonoBehaviour
         Time.timeScale = visible ? 0f : 1f;
 
         if (!visible)
+        {
             controllers = null;
+            OnPanelClosed?.Invoke(); // linha nova
+        }
     }
 
     private void HandlePickUp(CardData data)

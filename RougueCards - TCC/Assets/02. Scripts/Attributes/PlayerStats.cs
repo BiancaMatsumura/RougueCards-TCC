@@ -30,6 +30,9 @@ namespace RougueCards.Attributes
         [Header("Cartas Coletadas")]
         public List<CardData> inventoryCards = new List<CardData>();
 
+        [Header("Pontuação")]
+        public int kills = 0;
+
         private void Awake()
         {
             inventoryCards ??= new List<CardData>();
@@ -42,6 +45,8 @@ namespace RougueCards.Attributes
         /// </summary>
         public void AddKill()
         {
+            kills++;
+            Debug.Log($"[Player {playerID}] Kills: {kills}");
             currentCombo++;
             comboTimer = comboDuration;
 

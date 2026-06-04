@@ -37,6 +37,7 @@ public class SplitScreenManager : MonoBehaviour
     public bool isSplitScreen => _isSplit;
     public (Transform p1, Transform p2) Players => (_p1, _p2);
     public event System.Action<bool> OnSplitScreenChanged;
+    public event System.Action<Transform, Transform> OnPlayersRegistered;
 
     void Start()
     {
@@ -117,6 +118,8 @@ public class SplitScreenManager : MonoBehaviour
         targetGroup.Targets.Clear();
         targetGroup.Targets.Add(new CinemachineTargetGroup.Target { Object = p1, Weight = 1f, Radius = 2f });
         targetGroup.Targets.Add(new CinemachineTargetGroup.Target { Object = p2, Weight = 1f, Radius = 2f });
+
+        OnPlayersRegistered?.Invoke(p1, p2);
     }
 
     public void OnPlayerDied(Transform deadPlayer)

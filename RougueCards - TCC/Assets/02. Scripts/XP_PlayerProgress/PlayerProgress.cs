@@ -13,6 +13,7 @@ public class PlayerProgress : ScriptableObject
 
     public event System.Action<int, int> OnXPChanged;  // current, max
     public event System.Action<int> OnStageCompleted;  // stage completado
+    public bool bossAlive = false;
 
     public void AddXP(int amount)
     {
@@ -21,10 +22,14 @@ public class PlayerProgress : ScriptableObject
         OnXPChanged?.Invoke(currentXP, MaxXP);
 
         if (currentXP >= MaxXP)
-            CompleteStage();
+        {
+            Debug.Log($"[PlayerProgress] XP cheio. bossAlive: {bossAlive}"); // linha nova
+            if (!bossAlive)
+                CompleteStage();
+        }
     }
 
-    private void CompleteStage()
+    public void CompleteStage()
     {
         OnStageCompleted?.Invoke(currentStage);
         currentStage++;
@@ -36,6 +41,7 @@ public class PlayerProgress : ScriptableObject
     {
         currentXP = 0;
         currentStage = 0;
+        bossAlive = false;
         OnXPChanged?.Invoke(currentXP, MaxXP);
     }
 }

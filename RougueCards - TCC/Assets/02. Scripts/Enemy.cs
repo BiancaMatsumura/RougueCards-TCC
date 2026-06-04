@@ -71,6 +71,7 @@ public class Enemy : MonoBehaviour
         // 2. Sincronização de Atributos
         health.maxHealth = data.maxHealth;
         health.currentHealth = data.maxHealth;
+        health.ForceRefresh();
         damageDealer.damage = data.damageToPlayer;
 
         if (enemyXP != null) enemyXP.SetXPValue(data.xpValue);

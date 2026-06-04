@@ -18,5 +18,5 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 343c6d4a07713c0478de2bb210bcd4cc, type: 2}
   comboDuration: 5
   statToUpgrade: 0
-  upgradeValue: 200
+  upgradeValue: 100
   isPercentage: 0
