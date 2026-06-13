@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1ca167d7e7d115468a37a78619e8983, type: 3}
   m_Name: Orbital
   m_EditorClassIdentifier: 
-  bulletPrefab: {fileID: 2591478938443851655, guid: eb2b036ebd24ce64f8968784b1e9f144, type: 3}
+  bulletPrefab: {fileID: 2591478938443851655, guid: 3803868bfb2cc3b4e94d1810d3177afd, type: 3}
   fireRate: 3
   range: 7
   damage: 10
@@ -21,3 +21,4 @@ MonoBehaviour:
   DestroyOnContact: 1
   pellets: 3
   spread: 20
+  recoilForce: 0

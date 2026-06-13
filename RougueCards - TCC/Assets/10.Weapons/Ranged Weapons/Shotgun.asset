@@ -12,12 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1ca167d7e7d115468a37a78619e8983, type: 3}
   m_Name: Shotgun
   m_EditorClassIdentifier: 
-  bulletPrefab: {fileID: 7856817073036134209, guid: faf1a051722e80d46822c56f5005a061, type: 3}
+  bulletPrefab: {fileID: 2591478938443851655, guid: 4da235d5478e23240bfd169fe826c184, type: 3}
   fireRate: 3
   range: 7
   damage: 7
   lifetime: 3
   BM: 0
-  DestroyOnContact: 1
+  DestroyOnContact: 0
   pellets: 5
   spread: 20
+  recoilForce: 0

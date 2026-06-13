@@ -13,11 +13,12 @@ MonoBehaviour:
   m_Name: Domo
   m_EditorClassIdentifier: 
   bulletPrefab: {fileID: 2591478938443851655, guid: 554698d7742a080469ba696775ab72e4, type: 3}
-  fireRate: 15
+  fireRate: 7.35
   range: 7
   damage: 100
-  lifetime: 10
+  lifetime: 5
   BM: 4
   DestroyOnContact: 0
   pellets: 1
   spread: 20
+  recoilForce: 0
