@@ -23,6 +23,7 @@ public class EnemySpawner : MonoBehaviour
     [Header("Hordas")]
     [SerializeField] private int inimigosPorHorda = 10;
     [SerializeField] private float intervaloEntreSpawns = 0.1f;
+    [SerializeField] private float tempoMaximoHorda = 30f;
 
     [Header("Referências")]
     public SplitScreenManager splitManager;
@@ -38,7 +39,7 @@ public class EnemySpawner : MonoBehaviour
 
     void Start()
     {
-        enabled = false; 
+        enabled = false;
         enterPlayersUI.OnSelectionComplete += StartSpawner;
     }
     private void StartSpawner()
@@ -63,8 +64,16 @@ public class EnemySpawner : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitUntil(() => inimigosAtivos.Count == 0);
-            OnHordaCompleted?.Invoke(); // avisa que a horda terminou
+            float tempo = 0f;
+
+            while (inimigosAtivos.Count > 0 && tempo < tempoMaximoHorda)
+            {
+                tempo += Time.deltaTime;
+                yield return null;
+            }
+
+            OnHordaCompleted?.Invoke();
+
             yield return StartCoroutine(SpawnHorda(inimigosPorHorda));
         }
     }

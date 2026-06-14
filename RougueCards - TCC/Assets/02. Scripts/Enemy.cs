@@ -105,7 +105,7 @@ public class Enemy : MonoBehaviour
     private void UpdateSlider(int _, int current, int max)
     {
         if (slideLife == null) return;
-        slideLife.maxValue = max; 
+        slideLife.maxValue = max;
         slideLife.value = current;
     }
 
@@ -181,12 +181,17 @@ public class Enemy : MonoBehaviour
     private void FindClosestPlayer()
     {
         var players = GameObject.FindGameObjectsWithTag("Player");
+        Debug.Log($"[Enemy] FindClosestPlayer — players encontrados: {players.Length}");
+
         float minDist = Mathf.Infinity;
         Transform closest = null;
 
         foreach (var p in players)
         {
+            Debug.Log($"[Enemy] Player: {p.name} | active: {p.activeInHierarchy} | IsDowned: {p.GetComponent<DownedState>()?.IsDowned}");
             if (!p.activeInHierarchy) continue;
+            if (p.GetComponent<DownedState>()?.IsDowned == true) continue;
+
             float dist = Vector3.Distance(transform.position, p.transform.position);
             if (dist < minDist)
             {
@@ -194,6 +199,8 @@ public class Enemy : MonoBehaviour
                 closest = p.transform;
             }
         }
+
         target = closest;
+        Debug.Log($"[Enemy] target definido: {(target != null ? target.name : "NULL")}");
     }
 }

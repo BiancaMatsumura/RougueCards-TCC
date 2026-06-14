@@ -3,6 +3,7 @@ using UnityEngine.UIElements;
 using UnityEngine.SceneManagement;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.UI;
+using System.Collections;
 
 public class UI_Controller : MonoBehaviour
 {
@@ -74,8 +75,23 @@ public class UI_Controller : MonoBehaviour
     {
         isPaused = true;
         Time.timeScale = 0;
-        RefreshInputModule();
         pauseScreen.Show();
+        StartCoroutine(RefreshInputModule());
+    }
+
+    public void ShowGameOver()
+    {
+        isPaused = true;
+        Time.timeScale = 0;
+        gameOverScreen.Show();
+        StartCoroutine(RefreshInputModule());
+    }
+
+    private IEnumerator RefreshInputModule()
+    {
+        inputModule.enabled = false;
+        yield return null; // espera um frame
+        inputModule.enabled = true;
     }
 
     private void OpenOptions()
@@ -90,14 +106,6 @@ public class UI_Controller : MonoBehaviour
         if (optionsOpenedFromPause)
             pauseScreen.Show();
         // Se vier do menu principal, navegue de volta lá
-    }
-
-    public void ShowGameOver()  // chame de fora quando o jogador morrer
-    {
-        isPaused = true;
-        Time.timeScale = 0;
-        RefreshInputModule();
-        gameOverScreen.Show();
     }
 
     // --- Ações comuns ---
@@ -119,12 +127,6 @@ public class UI_Controller : MonoBehaviour
     {
         Time.timeScale = 1;
         SceneManager.LoadScene(0);
-    }
-
-    private void RefreshInputModule()
-    {
-        inputModule.enabled = false;
-        inputModule.enabled = true;
     }
 
     private void PlayLevel(string levelName)

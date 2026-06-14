@@ -108,9 +108,9 @@
             <engine:Button text="Resume" name="ResumeButton" class="Button" />
             <engine:Button text="Restart" name="RestartButton" enable-rich-text="false" class="Button" style="width: 400px; height: 60px; font-size: 30px;" />
             <engine:Button text="Main Menu" name="MainMenu" enable-rich-text="false" class="Button" style="width: 400px; height: 60px; font-size: 30px;" />
-            <engine:VisualElement name="InstructionPanel" style="flex-grow: 1; position: absolute; width: 500px; height: 500px; align-items: flex-start; align-self: center; left: -441px; justify-content: center; display: flex; top: 49px;">
+            <engine:VisualElement name="InstructionPanel" style="flex-grow: 1; position: absolute; width: 500px; height: 500px; align-items: flex-start; align-self: center; left: -476px; justify-content: center; display: flex; top: 5px;">
                 <engine:Label text="INSTRUÇÕES" name="Title" style="background-color: rgba(0, 0, 0, 0); color: rgb(255, 255, 255); left: 20px; -unity-font-style: bold;" />
-                <engine:Label text="Iniciar com Espaço = WASD&#10;Iniciar com Control Direito = SETAS&#10;Iniciar com Botão A ou X = Gamepad&#10;&#10;Esc | Enter Numpad | Start ou Option = Pause&#10;&#10;-- Controles WASD --&#10;WASD = Move&#10;Espaço = Pula&#10;E = Ataca&#10;&#10;-- Controle SETRAS -- &#10;SETAS = Move&#10;0 Numpad = Pula&#10;Control Direito  = Ataca&#10;&#10;-- Controle GAMEPAD -- &#10;Analógio = Move&#10;South Button (A ou X) = Pula&#10;West Button (X ou Quadrado) = Ataca&#10;&#10;Player 01 = Ataque Manual&#10;Player 02 = Ataque Automático" name="Text" style="flex-wrap: wrap; color: rgb(255, 255, 255); left: 15px;" />
+                <engine:Label text="Esc | &#10;Enter Numpad | &#10;Start ou Option = Pause&#10;&#10;-- Controles WASD --&#10;WASD = Move&#10;Espaço = Pula&#10;E = Ataca&#10;&#10;-- Controle SETRAS -- &#10;SETAS = Move&#10;0 Numpad = Pula&#10;Control Direito  = Ataca&#10;&#10;-- Controle GAMEPAD -- &#10;Analógio = Move&#10;South Button (A ou X) = Pula&#10;West Button (X ou Quadrado) = Ataca&#10;&#10;Player 01 = Ataque Manual&#10;Player 02 = Ataque Automático" name="Text" style="flex-wrap: wrap; color: rgb(255, 255, 255); left: 15px;" />
             </engine:VisualElement>
         </engine:VisualElement>
     </engine:VisualElement>
