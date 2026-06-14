@@ -9,7 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4fc4e1b567e84f047b7fe31cb973279a, type: 3}
-  m_Name: ComboDatabase
+  m_Script: {fileID: 11500000, guid: e9b1736e5d77fe045abffaae660e3e8b, type: 3}
+  m_Name: Arcano01
   m_EditorClassIdentifier: 
-  allPossibleCombos: []
+  bossName: Arcano 01
+  bossEnemyData: {fileID: 11400000, guid: 27f59b4369fe53b44a3426f00b3e36ed, type: 2}
+  xpStageRequired: 2
+  killsRequired: 30
+  timeRequired: 30

@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cae05e17d344a374fb11f6f698d7d87f, type: 3}
-  m_Name: Boss01
+  m_Name: Boss02
   m_EditorClassIdentifier: 
-  enemyName: Arcano 01
-  visualPrefab: {fileID: 5427188821400822598, guid: c5e89ad38114f1945b97739bce0f7b76, type: 3}
+  enemyName: Arcano 02
+  visualPrefab: {fileID: 5427188821400822598, guid: 412bc46ec1f9a4c45a2a6c0b6829ddab, type: 3}
   animatorController: {fileID: 0}
-  speed: 3
-  maxHealth: 250
-  damageToPlayer: 10
+  speed: 3.5
+  maxHealth: 450
+  damageToPlayer: 13
   xpValue: 20
   modelScale: 2

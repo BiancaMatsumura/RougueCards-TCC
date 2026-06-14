@@ -10,6 +10,7 @@ public class BossFightManager : MonoBehaviour
     [Header("Referências")]
     public PlayerProgress playerProgress;
     public CardManager cardManager;
+    [SerializeField] private BossIndicatorHUD bossHUD;
 
     private PlayerStats _p1;
     private PlayerStats _p2;
@@ -29,6 +30,7 @@ public class BossFightManager : MonoBehaviour
             _p1 = p1.GetComponent<PlayerStats>();
             _p2 = p2.GetComponent<PlayerStats>();
         };
+        bossHUD.Hide();
     }
 
     void Update()
@@ -38,12 +40,32 @@ public class BossFightManager : MonoBehaviour
         if (_p1 == null || _p2 == null) return;
 
         var condition = bosses[_currentBossIndex];
-        bool xpOk = playerProgress.currentStage >= condition.xpStageRequired;
-        bool killsOk = (_p1.kills + _p2.kills) >= condition.killsRequired;
-        bool timeOk = Time.timeSinceLevelLoad >= condition.timeRequired;
+
+        float xpProgress = condition.xpStageRequired > 0
+    ? (float)playerProgress.currentStage / condition.xpStageRequired : -1f;
+        float killsProgress = condition.killsRequired > 0
+            ? (float)(_p1.kills + _p2.kills) / condition.killsRequired : -1f;
+        float timeProgress = condition.timeRequired > 0
+            ? Time.timeSinceLevelLoad / condition.timeRequired : -1f;
+
+        // Média só dos requisitos ativos (valor != -1)
+        float sum = 0f; int count = 0;
+        if (xpProgress >= 0f) { sum += Mathf.Clamp01(xpProgress); count++; }
+        if (killsProgress >= 0f) { sum += Mathf.Clamp01(killsProgress); count++; }
+        if (timeProgress >= 0f) { sum += Mathf.Clamp01(timeProgress); count++; }
+
+        float average = count > 0 ? sum / count : 1f;
+        bossHUD.UpdateBar(average);
+
+        bool xpOk = xpProgress < 0f || xpProgress >= 1f;
+        bool killsOk = killsProgress < 0f || killsProgress >= 1f;
+        bool timeOk = timeProgress < 0f || timeProgress >= 1f;
 
         if (xpOk && killsOk && timeOk)
+        {
+            bossHUD.Hide();
             TriggerBoss(condition);
+        }
     }
 
     void TriggerBoss(ArcanoMaior condition)
@@ -73,6 +95,7 @@ public class BossFightManager : MonoBehaviour
         playerProgress.bossAlive = false;
         _currentBossIndex++;
         playerProgress.CompleteStage();
+        bossHUD.Hide();
     }
 
     void OnPanelClosed()

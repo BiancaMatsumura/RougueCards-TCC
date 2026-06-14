@@ -11,8 +11,6 @@ public class PlayerInputManager : MonoBehaviour
     [SerializeField] private Transform[] spawnPoints;
     [SerializeField] private CameraGroupManager cameraGroupManager;
     [SerializeField] private SplitScreenManager splitScreenManager;
-    [SerializeField] private GameObject playerEnterUI_1;
-    [SerializeField] private GameObject playerEnterUI_2;
 
     private Transform _p1Transform; // adiciona esse campo privado
 
@@ -24,6 +22,9 @@ public class PlayerInputManager : MonoBehaviour
     private bool arrowsUsed = false;
 
     private enum InputType { Gamepad, KeyboardWASD, KeyboardArrows }
+
+    public event System.Action OnPlayer01Joined;
+    public event System.Action OnPlayer02Joined;
 
     void Update()
     {
@@ -138,17 +139,12 @@ public class PlayerInputManager : MonoBehaviour
         if (!player01Joined)
         {
             player01Joined = true;
-
-            if (playerEnterUI_1 != null)
-                playerEnterUI_1.SetActive(false);
+            OnPlayer01Joined?.Invoke();
         }
         else
         {
             player02Joined = true;
-
-            if (playerEnterUI_2 != null)
-                playerEnterUI_2.SetActive(false);
-
+            OnPlayer02Joined?.Invoke();
             this.enabled = false;
         }
 

@@ -45,6 +45,6 @@ public class XPUIManager : MonoBehaviour
         fillXP.style.width = Length.Percent(percent * 100);
 
         if (currentXPLabel != null) currentXPLabel.text = current.ToString();
-        if (maxXPLabel != null)     maxXPLabel.text     = max.ToString();
+        if (maxXPLabel != null)     maxXPLabel.text     = $"/ {max}";
     }
 }

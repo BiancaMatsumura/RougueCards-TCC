@@ -18,6 +18,12 @@
             <engine:Tab label="ETAPA 03" class="TAB" style="flex-grow: 1; margin-top: 10px; margin-right: 10px; margin-bottom: 10px; margin-left: 10px;">
                 <engine:VisualElement name="ETAPA3" class="ETAPA_FINAL" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/05.%20Sprites/UI/etapa3%202.png?fileID=2800000&amp;guid=e828de435f5d5f44b8caf5ee10914cd0&amp;type=3#etapa3 2&quot;);" />
             </engine:Tab>
+            <engine:Tab label="ETAPA 04" name="Tab" class="TAB" style="flex-grow: 1; margin-top: 10px; margin-right: 10px; margin-bottom: 10px; margin-left: 10px;">
+                <engine:ScrollView style="top: 30px; bottom: auto; height: auto;">
+                    <engine:VisualElement name="ETAPA4" class="ETAPA_FINAL" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/05.%20Sprites/UI/ETAPA%204%20EDIT.png?fileID=2800000&amp;guid=5ce346bde60770c4baf10197d91b456b&amp;type=3#ETAPA 4 EDIT&quot;);" />
+                    <engine:VisualElement name="ETAPA4_1" class="ETAPA_FINAL" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/05.%20Sprites/UI/ETAPA%204.1%20%20EDIT.png?fileID=2800000&amp;guid=623fb908533638845b9791ffce05e303&amp;type=3#ETAPA 4.1  EDIT&quot;);" />
+                </engine:ScrollView>
+            </engine:Tab>
         </engine:TabView>
     </engine:VisualElement>
 </engine:UXML>

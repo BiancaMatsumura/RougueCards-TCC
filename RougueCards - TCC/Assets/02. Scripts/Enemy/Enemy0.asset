@@ -15,7 +15,7 @@ MonoBehaviour:
   enemyName: Enemy0
   visualPrefab: {fileID: 1338481006240149234, guid: 8dbbab9c8bf43a243ad8e69abb7cc023, type: 3}
   animatorController: {fileID: 0}
-  speed: 3
+  speed: 4
   maxHealth: 50
   damageToPlayer: 5
   xpValue: 20

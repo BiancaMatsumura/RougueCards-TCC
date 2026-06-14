@@ -26,17 +26,27 @@ public class EnemySpawner : MonoBehaviour
 
     [Header("Referências")]
     public SplitScreenManager splitManager;
+    [SerializeField] private EnterPlayersUI enterPlayersUI;
+
 
     private List<GameObject> inimigosAtivos = new List<GameObject>();
 
     private bool spawnNoJogador1 = true;
     public event System.Action OnHordaCompleted;
 
+
+
     void Start()
     {
+        enabled = false; 
+        enterPlayersUI.OnSelectionComplete += StartSpawner;
+    }
+    private void StartSpawner()
+    {
+        enterPlayersUI.OnSelectionComplete -= StartSpawner;
+        enabled = true;
         StartCoroutine(CicloDeHordas());
     }
-
     void Update()
     {
         if (jogador1 == null || jogador2 == null)

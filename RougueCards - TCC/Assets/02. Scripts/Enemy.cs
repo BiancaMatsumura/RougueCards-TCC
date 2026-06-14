@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 /// <summary>
 /// Controlador unificado do inimigo. 
@@ -14,6 +15,9 @@ public class Enemy : MonoBehaviour
 
     [Header("Configurações de Knockback")]
     [SerializeField] private float knockbackResistance = 5f;
+
+    [Header("Slider de Vida")]
+    [SerializeField] private Slider slideLife;
 
     // Referências de Componentes
     private Health health;
@@ -66,6 +70,9 @@ public class Enemy : MonoBehaviour
             {
                 anim.runtimeAnimatorController = data.animatorController;
             }
+
+            //  Busca o slider dentro do visualPrefab instanciado
+            slideLife = model.GetComponentInChildren<Slider>(true);
         }
 
         // 2. Sincronização de Atributos
@@ -79,8 +86,35 @@ public class Enemy : MonoBehaviour
         var hitFlash = GetComponent<HitFlash>();
         if (hitFlash != null)
             hitFlash.RefreshRenderers();
+
+        //  Conecta o slider ao Health após tudo inicializado
+        SetupHealthSlider();
     }
 
+    private void SetupHealthSlider()
+    {
+        if (slideLife == null) return;
+
+        slideLife.minValue = 0f;
+        slideLife.maxValue = health.maxHealth;
+        slideLife.value = health.currentHealth;
+
+        health.OnHealthChanged += UpdateSlider;
+    }
+
+    private void UpdateSlider(int _, int current, int max)
+    {
+        if (slideLife == null) return;
+        slideLife.maxValue = max; 
+        slideLife.value = current;
+    }
+
+    void OnDestroy()
+    {
+        // Evita memory leak: remove listener ao destruir o inimigo
+        if (health != null)
+            health.OnHealthChanged -= UpdateSlider;
+    }
     void Update()
     {
         HandleKnockback();

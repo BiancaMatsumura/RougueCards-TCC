@@ -12,4 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c8fe5b30c3aff04b84243ced5e3f5e2, type: 3}
   m_Name: PlayerProgress
   m_EditorClassIdentifier: 
-  currentXP: 2
+  currentXP: 0
+  currentStage: 1
+  xpPerStage: 6400000096000000c8000000fa0000002c010000
+  bossAlive: 0

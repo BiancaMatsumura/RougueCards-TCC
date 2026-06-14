@@ -44,9 +44,9 @@
         <engine:VisualElement name="XPContainer" style="flex-grow: 1; width: 1600px; position: absolute; height: 100px; align-self: flex-end; align-items: center; justify-content: center; bottom: 10px;">
             <engine:VisualElement name="XP" style="flex-grow: 1; position: absolute; width: 1600px; height: 35px; align-self: flex-start; background-color: rgba(255, 255, 255, 0); border-top-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; border-bottom-left-radius: 5px; background-image: url(&quot;project://database/Assets/05.%20Sprites/UI/LIFE_BAR.png?fileID=21300000&amp;guid=afa8baf39fb52e74b8ec4766dbdcf797&amp;type=3#LIFE_BAR&quot;); -unity-background-image-tint-color: rgb(41, 41, 41);" />
             <engine:VisualElement name="FillXP" style="flex-grow: 1; position: absolute; width: 1579px; height: 31px; align-self: flex-start; background-color: rgba(255, 255, 255, 0); border-top-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; border-bottom-left-radius: 5px; background-image: url(&quot;project://database/Assets/05.%20Sprites/UI/FILL_LIFE.png?fileID=21300000&amp;guid=8b14aedaaa1a38c49be89af7d1c64968&amp;type=3#FILL_LIFE&quot;); -unity-background-image-tint-color: rgb(178, 146, 88); left: 10px;" />
-            <engine:VisualElement name="XPCounter" style="flex-grow: 1; flex-direction: row; bottom: 15px;">
-                <engine:Label text="00" name="CurrentXP" style="color: rgb(255, 255, 255); margin-top: 0; margin-right: 0; margin-bottom: 0; font-size: 20px;" />
-                <engine:Label text="/ 00" name="MaxXP" style="color: rgb(255, 255, 255); margin-top: 0; margin-right: 0; margin-bottom: 0; font-size: 15px;" />
+            <engine:VisualElement name="XPCounter" style="flex-grow: 1; flex-direction: row; bottom: auto; height: auto; max-height: 30px;">
+                <engine:Label text="00" name="CurrentXP" style="color: rgb(255, 255, 255); margin-top: 0; margin-right: 0; margin-bottom: 0; font-size: 25px; -unity-font-style: bold; -unity-text-align: middle-left;" />
+                <engine:Label text="/ 00" name="MaxXP" style="color: rgb(255, 255, 255); margin-top: 0; margin-right: 0; margin-bottom: 0; font-size: 20px; -unity-font-style: bold; -unity-text-align: middle-left;" />
             </engine:VisualElement>
         </engine:VisualElement>
         <engine:VisualElement name="Timer" style="flex-grow: 1; position: absolute; top: 57px; align-self: center; justify-content: space-between; align-items: center; align-content: flex-end; width: 110px; height: 50px; left: 50%; flex-direction: column; translate: -50% -50%; color: rgb(255, 255, 255);">
@@ -102,7 +102,7 @@
             </engine:VisualElement>
         </engine:VisualElement>
     </engine:VisualElement>
-    <engine:VisualElement name="PauseContainer" style="flex-grow: 1; height: 1080px; width: 1920px; opacity: 1; visibility: visible; position: absolute; background-color: rgba(0, 0, 0, 0); align-items: center; justify-content: center; align-self: center;">
+    <engine:VisualElement name="PauseContainer" style="flex-grow: 1; height: 1080px; width: 1920px; opacity: 1; visibility: visible; position: absolute; background-color: rgba(0, 0, 0, 0); align-items: center; justify-content: center; align-self: center; font-size: 25px;">
         <engine:VisualElement name="PauseMenu" class="containerMenu" style="align-items: center; justify-content: center; display: none; visibility: visible; flex-direction: column; align-content: center; width: 800px; top: 200px; height: 600px;">
             <engine:Label text="PAUSE MENU" style="background-color: rgba(255, 255, 255, 0); -unity-text-align: middle-center; -unity-background-image-tint-color: rgb(255, 255, 255); color: rgb(255, 255, 255); font-size: 41px; margin-top: 0; margin-bottom: 32px; margin-right: 0; margin-left: 0;" />
             <engine:Button text="Resume" name="ResumeButton" class="Button" />
