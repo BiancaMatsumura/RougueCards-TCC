@@ -114,6 +114,8 @@
     border-right-width: 0;
     border-bottom-width: 0;
     border-left-width: 0;
+    align-self: auto;
+    align-items: center;
 }
 
 .unity-tab__header:checked {

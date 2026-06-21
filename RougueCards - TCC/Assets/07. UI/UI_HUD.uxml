@@ -104,8 +104,9 @@
     </engine:VisualElement>
     <engine:VisualElement name="PauseContainer" style="flex-grow: 1; height: 1080px; width: 1920px; opacity: 1; visibility: visible; position: absolute; background-color: rgba(0, 0, 0, 0); align-items: center; justify-content: center; align-self: center; font-size: 25px;">
         <engine:VisualElement name="PauseMenu" class="containerMenu" style="align-items: center; justify-content: center; display: none; visibility: visible; flex-direction: column; align-content: center; width: 800px; top: 200px; height: 600px;">
-            <engine:Label text="PAUSE MENU" style="background-color: rgba(255, 255, 255, 0); -unity-text-align: middle-center; -unity-background-image-tint-color: rgb(255, 255, 255); color: rgb(255, 255, 255); font-size: 41px; margin-top: 0; margin-bottom: 32px; margin-right: 0; margin-left: 0;" />
+            <engine:Label text="PAUSE MENU" name="Label" style="background-color: rgba(255, 255, 255, 0); -unity-text-align: middle-center; -unity-background-image-tint-color: rgb(255, 255, 255); color: rgb(255, 255, 255); font-size: 41px; margin-top: 0; margin-bottom: 32px; margin-right: 0; margin-left: 0;" />
             <engine:Button text="Resume" name="ResumeButton" class="Button" />
+            <engine:Button text="Options" name="optionsButton" class="Button" />
             <engine:Button text="Restart" name="RestartButton" enable-rich-text="false" class="Button" style="width: 400px; height: 60px; font-size: 30px;" />
             <engine:Button text="Main Menu" name="MainMenu" enable-rich-text="false" class="Button" style="width: 400px; height: 60px; font-size: 30px;" />
             <engine:VisualElement name="InstructionPanel" style="flex-grow: 1; position: absolute; width: 500px; height: 500px; align-items: flex-start; align-self: center; left: -476px; justify-content: center; display: flex; top: 5px;">
