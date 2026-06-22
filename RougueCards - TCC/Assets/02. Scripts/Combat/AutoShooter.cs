@@ -10,15 +10,20 @@ public class AutoShooter : MonoBehaviour
     [Header("Tiro")]
     [SerializeField] private Transform firePoint;
 
+    [Header("Audio")]
+    [SerializeField] private AudioSource audioSource;
+
     private PlayerStats pStats;
     private float[] timers;
 
-    // recoil interno (sem Rigidbody)
     private Vector3 recoilOffset;
 
     void Awake()
     {
         pStats = GetComponentInParent<PlayerStats>();
+
+        if (audioSource == null)
+            audioSource = GetComponent<AudioSource>();
     }
 
     void Start()
@@ -53,6 +58,7 @@ public class AutoShooter : MonoBehaviour
                 {
                     Shoot(weapon, target);
                     ApplyRecoil(weapon, target);
+                    PlayShootSound(weapon);
                     timers[i] = 0f;
                 }
             }
@@ -65,7 +71,6 @@ public class AutoShooter : MonoBehaviour
         recoilOffset = Vector3.Lerp(recoilOffset, Vector3.zero, 10f * Time.deltaTime);
     }
 
-    // 🔥 ADD WEAPON (CARTAS)
     public void AddWeapon(RangedWeaponData newWeapon)
     {
         if (newWeapon == null) return;
@@ -77,42 +82,37 @@ public class AutoShooter : MonoBehaviour
     }
 
     Transform FindClosestEnemy(RangedWeaponData weapon)
-{
-    GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
-
-    float minDist = Mathf.Infinity;
-    Transform closest = null;
-
-    foreach (var e in enemies)
     {
-        if (!e.activeInHierarchy) continue;
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
 
-        float dist = Vector3.Distance(transform.position, e.transform.position);
+        float minDist = Mathf.Infinity;
+        Transform closest = null;
 
-        // 🔥 RESPEITA O RANGE DA ARMA
-        if (dist > weapon.range) continue;
-
-        if (dist < minDist)
+        foreach (var e in enemies)
         {
-            minDist = dist;
-            closest = e.transform;
-        }
-    }
+            if (!e.activeInHierarchy) continue;
 
-    return closest;
-}
+            float dist = Vector3.Distance(transform.position, e.transform.position);
+
+            if (dist > weapon.range) continue;
+
+            if (dist < minDist)
+            {
+                minDist = dist;
+                closest = e.transform;
+            }
+        }
+
+        return closest;
+    }
 
     void Shoot(RangedWeaponData weapon, Transform target)
     {
         if (firePoint == null || weapon == null || weapon.bulletPrefab == null) return;
 
-        Vector3 baseDir =
-            (target.position - firePoint.position).normalized;
+        Vector3 baseDir = (target.position - firePoint.position).normalized;
 
         int pellets = Mathf.Max(1, weapon.pellets);
-
-        float projSpeed =
-            pStats != null ? pStats.stats.ProjectileSpeed.Value : 10f;
 
         for (int i = 0; i < pellets; i++)
         {
@@ -121,7 +121,6 @@ public class AutoShooter : MonoBehaviour
 
             Vector3 dir = baseDir;
 
-            // 🔥 spread da shotgun
             if (weapon.spread > 0f)
             {
                 float angle = Random.Range(-weapon.spread, weapon.spread);
@@ -135,11 +134,10 @@ public class AutoShooter : MonoBehaviour
                 b.Init(
                     dir,
                     weapon.damage,
-                    projSpeed,
                     weapon.lifetime,
                     0f,
                     weapon.DestroyOnContact,
-                    pStats 
+                    pStats
                 );
 
                 b.ApplyMovimentType(weapon.BM, this);
@@ -147,17 +145,24 @@ public class AutoShooter : MonoBehaviour
         }
     }
 
+    void PlayShootSound(RangedWeaponData weapon)
+    {
+        if (audioSource == null) return;
+
+        if (weapon.shootSound != null)
+        {
+            audioSource.PlayOneShot(weapon.shootSound);
+        }
+    }
+
     void ApplyRecoil(RangedWeaponData weapon, Transform target)
     {
         if (weapon.recoilForce <= 0f) return;
 
-        Vector3 dir =
-            (target.position - firePoint.position).normalized;
-
+        Vector3 dir = (target.position - firePoint.position).normalized;
         recoilOffset += -dir * weapon.recoilForce;
     }
 
-    // ⚠️ compatibilidade com Bullet.cs (nome legado)
     public Vector3 GetTrasform()
     {
         return transform.position;

@@ -21,4 +21,5 @@ MonoBehaviour:
   DestroyOnContact: 0
   pellets: 5
   spread: 20
+  shootSound: {fileID: 8300000, guid: a3690d86ddbb44e47ad486e9d5fd2bc2, type: 3}
   recoilForce: 0

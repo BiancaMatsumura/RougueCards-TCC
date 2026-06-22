@@ -16,7 +16,9 @@ public class RangedWeaponData : ScriptableObject
     public int pellets = 1;
     public float spread = 0f;
 
+    [Header("Audio")]
+    public AudioClip shootSound;
+
     [Header("Recoil")]
-    [Tooltip("Força que empurra o jogador para trás ao disparar")]
     public float recoilForce = 0f;
 }

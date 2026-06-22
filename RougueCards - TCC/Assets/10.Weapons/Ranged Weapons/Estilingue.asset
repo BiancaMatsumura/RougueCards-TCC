@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Estilingue
   m_EditorClassIdentifier: 
   bulletPrefab: {fileID: 2591478938443851655, guid: eb2b036ebd24ce64f8968784b1e9f144, type: 3}
-  fireRate: 0.96
+  fireRate: 1.2
   range: 14.85
   damage: 20
   lifetime: 7.72
@@ -21,4 +21,5 @@ MonoBehaviour:
   DestroyOnContact: 1
   pellets: 0
   spread: 0
+  shootSound: {fileID: 8300000, guid: a8760a59c1aa2d0429f93cd0436c568c, type: 3}
   recoilForce: 0

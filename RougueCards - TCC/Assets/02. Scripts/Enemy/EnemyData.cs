@@ -33,4 +33,11 @@ public class EnemyData : ScriptableObject
     [Header("Configuração de Escala")]
     /// <summary> Multiplicador de escala para ajustar o tamanho do modelo visual em relação ao objeto pai. </summary>
     public float modelScale = 1f;
+
+    [Header("Audio")]
+    /// <summary> Som tocado quando o inimigo recebe dano. </summary>
+    public AudioClip damageSound;
+
+    /// <summary> Som tocado quando o inimigo morre. </summary>
+    public AudioClip deathSound;
 }
