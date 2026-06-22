@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 2efe0fbd5f7fe22439bd87055c598c15
+guid: dd931c52566396c438184fb1e867e718
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -7,38 +7,13 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Material
-    second: {fileID: 2100000, guid: 10f35b1f00146d249ab5f6132b7cf17c, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Material.001
-    second: {fileID: 2100000, guid: 418fa9d18c8776e4d813aedfc5286017, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Material.002
-    second: {fileID: 2100000, guid: 418fa9d18c8776e4d813aedfc5286017, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Material.003
-    second: {fileID: 2100000, guid: 418fa9d18c8776e4d813aedfc5286017, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Material.004
-    second: {fileID: 2100000, guid: 418fa9d18c8776e4d813aedfc5286017, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Material.005
-    second: {fileID: 2100000, guid: 418fa9d18c8776e4d813aedfc5286017, type: 2}
+      name: Material.006
+    second: {fileID: 2100000, guid: 991c73120159e5f42ae3b43c292694ac, type: 2}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
-      name: "sem t\xEDtulo3"
-    second: {fileID: 2800000, guid: 33f33333650e3ce48b3a4eebf32c235c, type: 3}
+      name: images
+    second: {fileID: 2800000, guid: 7dd9cafaea44855428753a4d245babef, type: 3}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -68,7 +43,7 @@ ModelImporter:
     isReadable: 0
   meshes:
     lODScreenPercentages: []
-    globalScale: 0.76
+    globalScale: 1
     meshCompression: 0
     addColliders: 0
     useSRGBMaterialColor: 1
@@ -123,7 +98,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 0.0075999997
+    globalScale: 1
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0
