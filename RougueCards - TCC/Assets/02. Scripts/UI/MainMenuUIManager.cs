@@ -18,6 +18,9 @@ public class MainMenuUIManager : MonoBehaviour
     private Button closeOptionsPanel;
     private VisualElement optionsPanel;
 
+    private Button closeCreditsPanel;
+    private VisualElement creditsPanel;
+
     public AudioSource clickSound;
 
     public string levelToLoad = "NomeDaCena";
@@ -32,6 +35,9 @@ public class MainMenuUIManager : MonoBehaviour
         updateButton = root.Q<Button>("AttButton");
         updatePanel = root.Q<VisualElement>("AttPanel");
         closeUpdatePanel = root.Q<Button>("CloseUpdatePanel");
+
+        creditsPanel = root.Q<VisualElement>("CreditsMenu");
+        closeCreditsPanel = root.Q<Button>("closeCreditsButton");
 
         if (optionsUIDocument != null)
         {
@@ -50,7 +56,8 @@ public class MainMenuUIManager : MonoBehaviour
         if (closeOptionsPanel != null)
             closeOptionsPanel.clicked += CloseOptionsMenu;
 
-        
+        if (closeCreditsPanel != null)
+            closeCreditsPanel.clicked += CloseCreditsMenu;  
     }
     private void PlayLevel(string levelToLoad)
     {
@@ -98,8 +105,22 @@ public class MainMenuUIManager : MonoBehaviour
 
     private void OpenCreditsMenu()
     {
-        Debug.Log("Abrir créditos");
-        clickSound.Play();
+       if (creditsPanel != null)
+        {
+            creditsPanel.style.visibility = Visibility.Visible;
+            creditsPanel.pickingMode = PickingMode.Position;
+            clickSound.Play(); 
+        }
+    }
+
+    private void CloseCreditsMenu()
+    {
+        if (creditsPanel != null)
+        {
+            creditsPanel.style.visibility = Visibility.Hidden;
+            creditsPanel.pickingMode = PickingMode.Ignore;
+            clickSound.Play();
+        }
     }
 
     private void QuitGame()

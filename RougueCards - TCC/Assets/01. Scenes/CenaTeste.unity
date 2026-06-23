@@ -11422,11 +11422,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   instrucoes01Image: {fileID: 1149389027}
   texto01: {fileID: 1424423555}
-  instrucoes01Sprite: {fileID: 21300000, guid: bd42d55ffbf93624bb96d8f2ec423508, type: 3}
+  instrucoes01Sprite: {fileID: 21300000, guid: 9fa0898568bd7be45bfb4e636b82b44b, type: 3}
   personagem01Sprite: {fileID: 21300000, guid: 3197aba1199888f448420de2a7fb5bec, type: 3}
   instrucoes02Image: {fileID: 271235827}
   texto02: {fileID: 1942412742}
-  instrucoes02Sprite: {fileID: 21300000, guid: bd42d55ffbf93624bb96d8f2ec423508, type: 3}
+  instrucoes02Sprite: {fileID: 21300000, guid: 9fa0898568bd7be45bfb4e636b82b44b, type: 3}
   personagem02Sprite: {fileID: 21300000, guid: ca0a5ef5ae9469d4d92e790e6868c718, type: 3}
   playerInputManager: {fileID: 1243163934}
   enterPlayersPanel: {fileID: 1439137144}

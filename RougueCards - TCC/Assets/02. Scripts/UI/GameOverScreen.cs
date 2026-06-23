@@ -13,11 +13,12 @@ public class GameOverScreen : BaseScreen
 
     protected override void RegisterCallbacks()
     {
-        restartBtn  = root.Q<Button>("RestartButton");
+        restartBtn = root.Q<Button>("RestartButton");
         mainMenuBtn = root.Q<Button>("MainMenu");
 
-        restartBtn.RegisterCallback<NavigationSubmitEvent>(_ => OnRestart?.Invoke());
-        mainMenuBtn.RegisterCallback<NavigationSubmitEvent>(_ => OnMainMenu?.Invoke());
+        
+        if (restartBtn != null) restartBtn.clicked += () => OnRestart?.Invoke();
+        if (mainMenuBtn != null) mainMenuBtn.clicked += () => OnMainMenu?.Invoke();
     }
 
     protected override void OnShow()

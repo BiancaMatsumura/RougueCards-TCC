@@ -26,6 +26,10 @@ public class UI_Controller : MonoBehaviour
     private Button closeOptionsPanel;
     private VisualElement optionsPanel;
 
+    private VisualElement howToPlayPanel;
+    private Button closeHowToPlayPanel;
+    private Button openHowToPlayButton;
+
     void Awake()
     {
         // Garante a busca do Input no Awake para que o OnEnable/OnDisable funcione perfeitamente
@@ -72,15 +76,11 @@ public class UI_Controller : MonoBehaviour
             gameOverScreen.OnMainMenu += HandleMainMenu;
         }
 
-        // CORREÇÃO AQUI: O botão que ABRE as opções está no menu de pause (root)
+        // O botão que ABRE as opções está no menu de pause (root)
         optionButton = root.Q<Button>("optionsButton");
         if (optionButton != null)
         {
             optionButton.clicked += OpenOptionsMenu;
-        }
-        else
-        {
-            Debug.LogWarning("Não encontrei o 'optionsButton' no UIDocument Principal. Verifique o nome no UI Builder.");
         }
 
         // O painel de opções em si e o botão de FECHAR estão no outro UIDocument
@@ -94,13 +94,24 @@ public class UI_Controller : MonoBehaviour
             {
                 closeOptionsPanel.clicked += CloseOptionsMenu;
             }
-            else
-            {
-                Debug.LogWarning("Não encontrei o 'closeButton' dentro do documento de Opções.");
-            }
         }
-    }
 
+        // --- How To Play ---
+        howToPlayPanel = root.Q<VisualElement>("HowToPlayMenu");
+        openHowToPlayButton = root.Q<Button>("howToPlayButton");
+        closeHowToPlayPanel = root.Q<Button>("closeHTP");
+
+        if (openHowToPlayButton != null)
+        {
+            openHowToPlayButton.clicked += OpenHowToPlayPanel;
+        }
+
+        if (closeHowToPlayPanel != null)
+        {
+            closeHowToPlayPanel.clicked += CloseHowToPlayPanel;
+        }
+       
+    }
     private void OpenOptionsMenu()
     {
         if (optionsPanel != null)
@@ -125,6 +136,34 @@ public class UI_Controller : MonoBehaviour
         {
             optionsPanel.style.visibility = Visibility.Hidden;
             optionsPanel.pickingMode = PickingMode.Ignore;
+            if (clickSound != null) clickSound.Play();
+        }
+    }
+
+    private void OpenHowToPlayPanel()
+    {
+        if (howToPlayPanel != null)
+        {
+            howToPlayPanel.style.visibility = Visibility.Visible;
+            howToPlayPanel.pickingMode = PickingMode.Position;
+
+            if (optionsManager != null)
+            {
+                optionsManager.InitializeResolutions();
+                optionsManager.InitializeQuality();
+                optionsManager.InitializeFPS();
+            }
+
+            if (clickSound != null) clickSound.Play();
+        }
+    }
+
+    private void CloseHowToPlayPanel()
+    {
+        if (howToPlayPanel != null)
+        {
+            howToPlayPanel.style.visibility = Visibility.Hidden;
+            howToPlayPanel.pickingMode = PickingMode.Ignore;
             if (clickSound != null) clickSound.Play();
         }
     }

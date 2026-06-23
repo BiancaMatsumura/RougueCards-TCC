@@ -26,4 +26,13 @@
             </engine:Tab>
         </engine:TabView>
     </engine:VisualElement>
+    <engine:VisualElement name="CreditsContainer" picking-mode="Ignore" style="flex-grow: 1; position: absolute; width: 100%; height: 100%;">
+        <engine:VisualElement name="CreditsMenu" picking-mode="Ignore" style="flex-grow: 1; width: 100%; height: 100%; background-image: url(&quot;project://database/Assets/05.%20Sprites/UI/TELA%20DE%20CREDITS.png?fileID=21300000&amp;guid=1e4c9142117ace24ea50bce23e90bd94&amp;type=3#TELA DE CREDITS&quot;); align-items: center; align-self: center; justify-content: flex-end; visibility: hidden;">
+            <engine:ScrollView picking-mode="Ignore" style="width: 1363px; height: 657px; max-height: 657px; bottom: 80px;">
+                <engine:Label text="Desenvolvido por&#10;&#10;Bianca Dellevedove Matsumura&#10;Davi dos Santos Nascimento&#10;Gustavo Lucas Vieira Pimentel&#10;Jonathan Frederico Passos&#10;Pedro Henrique de Freitas Souza&#10;&#10;Trabalho de Conclusão de Curso&#10;Jogos Digitais — PUC Minas Virtual&#10;&#10;Obrigado por jogar!" picking-mode="Ignore" style="-unity-text-align: upper-center; font-size: 33px;" />
+                <engine:VisualElement picking-mode="Ignore" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/05.%20Sprites/UI/puc%20logo.png?fileID=21300000&amp;guid=ee795de3273ccd04a9726b6f70e85d35&amp;type=3#puc logo&quot;); width: 300px; height: 150px; align-items: center; align-self: center; margin-top: 20px; margin-right: 20px; margin-bottom: 20px; margin-left: 20px;" />
+                <engine:Button text="CLOSE" name="closeCreditsButton" class="Button" style="width: 380px; height: 78px; font-size: 40px; margin-top: 10px; margin-right: 10px; margin-bottom: 37px; margin-left: 10px;" />
+            </engine:ScrollView>
+        </engine:VisualElement>
+    </engine:VisualElement>
 </engine:UXML>

@@ -17,15 +17,16 @@ public class PauseScreen : BaseScreen
 
     protected override void RegisterCallbacks()
     {
-        resumeBtn  = root.Q<Button>("ResumeButton");
+        resumeBtn = root.Q<Button>("ResumeButton");
         restartBtn = root.Q<Button>("RestartButton");
-        mainMenuBtn = root.Q<Button>("MainMenu");
+        mainMenuBtn = root.Q<Button>("MainMenuButton");
         optionsBtn = root.Q<Button>("OptionsButton");
 
-        resumeBtn.RegisterCallback<NavigationSubmitEvent>(_ => OnResume?.Invoke());
-        restartBtn.RegisterCallback<NavigationSubmitEvent>(_ => OnRestart?.Invoke());
-        mainMenuBtn.RegisterCallback<NavigationSubmitEvent>(_ => OnMainMenu?.Invoke());
-        optionsBtn?.RegisterCallback<NavigationSubmitEvent>(_ => OnOptions?.Invoke());
+        
+        if (resumeBtn != null) resumeBtn.clicked += () => OnResume?.Invoke();
+        if (restartBtn != null) restartBtn.clicked += () => OnRestart?.Invoke();
+        if (mainMenuBtn != null) mainMenuBtn.clicked += () => OnMainMenu?.Invoke();
+        if (optionsBtn != null) optionsBtn.clicked += () => OnOptions?.Invoke();
     }
 
     protected override void OnShow()

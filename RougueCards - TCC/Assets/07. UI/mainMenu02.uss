@@ -12,6 +12,7 @@
     width: 430px;
     height: 80px;
     font-size: 45px;
+    align-self: center;
 }
 
 .Button:hover {
