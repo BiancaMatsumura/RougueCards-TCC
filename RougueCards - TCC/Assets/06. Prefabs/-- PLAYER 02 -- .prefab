@@ -6322,6 +6322,7 @@ MonoBehaviour:
   weapons:
   - {fileID: 11400000, guid: d5533b58b8176a848b1d0a9287f1fcd2, type: 2}
   firePoint: {fileID: 887448683358562105}
+  audioSource: {fileID: 0}
 --- !u!95 &2846131901169197089
 Animator:
   serializedVersion: 7
