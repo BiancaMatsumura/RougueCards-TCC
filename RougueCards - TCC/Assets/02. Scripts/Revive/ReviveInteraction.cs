@@ -8,13 +8,18 @@ public class ReviveInteraction : MonoBehaviour
 
 
     private DownedState _myDownedState;
-    private DownedState _targetBeingRevived; 
+    private DownedState _targetBeingRevived;
+    private Animator anim;
 
     private void Awake()
-    {
+    {   
         _myDownedState = GetComponent<DownedState>();
     }
 
+    private void Start()
+    {
+        anim = GetComponent<Animator>();
+    }
 
     public void OnReviveHeld(bool isHolding)
     {
@@ -47,7 +52,7 @@ public class ReviveInteraction : MonoBehaviour
             if (col.gameObject == gameObject) continue;
 
             var downed = col.GetComponent<DownedState>();
-            
+            anim.Play("Revive");
             if (downed != null && downed.IsDowned)
             {
                 
@@ -70,19 +75,22 @@ public class ReviveInteraction : MonoBehaviour
     }
 
     private void StopRevive()
-    {
+    {   
         if (_targetBeingRevived == null) return;
         _targetBeingRevived.InterruptRevive();
         ClearTarget();
+        
     }
 
     private void InterruptOnDamage()
     {
+        anim.SetTrigger("StopRevive");
         StopRevive();
     }
 
     private void ClearTarget()
     {
+        anim.SetTrigger("StopRevive");
         if (_targetBeingRevived != null)
         {
             _targetBeingRevived.OnRevived -= ClearTarget;

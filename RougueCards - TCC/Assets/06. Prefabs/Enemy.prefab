@@ -109,7 +109,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: 735695ab05171f44d9136da4dfed93f4, type: 2}
   updateTargetRate: 0.5
-  knockbackResistance: 5
+  knockbackResistance: 0
   slideLife: {fileID: 0}
 --- !u!65 &5767922539996724424
 BoxCollider:
@@ -176,6 +176,7 @@ MonoBehaviour:
   currentHealth: 0
   pStats: {fileID: 0}
   lastAttacker: {fileID: 0}
+  _isDead: 0
 --- !u!114 &-1223435608833976042
 MonoBehaviour:
   m_ObjectHideFlags: 0

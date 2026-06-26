@@ -20,6 +20,8 @@ public class DownedState : MonoBehaviour
     private Coroutine _reviveCoroutine;
     private DownedState _reviverState; // quem está me revivendo
 
+    private Animator anim;
+
     public void EnterDownedState()
     {
         Debug.Log($"[Downed] {name} entrou em estado abatido");
@@ -32,6 +34,11 @@ public class DownedState : MonoBehaviour
 
     public void BeginRevive(DownedState reviver)
     {
+        anim = GetComponent<Animator>();
+        if (anim != null)
+        {
+            anim.SetTrigger("StopRevive");
+        }
         Debug.Log($"[Downed] {name} começando a ser revivido");
         if (!IsDowned || _reviveCoroutine != null) return;
         _reviverState = reviver;
@@ -40,6 +47,11 @@ public class DownedState : MonoBehaviour
 
     public void InterruptRevive()
     {
+        anim = GetComponent<Animator>();
+        if (anim != null)
+        {
+            anim.SetTrigger("StopRevive");
+        }
         Debug.Log($"[Downed] {name} revive interrompido");
         if (_reviveCoroutine == null) return;
         StopCoroutine(_reviveCoroutine);

@@ -14,10 +14,13 @@ public class Health : MonoBehaviour
 
     public PlayerStats pStats;
     public PlayerStats lastAttacker;
-    private bool _isDead = false;
+    public bool _isDead = false;
 
+    //Animation
+    private Animator anim;
     void Awake()
-    {
+    {   
+       
         pStats = GetComponentInParent<PlayerStats>();
         GameOverWatcher.Instance?.RegisterPlayer(this);
         if (currentHealth <= 0) currentHealth = maxHealth;
@@ -25,6 +28,7 @@ public class Health : MonoBehaviour
 
     void Start()
     {
+        anim = GetComponent<Animator>();
         if (pStats != null)
             RefreshMaxHP();
 
@@ -69,6 +73,8 @@ public class Health : MonoBehaviour
         if (_isDead) return;
         _isDead = true;
 
+       
+
         lastAttacker?.AddKill();
 
         var downed = GetComponent<DownedState>();
@@ -82,6 +88,8 @@ public class Health : MonoBehaviour
             OnDeath?.Invoke();
             gameObject.SetActive(false);
         }
+
+        if (anim != null) { anim.Play("Die"); }
     }
 
     public void RefreshMaxHP()
@@ -106,5 +114,7 @@ public class Health : MonoBehaviour
         _isDead = false;
         currentHealth = (int)(maxHealth * hpPercent);
         OnHealthChanged?.Invoke(playerID, currentHealth, maxHealth);
+        if (anim != null) { anim.Play("Revived"); }
+        
     }
 }

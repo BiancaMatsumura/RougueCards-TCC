@@ -12,6 +12,7 @@ public class CardManager : MonoBehaviour
     [SerializeField] private InputActionReference toggleAction;
 
     [SerializeField] private AutoShooter autoShooter;
+    private Shooter shooter;
 
     private CardController[] controllers;
     private VisualElement cardPanel;
@@ -154,6 +155,7 @@ public class CardManager : MonoBehaviour
             else if (data.effectType == CardEffectType.UnlockWeapon)
             {
                 EquipWeapon(data);
+                EquipWeaponMelee(data);
             }
 
             AttributeMaestro.Instance.CheckForCardCombos();
@@ -175,6 +177,21 @@ public class CardManager : MonoBehaviour
         else
         {
             Debug.LogWarning("AutoShooter ou rangedWeapon não configurado corretamente na carta.");
+        }
+    }
+    private void EquipWeaponMelee(CardData data)
+    {
+        if (shooter == null)
+            shooter = FindFirstObjectByType<Shooter>();
+
+        if (shooter != null )
+        {
+            shooter.ApplyWeaponAnimations();
+            Debug.Log("Arma adicionada: " + data.rangedWeapon.name);
+        }
+        else
+        {
+            Debug.LogWarning("Shooter ou rangedWeapon não configurado corretamente na carta.");
         }
     }
 }

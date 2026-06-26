@@ -12,7 +12,7 @@ public class Shooter : MonoBehaviour
 
     // sistema de combo
     private bool IsInCombo;
-    private int counter;
+    public  int counter;
 
     [Header("Combo System")]
     public int ComboLengthMax = 3;
@@ -20,14 +20,20 @@ public class Shooter : MonoBehaviour
 
     public bool IsShooter;
     public GameObject Hands;
+    private Health life;
+    private Damage damage;
 
     void Start()
     {
         ApplyWeaponAnimations();
+        damage = GetComponentInChildren<Damage>();
+        life = GetComponent<Health>();
+
+      
 
         if (weaponData != null)
         {
-            ComboLengthMax += weaponData.comboMaxBonus;
+            ComboLengthMax = weaponData.comboMax;
             ComoboWindow *= weaponData.comboWindowMultiplier;
         }
 
@@ -39,7 +45,7 @@ public class Shooter : MonoBehaviour
 
     public void ATK(InputAction.CallbackContext context)
     {
-        if (!context.performed) return;
+        if (!context.performed || life._isDead) return;
 
         if (!IsInCombo)
         {
@@ -79,20 +85,22 @@ public class Shooter : MonoBehaviour
             return;
         }
 
+       
         string Ataque = "Atack";
         string Next = Ataque + counter;
 
         control.Play(Next);
-
+        damage.ColiderBlink();
         // FUTURO: dano aqui pode usar weaponData.baseDamage
     }
 
     void BacktoTrigger()
     {
+   
         control.SetTrigger("Back");
         
     }
-    void ApplyWeaponAnimations() 
+    public void ApplyWeaponAnimations() 
     {
         if (control != null && weaponData != null)
         {

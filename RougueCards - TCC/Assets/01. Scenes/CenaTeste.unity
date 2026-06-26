@@ -344,7 +344,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_VertexColorAlwaysGammaSpace: 0
-  m_AdditionalShaderChannelsFlag: 0
+  m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
@@ -811,7 +811,7 @@ GameObject:
   - component: {fileID: 173108257}
   - component: {fileID: 173108256}
   - component: {fileID: 173108255}
-  - component: {fileID: 173108254}
+  - component: {fileID: 173108258}
   m_Layer: 0
   m_Name: '-- GROUND -- '
   m_TagString: Ground
@@ -819,28 +819,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!64 &173108254
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 173108253}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!23 &173108255
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -914,6 +892,27 @@ Transform:
   - {fileID: 471878269}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &173108258
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 173108253}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 9.999999, y: 2.220446e-16, z: 9.999999}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &190854452
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2427,13 +2426,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 410087039}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.18187928, y: -0.01001811, z: 0.10965116, w: 0.97713673}
-  m_LocalPosition: {x: 0, y: 3, z: 0}
+  m_LocalRotation: {x: 0.30415413, y: -0.023823066, z: 0.10749968, w: 0.94623816}
+  m_LocalPosition: {x: 0, y: 14.11, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 20.955, y: -358.754, z: -346.964}
+  m_LocalEulerAnglesHint: {x: 35.502, y: -358.571, z: -346.58}
 --- !u!114 &410087042
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9601,8 +9600,8 @@ MonoBehaviour:
   raioSpawn: 20
   distanciaMinimaJogador: 10
   inimigosPorHorda: 5
-  intervaloEntreSpawns: 0.5
-  tempoMaximoHorda: 15
+  intervaloEntreSpawns: 0.71
+  tempoMaximoHorda: 13
   splitManager: {fileID: 1243163941}
   enterPlayersUI: {fileID: 1962024343}
 --- !u!4 &1584813346

@@ -156,25 +156,11 @@ public class Enemy : MonoBehaviour
 
     void Update()
     {
-        HandleKnockback();
+      
         HandleAI();
     }
 
-    private void HandleKnockback()
-    {
-        if (knockbackVelocity.magnitude > 0.01f)
-        {
-            isKnockedBack = true;
-            transform.position += knockbackVelocity * Time.deltaTime;
-
-            knockbackVelocity =
-                Vector3.Lerp(knockbackVelocity, Vector3.zero, Time.deltaTime * knockbackResistance);
-        }
-        else
-        {
-            isKnockedBack = false;
-        }
-    }
+  
 
     private void HandleAI()
     {
@@ -204,6 +190,7 @@ public class Enemy : MonoBehaviour
     public void ApplyKnockback(Vector3 direction, float force)
     {
         knockbackVelocity = direction * force;
+  
     }
 
     private void FindClosestPlayer()

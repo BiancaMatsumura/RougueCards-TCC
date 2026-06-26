@@ -6,7 +6,7 @@ public class MeleeWeaponData : ScriptableObject
     public AnimatorOverrideController controler;
     public int baseDamage = 10;
     public float comboWindowMultiplier = 1f;
-    public int comboMaxBonus = 0;
+    public int comboMax = 0;
 
     public void ApplyOverride(Animator Anim) 
     {
