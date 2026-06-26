@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 648c01704e2900642adcd685752a44b7, type: 3}
   m_Name: Card_Shotgun
   m_EditorClassIdentifier: 
-  cardName: Shotgun / NInja
+  cardName: Shotgun
   description: + 5 disparos em cadeia
   cardImage: {fileID: 21300000, guid: 62fe6dbdd5582b741aaf913be2252898, type: 3}
   xpRequired: 0
@@ -21,4 +21,4 @@ MonoBehaviour:
   upgradeValue: 0
   isPercentage: 0
   rangedWeapon: {fileID: 11400000, guid: 397891c723cc57a43bb6fd5cd9dc3ddf, type: 2}
-  meleeWeapon: {fileID: 11400000, guid: ae3e5918eb841024498eb73e08eb3b2e, type: 2}
+  meleeWeapon: {fileID: 0}
