@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: PlayerProgress
   m_EditorClassIdentifier: 
   currentXP: 0
-  currentStage: 1
+  currentStage: 3
   xpPerStage: 6400000096000000c8000000fa0000002c010000
   bossAlive: 0

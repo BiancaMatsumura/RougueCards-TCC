@@ -11334,6 +11334,7 @@ MonoBehaviour:
   optionsUIDocument: {fileID: 636659369}
   optionsManager: {fileID: 636659368}
   cardManager: {fileID: 1962024334}
+  playerProgress: {fileID: 11400000, guid: 00a38000d9bba5a42b1cef107458d7c8, type: 2}
   clickSound: {fileID: 232606266}
 --- !u!114 &1962024338
 MonoBehaviour:

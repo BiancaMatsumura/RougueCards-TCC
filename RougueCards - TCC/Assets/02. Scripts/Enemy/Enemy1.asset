@@ -17,7 +17,7 @@ MonoBehaviour:
   animatorController: {fileID: 0}
   speed: 3
   maxHealth: 50
-  damageToPlayer: 5
+  damageToPlayer: 2
   xpValue: 20
   modelScale: 1
   damageSound: {fileID: 8300000, guid: 986f492ba4744e34a8a03248837799a7, type: 3}

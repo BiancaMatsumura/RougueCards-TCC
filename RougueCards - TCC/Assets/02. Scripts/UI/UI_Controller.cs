@@ -11,6 +11,7 @@ public class UI_Controller : MonoBehaviour
     [SerializeField] private UIDocument optionsUIDocument;
     [SerializeField] private OptionsManager optionsManager;
     [SerializeField] private CardManager cardManager;
+    [SerializeField] private PlayerProgress playerProgress;
     public AudioSource clickSound;
 
     private InputAction pauseAction;
@@ -29,6 +30,10 @@ public class UI_Controller : MonoBehaviour
     private VisualElement howToPlayPanel;
     private Button closeHowToPlayPanel;
     private Button openHowToPlayButton;
+    private VisualElement finalScreen;
+    private Button finalRestartButton;
+    private Button finalMainMenuButton;
+    private Button finalQuitButton;
 
     void Awake()
     {
@@ -54,12 +59,24 @@ public class UI_Controller : MonoBehaviour
             return;
         }
 
-        // Essa é a raiz do Menu Principal / Menu de Pause
         var root = uiDoc.rootVisualElement;
 
-        // Inicializa as telas de forma segura
         var pauseVisual = root.Q<VisualElement>("PauseMenu");
         var gameOverVisual = root.Q<VisualElement>("GameOverMenu");
+
+        var finalVisual = root.Q<VisualElement>("ToBeContinuedMenu");
+        finalQuitButton = root.Q<Button>("finalQuitButton");
+        finalRestartButton = root.Q<Button>("finalRestartButton");
+        finalMainMenuButton = root.Q<Button>("finalMainMenuButton");
+
+        if (finalRestartButton != null)
+            finalRestartButton.clicked += HandleRestart;
+
+        if (finalMainMenuButton != null)
+            finalMainMenuButton.clicked += HandleMainMenu;
+
+        if (finalQuitButton != null)
+            finalQuitButton.clicked += QuitGame;
 
         if (pauseVisual != null)
         {
@@ -76,14 +93,20 @@ public class UI_Controller : MonoBehaviour
             gameOverScreen.OnMainMenu += HandleMainMenu;
         }
 
-        // O botão que ABRE as opções está no menu de pause (root)
+        // NOVO: guarda a referência e garante que começa escondida
+        if (finalVisual != null)
+        {
+            finalScreen = finalVisual;
+            finalScreen.style.display = DisplayStyle.None;
+            finalScreen.pickingMode = PickingMode.Ignore;
+        }
+
         optionButton = root.Q<Button>("optionsButton");
         if (optionButton != null)
         {
             optionButton.clicked += OpenOptionsMenu;
         }
 
-        // O painel de opções em si e o botão de FECHAR estão no outro UIDocument
         if (optionsUIDocument != null)
         {
             var optionsRoot = optionsUIDocument.rootVisualElement;
@@ -96,7 +119,6 @@ public class UI_Controller : MonoBehaviour
             }
         }
 
-        // --- How To Play ---
         howToPlayPanel = root.Q<VisualElement>("HowToPlayMenu");
         openHowToPlayButton = root.Q<Button>("howToPlayButton");
         closeHowToPlayPanel = root.Q<Button>("closeHTP");
@@ -110,7 +132,6 @@ public class UI_Controller : MonoBehaviour
         {
             closeHowToPlayPanel.clicked += CloseHowToPlayPanel;
         }
-       
     }
     private void OpenOptionsMenu()
     {
@@ -168,8 +189,19 @@ public class UI_Controller : MonoBehaviour
         }
     }
 
-    private void OnEnable() => pauseAction?.Enable();
-    private void OnDisable() => pauseAction?.Disable();
+    private void OnEnable()
+    {
+        pauseAction?.Enable();
+        playerProgress.OnAllStagesCompleted += HandleGameCompleted;
+
+
+    }
+    private void OnDisable()
+    {
+        pauseAction?.Disable();
+        playerProgress.OnAllStagesCompleted -= HandleGameCompleted;
+    }
+
 
     private void Update()
     {
@@ -219,6 +251,21 @@ public class UI_Controller : MonoBehaviour
         if (optionsOpenedFromPause)
             pauseScreen?.Show();
     }
+    void HandleGameCompleted()
+    {
+        isPaused = true;
+        Time.timeScale = 0;
+
+        if (finalScreen != null)
+        {
+            finalScreen.style.display = DisplayStyle.Flex;
+            finalScreen.pickingMode = PickingMode.Position;
+        }
+
+        StartCoroutine(RefreshInputModule());
+
+        if (clickSound != null) clickSound.Play();
+    }
 
     // --- Ações comuns ---
 
@@ -249,5 +296,14 @@ public class UI_Controller : MonoBehaviour
         Time.timeScale = 1;
         SceneManager.LoadScene(levelName);
         if (clickSound != null) clickSound.Play();
+    }
+    private void QuitGame()
+    {
+        Application.Quit();
+        
+
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#endif
     }
 }

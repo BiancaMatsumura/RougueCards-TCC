@@ -132,4 +132,13 @@
             </engine:VisualElement>
         </engine:VisualElement>
     </engine:VisualElement>
+    <engine:VisualElement name="ToBeContinuedContainer" picking-mode="Ignore" style="flex-grow: 1; height: 1080px; width: 1920px; opacity: 1; visibility: visible; position: absolute; background-color: rgba(0, 0, 0, 0); align-items: auto; justify-content: flex-end; align-self: auto; align-content: auto;">
+        <engine:VisualElement name="ToBeContinuedMenu" picking-mode="Ignore" style="align-items: center; justify-content: flex-end; display: none; visibility: visible; flex-direction: column; align-content: auto; width: 100%; top: auto; height: 100%; background-image: url(&quot;project://database/Assets/05.%20Sprites/UI/TELA%20DE%20CONTINUA....png?fileID=21300000&amp;guid=b58aca5f6c91ffb40bdac9f833a72de7&amp;type=3#TELA DE CONTINUA...&quot;); align-self: auto; bottom: 0;">
+            <engine:VisualElement name="ButtonContainer" picking-mode="Ignore" style="flex-grow: 1; width: 1363px; height: 657px; max-height: 657px; align-items: center; bottom: 80px; justify-content: space-evenly; align-self: center;">
+                <engine:Button text="RESTART" name="finalRestartButton" enable-rich-text="false" class="Button" style="width: 430px; height: 80px; font-size: 40px;" />
+                <engine:Button text="MAIN MENU" name="finalMainMenuButton" enable-rich-text="false" class="Button" style="width: 430px; height: 80px; font-size: 40px;" />
+                <engine:Button text="QUIT GAME" name="finalQuitButton" enable-rich-text="false" class="Button" style="width: 430px; height: 80px; font-size: 40px;" />
+            </engine:VisualElement>
+        </engine:VisualElement>
+    </engine:VisualElement>
 </engine:UXML>

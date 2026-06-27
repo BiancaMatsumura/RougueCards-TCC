@@ -18,6 +18,8 @@ public class UIController : MonoBehaviour
     private InputSystemUIInputModule inputModule;
     private bool isPaused = false;
     private ReviveInteraction _reviveInteraction;
+    [SerializeField] private PlayerProgress playerProgress;
+    private VisualElement finalScreen;
 
     void Awake()
     {
@@ -33,6 +35,9 @@ public class UIController : MonoBehaviour
 
         pauseAction = inputActions.FindAction("Pause", true);
         _reviveInteraction = GetComponent<ReviveInteraction>();
+
+        finalScreen = uIDocument.rootVisualElement.Q<VisualElement>("ToBeContinuedMenu");
+
     }
 
     private void OnEnable()
@@ -41,6 +46,7 @@ public class UIController : MonoBehaviour
         resumeBtn.RegisterCallback<NavigationSubmitEvent>(ResumeGame);
         restartBtn.RegisterCallback<NavigationSubmitEvent>(RestartGame);
         mainMenuBtn.RegisterCallback<NavigationSubmitEvent>(MainMenu);
+        playerProgress.OnAllStagesCompleted += HandleGameCompleted;
     }
 
     private void OnDisable()
@@ -49,6 +55,7 @@ public class UIController : MonoBehaviour
         resumeBtn.UnregisterCallback<NavigationSubmitEvent>(ResumeGame);
         restartBtn.UnregisterCallback<NavigationSubmitEvent>(RestartGame);
         mainMenuBtn.UnregisterCallback<NavigationSubmitEvent>(MainMenu);
+        playerProgress.OnAllStagesCompleted -= HandleGameCompleted;
     }
 
     private bool pauseHeld = false;
@@ -114,5 +121,11 @@ public class UIController : MonoBehaviour
 
         if (context.canceled)
             _reviveInteraction.OnReviveHeld(false);
+    }
+
+    void HandleGameCompleted()
+    {
+        Time.timeScale = 0;
+        finalScreen.style.display = DisplayStyle.Flex;
     }
 }
