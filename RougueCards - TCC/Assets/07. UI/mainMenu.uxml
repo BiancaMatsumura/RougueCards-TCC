@@ -10,7 +10,7 @@
         </engine:VisualElement>
     </engine:VisualElement>
     <engine:VisualElement name="AttPanel" style="flex-grow: 1; position: absolute; width: 100%; height: 100%; -unity-background-image-tint-color: rgb(255, 255, 255); background-color: rgb(0, 0, 0); background-image: url(&quot;project://database/Assets/05.%20Sprites/UI/TELA%20DE%20UPDATES.png?fileID=21300000&amp;guid=3f5cb73d9cf7cb04393c64a4e40064b7&amp;type=3#TELA DE UPDATES&quot;); display: none; align-self: center; align-content: center; justify-content: space-evenly; align-items: center; -unity-slice-scale: 0;">
-        <engine:Button text="CLOSE" name="CloseUpdatePanel" class="Button_2" style="bottom: auto; top: 120px;" />
+        <engine:Button text="CLOSE" name="CloseUpdatePanel" class="Button_2" style="bottom: auto; top: 120px; display: flex;" />
         <engine:TabView style="width: 80%; height: 55%; top: 80px; flex-direction: column;">
             <engine:Tab label="ETAPA 02" name="Tab" class="TAB" style="margin-top: 10px; margin-right: 10px; margin-bottom: 10px; margin-left: 10px;">
                 <engine:VisualElement name="ETAPA2" class="ETAPA ETAPA_ATUAL ETAPA_FINAL" />
@@ -23,6 +23,9 @@
                     <engine:VisualElement name="ETAPA4" class="ETAPA_FINAL" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/05.%20Sprites/UI/ETAPA%204%20EDIT.png?fileID=2800000&amp;guid=5ce346bde60770c4baf10197d91b456b&amp;type=3#ETAPA 4 EDIT&quot;);" />
                     <engine:VisualElement name="ETAPA4_1" class="ETAPA_FINAL" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/05.%20Sprites/UI/ETAPA%204.1%20%20EDIT.png?fileID=2800000&amp;guid=623fb908533638845b9791ffce05e303&amp;type=3#ETAPA 4.1  EDIT&quot;);" />
                 </engine:ScrollView>
+            </engine:Tab>
+            <engine:Tab label="ETAPA 05" name="Tab" class="TAB" style="flex-grow: 1; margin-top: 10px; margin-right: 10px; margin-bottom: 10px; margin-left: 10px;">
+                <engine:VisualElement name="ETAPA5" class="ETAPA_FINAL" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/05.%20Sprites/UI/ETAPA5.png?fileID=2800000&amp;guid=f1114a548432d98438fe13915011ae3c&amp;type=3#ETAPA5&quot;);" />
             </engine:Tab>
         </engine:TabView>
     </engine:VisualElement>
