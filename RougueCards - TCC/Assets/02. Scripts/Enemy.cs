@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 /// <summary>
 /// Controlador unificado do inimigo. 
@@ -30,6 +31,7 @@ public class Enemy : MonoBehaviour
     private float targetTimer;
     private Vector3 knockbackVelocity;
     private bool isKnockedBack;
+    private bool isDying;
     private bool _initialized = false;
 
     void Awake()
@@ -128,14 +130,13 @@ public class Enemy : MonoBehaviour
     // MORTE (CORRIGIDO DEFINITIVAMENTE)
     private void HandleDeath()
     {
-        if (data == null || data.deathSound == null) return;
+        if (isDying) return;
 
-        PlayDeathSoundSafe(data.deathSound);
-
+        isDying = true;
         StartCoroutine(DeathRoutine());
     }
 
-    private void PlayDeathSoundSafe(AudioClip clip)
+   /* private void PlayDeathSoundSafe(AudioClip clip)
     {
         GameObject tempAudio = new GameObject("DeathSound");
         AudioSource src = tempAudio.AddComponent<AudioSource>();
@@ -146,11 +147,17 @@ public class Enemy : MonoBehaviour
         src.Play();
 
         Destroy(tempAudio, clip.length + 0.1f);
-    }
+    }*/
 
     private System.Collections.IEnumerator DeathRoutine()
     {
-        yield return null;
+        if (data != null && data.deathSound != null)
+        {
+            audioSource.PlayOneShot(data.deathSound);
+            Debug.Log($"Playing death sound: {data.deathSound.name}");
+            yield return new WaitForSeconds(data.deathSound.length);
+        }
+
         Destroy(gameObject);
     }
 

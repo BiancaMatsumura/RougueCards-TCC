@@ -86,7 +86,7 @@ public class Health : MonoBehaviour
         else
         {
             OnDeath?.Invoke();
-            gameObject.SetActive(false);
+            //gameObject.SetActive(false);
         }
 
         if (anim != null) { anim.Play("Die"); }
