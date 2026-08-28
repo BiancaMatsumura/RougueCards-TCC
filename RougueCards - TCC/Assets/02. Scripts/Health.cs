@@ -15,6 +15,7 @@ public class Health : MonoBehaviour
     public PlayerStats pStats;
     public PlayerStats lastAttacker;
     public bool _isDead = false;
+    public bool isInvincible = false;
 
     //Animation
     private Animator anim;
@@ -41,7 +42,10 @@ public class Health : MonoBehaviour
     }
     public void TakeDamage(int amount, PlayerStats attacker = null)
     {
-        if (_isDead) return;
+        if (_isDead || isInvincible)
+        {
+            return;
+        }
 
         if (attacker != null)
             lastAttacker = attacker;
@@ -107,6 +111,27 @@ public class Health : MonoBehaviour
             if (playerID > 0)
                 Debug.Log($"[Health] Player {playerID} MaxHP sincronizado: {maxHealth}");
         }
+    }
+
+    public void FullHeal()
+    {
+        if (_isDead)
+        {
+            return;
+        }
+        currentHealth = maxHealth;
+        OnHealthChanged?.Invoke(playerID, currentHealth, maxHealth);
+    }
+
+    public void Kill()
+    {
+        if (_isDead)
+        {
+            return;
+        }
+        currentHealth = 0;
+        OnHealthChanged?.Invoke(playerID, currentHealth, maxHealth);
+        Die();
     }
 
     public void Revive(float hpPercent)
