@@ -4,6 +4,8 @@ using UnityEngine.SceneManagement;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.UI;
 using System.Collections;
+using System.Collections.Generic;
+using RougueCards.GameOver;
 
 public class UI_Controller : MonoBehaviour
 {
@@ -230,10 +232,11 @@ public class UI_Controller : MonoBehaviour
         StartCoroutine(RefreshInputModule());
     }
 
-    public void ShowGameOver()
+    public void ShowGameOver(List<GameOverPlayerStats> playersStats = null)
     {
         isPaused = true;
         Time.timeScale = 0;
+        gameOverScreen?.SetPlayerStats(playersStats);
         gameOverScreen?.Show();
         StartCoroutine(RefreshInputModule());
     }
