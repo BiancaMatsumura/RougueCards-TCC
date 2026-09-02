@@ -12,6 +12,7 @@ public class CardManager : MonoBehaviour
     [SerializeField] private InputActionReference toggleAction;
 
     [SerializeField] private AutoShooter autoShooter;
+    [SerializeField] private MenuBlurController menuBlurController;
     private Shooter shooter;
 
     private CardController[] controllers;
@@ -96,11 +97,13 @@ public class CardManager : MonoBehaviour
 
     public void ShowPanel()
     {
+        menuBlurController.AtivarBlur();
         SetPanelVisible(true);
     }
 
     public void HidePanel()
     {
+        menuBlurController.DesativarBlur();
         SetPanelVisible(false);
     }
 

@@ -839,6 +839,8 @@ MeshRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -860,9 +862,11 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &173108256
 MeshFilter:
@@ -1251,7 +1255,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: -5812710903785746306, guid: 3111422dbe9acbf40b74aab2db39c5e5, type: 2}
-  m_audioClip: {fileID: 8300000, guid: 949f5f4f735cebc4eae2d8ea6feab612, type: 3}
+  m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: 949f5f4f735cebc4eae2d8ea6feab612, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 0.5
@@ -2361,14 +2365,14 @@ Light:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 410087039}
   m_Enabled: 1
-  serializedVersion: 11
+  serializedVersion: 12
   m_Type: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 2
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
-  m_CookieSize: 10
+  m_CookieSize2D: {x: 10, y: 10}
   m_Shadows:
     m_Type: 2
     m_Resolution: -1
@@ -2445,17 +2449,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Version: 3
   m_UsePipelineSettings: 1
   m_AdditionalLightsShadowResolutionTier: 2
-  m_LightLayerMask: 1
-  m_RenderingLayers: 1
   m_CustomShadowLayers: 0
-  m_ShadowLayerMask: 1
-  m_ShadowRenderingLayers: 1
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
   m_SoftShadowQuality: 1
+  m_RenderingLayersMask:
+    serializedVersion: 0
+    m_Bits: 1
+  m_ShadowRenderingLayersMask:
+    serializedVersion: 0
+    m_Bits: 1
+  m_Version: 4
+  m_LightLayerMask: 1
+  m_ShadowLayerMask: 1
+  m_RenderingLayers: 1
+  m_ShadowRenderingLayers: 1
 --- !u!1001 &417721831
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3680,6 +3690,26 @@ MonoBehaviour:
   m_Script: {fileID: 19102, guid: 0000000000000000e000000000000000, type: 0}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &640262005
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1243163932}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a786d68116b86415c79de76c3d722a8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cheatsEnabled: 1
+  playerProgress: {fileID: 11400000, guid: 00a38000d9bba5a42b1cef107458d7c8, type: 2}
+  xpPerCheat: 50
+  godModeKey: 94
+  killAllEnemiesKey: 95
+  healPlayersKey: 96
+  addXPKey: 97
+  completeStageKey: 98
 --- !u!1 &643060760
 GameObject:
   m_ObjectHideFlags: 0
@@ -3750,7 +3780,6 @@ MonoBehaviour:
   m_ScreenCoordScaleBias: {x: 0, y: 0, z: 0, w: 0}
   m_RequiresDepthTexture: 0
   m_RequiresColorTexture: 0
-  m_Version: 2
   m_TaaSettings:
     m_Quality: 3
     m_FrameInfluence: 0.1
@@ -3758,6 +3787,7 @@ MonoBehaviour:
     m_MipBias: 0
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
+  m_Version: 2
 --- !u!20 &643060764
 Camera:
   m_ObjectHideFlags: 0
@@ -3883,7 +3913,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 2424185825211982030, guid: 3111422dbe9acbf40b74aab2db39c5e5, type: 2}
-  m_audioClip: {fileID: 8300000, guid: d1ce3ffc47e42c34cbb358020d69ac44, type: 3}
+  m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: d1ce3ffc47e42c34cbb358020d69ac44, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0.5
@@ -4836,7 +4866,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_IsGlobal: 1
-  priority: 0
+  priority: 1
   blendDistance: 0
   weight: 1
   sharedProfile: {fileID: 11400000, guid: 10fc4df2da32a41aaa32d77bc913491c, type: 2}
@@ -6451,6 +6481,8 @@ MeshRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -6472,9 +6504,11 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1139912395
 MeshFilter:
@@ -6778,7 +6812,6 @@ MonoBehaviour:
   m_ScreenCoordScaleBias: {x: 0, y: 0, z: 0, w: 0}
   m_RequiresDepthTexture: 0
   m_RequiresColorTexture: 0
-  m_Version: 2
   m_TaaSettings:
     m_Quality: 3
     m_FrameInfluence: 0.1
@@ -6786,6 +6819,7 @@ MonoBehaviour:
     m_MipBias: 0
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
+  m_Version: 2
 --- !u!20 &1177413648
 Camera:
   m_ObjectHideFlags: 0
@@ -7531,21 +7565,6 @@ MonoBehaviour:
   cardManager: {fileID: 1962024334}
   bossHUD: {fileID: 752020484}
   spawner: {fileID: 1584813345}
---- !u!114 &640262005
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1243163932}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a786d68116b86415c79de76c3d722a8e, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
-  cheatsEnabled: 1
-  playerProgress: {fileID: 11400000, guid: 00a38000d9bba5a42b1cef107458d7c8, type: 2}
-  xpPerCheat: 50
 --- !u!1001 &1294366145
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8288,6 +8307,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -9268,7 +9288,6 @@ MonoBehaviour:
   m_ScreenCoordScaleBias: {x: 0, y: 0, z: 0, w: 0}
   m_RequiresDepthTexture: 0
   m_RequiresColorTexture: 0
-  m_Version: 2
   m_TaaSettings:
     m_Quality: 3
     m_FrameInfluence: 0.1
@@ -9276,6 +9295,7 @@ MonoBehaviour:
     m_MipBias: 0
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
+  m_Version: 2
 --- !u!20 &1534837037
 Camera:
   m_ObjectHideFlags: 0
@@ -11095,6 +11115,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -11273,9 +11294,13 @@ MonoBehaviour:
   m_ParentUI: {fileID: 0}
   sourceAsset: {fileID: 9197481963319205126, guid: de19cb0df740fb8419940530b0643418, type: 3}
   m_SortingOrder: 0
+  m_Position: 0
   m_WorldSpaceSizeMode: 1
   m_WorldSpaceWidth: 1920
   m_WorldSpaceHeight: 1080
+  m_PivotReferenceSize: 0
+  m_Pivot: 0
+  m_WorldSpaceCollider: {fileID: 0}
 --- !u!4 &1962024331
 Transform:
   m_ObjectHideFlags: 0
@@ -11308,6 +11333,7 @@ MonoBehaviour:
   playerProgress: {fileID: 11400000, guid: 00a38000d9bba5a42b1cef107458d7c8, type: 2}
   toggleAction: {fileID: -6450635596403456157, guid: 6e778180076408648b21a1e54c02c1a0, type: 3}
   autoShooter: {fileID: 0}
+  menuBlurController: {fileID: 1962024344}
   isPanelVisible: 0
 --- !u!114 &1962024335
 MonoBehaviour:
@@ -11351,6 +11377,7 @@ MonoBehaviour:
   optionsManager: {fileID: 636659368}
   cardManager: {fileID: 1962024334}
   playerProgress: {fileID: 11400000, guid: 00a38000d9bba5a42b1cef107458d7c8, type: 2}
+  menuBlurController: {fileID: 1962024344}
   clickSound: {fileID: 232606266}
 --- !u!114 &1962024338
 MonoBehaviour:
@@ -11453,11 +11480,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1962024329}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: de4c9b2f4ace3404480e64e93b3cecfc, type: 3}
+  m_Script: {fileID: 11500000, guid: e9a6b07000022f54eac27de6da3a1810, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier: Assembly-CSharp::MenuBlurController
+  blurVolume: {fileID: 832575518}
 --- !u!1001 &1995317640
 PrefabInstance:
   m_ObjectHideFlags: 0

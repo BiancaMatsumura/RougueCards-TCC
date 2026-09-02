@@ -12,6 +12,7 @@ public class UI_Controller : MonoBehaviour
     [SerializeField] private OptionsManager optionsManager;
     [SerializeField] private CardManager cardManager;
     [SerializeField] private PlayerProgress playerProgress;
+    [SerializeField] private MenuBlurController menuBlurController;
     public AudioSource clickSound;
 
     private InputAction pauseAction;
@@ -146,6 +147,7 @@ public class UI_Controller : MonoBehaviour
                 optionsManager.InitializeQuality();
                 optionsManager.InitializeFPS();
             }
+            menuBlurController.AtivarBlur();
 
             if (clickSound != null) clickSound.Play();
         }
@@ -157,6 +159,7 @@ public class UI_Controller : MonoBehaviour
         {
             optionsPanel.style.visibility = Visibility.Hidden;
             optionsPanel.pickingMode = PickingMode.Ignore;
+            menuBlurController.DesativarBlur();
             if (clickSound != null) clickSound.Play();
         }
     }
@@ -174,6 +177,7 @@ public class UI_Controller : MonoBehaviour
                 optionsManager.InitializeQuality();
                 optionsManager.InitializeFPS();
             }
+            menuBlurController.AtivarBlur();
 
             if (clickSound != null) clickSound.Play();
         }
@@ -185,6 +189,7 @@ public class UI_Controller : MonoBehaviour
         {
             howToPlayPanel.style.visibility = Visibility.Hidden;
             howToPlayPanel.pickingMode = PickingMode.Ignore;
+            menuBlurController.DesativarBlur();
             if (clickSound != null) clickSound.Play();
         }
     }
@@ -227,6 +232,7 @@ public class UI_Controller : MonoBehaviour
         isPaused = true;
         Time.timeScale = 0;
         pauseScreen?.Show();
+        menuBlurController.AtivarBlur();
         StartCoroutine(RefreshInputModule());
     }
 
@@ -235,6 +241,7 @@ public class UI_Controller : MonoBehaviour
         isPaused = true;
         Time.timeScale = 0;
         gameOverScreen?.Show();
+        menuBlurController.AtivarBlur();
         StartCoroutine(RefreshInputModule());
     }
 
@@ -274,6 +281,7 @@ public class UI_Controller : MonoBehaviour
         isPaused = false;
         Time.timeScale = 1;
         pauseScreen?.Hide();
+        menuBlurController.DesativarBlur();
         if (clickSound != null) clickSound.Play();
     }
 
