@@ -10,7 +10,7 @@ public class HealthUIManager : MonoBehaviour
     private Label currentHealthLabel2;
     private Label maxHealthLabel2;
 
-    private const float BAR_WIDTH = 839f;
+    private const float BAR_WIDTH = 496f; // igual ao width da Fill no UXML
 
     void Awake()
     {
@@ -31,7 +31,7 @@ public class HealthUIManager : MonoBehaviour
 
     public void UpdateHealth(int playerID, int current, int max)
     {
-        float percent = (float)current / max;
+        float percent = Mathf.Clamp01((float)current / max);
 
         if (playerID == 1)
         {

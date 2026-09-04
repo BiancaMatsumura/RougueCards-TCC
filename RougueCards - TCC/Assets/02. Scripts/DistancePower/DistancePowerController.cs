@@ -39,7 +39,7 @@ public class DistancePowerController : MonoBehaviour
     private VisualElement _fillP2;
     private VisualElement _powerContainerP1;
     private VisualElement _powerContainerP2;
-    private const float BAR_HEIGHT = 522f;
+    private const float BAR_WIDTH = 446f;
 
     private float _powerP1;
     private float _powerP2;
@@ -208,15 +208,15 @@ public class DistancePowerController : MonoBehaviour
 
     private void ApplyBar(VisualElement fill, float current)
     {
-        float percent = current / maxPower;
-        fill.style.height = percent * BAR_HEIGHT;
+        float percent = Mathf.Clamp01(current / maxPower);
+        fill.style.width = percent * BAR_WIDTH;
     }
 
     // ── Compatibilidade com chamadas externas existentes ─────────────────────
     public void UpdatePower(int playerID, int current, int max)
     {
-        float percent = (float)current / max;
-        if (playerID == 1) _fillP1.style.height = percent * BAR_HEIGHT;
-        if (playerID == 2) _fillP2.style.height = percent * BAR_HEIGHT;
+        float percent = Mathf.Clamp01((float)current / max);
+        if (playerID == 1) _fillP1.style.width = percent * BAR_WIDTH;
+        if (playerID == 2) _fillP2.style.width = percent * BAR_WIDTH;
     }
 }
