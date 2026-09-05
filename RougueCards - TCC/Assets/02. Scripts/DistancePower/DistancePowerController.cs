@@ -59,6 +59,15 @@ public class DistancePowerController : MonoBehaviour
         _powerContainerP1 = root.Q<VisualElement>("PowerContainer01");
         _powerContainerP2 = root.Q<VisualElement>("PowerContainer02");
 
+        // Ancoragem: P1 preso na esquerda, P2 preso na direita
+        _fillP1.style.position = Position.Absolute;
+        _fillP1.style.left = 0;
+        _fillP1.style.right = StyleKeyword.Auto;
+
+        _fillP2.style.position = Position.Absolute;
+        _fillP2.style.right = 0;
+        _fillP2.style.left = StyleKeyword.Auto;
+
         _powerP1 = maxPower;
         _powerP2 = maxPower;
 

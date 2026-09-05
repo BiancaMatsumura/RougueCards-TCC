@@ -1,31 +1,24 @@
 using UnityEngine;
-using UnityEngine.UIElements;
+using UnityEngine.UI;
 
 public class BossIndicatorHUD : MonoBehaviour
 {
-    [SerializeField] private UIDocument uiDocument;
-    [SerializeField] private Texture2D fasesFillTexture; // mesma imagem usada no background-image
-
-    private VisualElement fasesContainer;
-    private RadialFillElement fasesFill;
+    [SerializeField] private GameObject fasesContainer;
+    [SerializeField] private Image fasesFillImage;
 
     private void OnEnable()
     {
-        var root = uiDocument.rootVisualElement;
-        fasesContainer = root.Q<VisualElement>("FasesContainer");
-        fasesFill = root.Q<RadialFillElement>("Fases_Fill");
-        fasesFill.fillTexture = fasesFillTexture;
         Hide();
     }
 
-    public void Show() => fasesContainer.style.display = DisplayStyle.Flex;
-    public void Hide() => fasesContainer.style.display = DisplayStyle.None;
+    public void Show() => fasesContainer.SetActive(true);
+    public void Hide() => fasesContainer.SetActive(false);
 
     public void UpdateBar(float progress)
     {
-        if (fasesContainer.style.display == DisplayStyle.None)
+        if (!fasesContainer.activeSelf)
             Show();
 
-        fasesFill.progress = progress; // 1 = cheio, 0 = vazio
+        fasesFillImage.fillAmount = 1f - Mathf.Clamp01(progress);
     }
 }

@@ -2,10 +2,11 @@ using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 
+
 public class MenuBlurController : MonoBehaviour
 {
     public Volume blurVolume;
-
+    public GameObject blurUICanvas;
     private DepthOfField depthOfField;
 
     private void Start()
@@ -17,13 +18,13 @@ public class MenuBlurController : MonoBehaviour
     public void AtivarBlur()
     {
         depthOfField.active = true;
-        
+        //blurUICanvas.SetActive(true);
     }
 
     // Desativa o desfoque
     public void DesativarBlur()
     {
-        
         depthOfField.active = false;
+        //blurUICanvas.SetActive(false);
     }
 }
