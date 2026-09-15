@@ -155,6 +155,38 @@
     transition-delay: 0s;
 }
 
+.gameover-stats-column {
+    align-items: center;
+    margin-left: 40px;
+    margin-right: 40px;
+}
+
+.gameover-stats-title {
+    color: rgb(255, 255, 255);
+    font-size: 28px;
+    -unity-font-style: bold;
+    margin-bottom: 10px;
+    -unity-text-align: middle-center;
+}
+
+.gameover-stats-row {
+    flex-direction: row;
+    justify-content: space-between;
+    width: 240px;
+    margin-bottom: 6px;
+}
+
+.gameover-stats-label {
+    color: rgb(220, 220, 220);
+    font-size: 20px;
+}
+
+.gameover-stats-value {
+    color: rgb(255, 255, 255);
+    font-size: 20px;
+    -unity-font-style: bold;
+}
+
 .Button_2:hover {
     position: absolute;
     width: 200px;
