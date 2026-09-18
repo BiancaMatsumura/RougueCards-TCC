@@ -13,8 +13,8 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private EnemyData[] dadosInimigosDisponiveis;
 
     [Header("Jogadores")]
-    [SerializeField] private Transform jogador1;
-    [SerializeField] private Transform jogador2;
+    [SerializeField] public Transform jogador1;
+    [SerializeField] public Transform jogador2;
 
     [Header("Área de Spawn")]
     [SerializeField] private float raioSpawn = 15f;
@@ -32,7 +32,7 @@ public class EnemySpawner : MonoBehaviour
 
     private List<GameObject> inimigosAtivos = new List<GameObject>();
 
-    private bool spawnNoJogador1 = true;
+    public bool spawnNoJogador1 = true;
     public event System.Action OnHordaCompleted;
 
 
