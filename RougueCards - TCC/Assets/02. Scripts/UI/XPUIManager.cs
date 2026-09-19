@@ -10,15 +10,17 @@ public class XPUIManager : MonoBehaviour
     private Label maxXPLabel;
 
     private System.Action<int, int> onXPChanged;
+    private const float FillMaxWidth = 996f;
+
 
 
     void Awake()
     {
         var root = GetComponent<UIDocument>().rootVisualElement;
 
-        fillXP        = root.Q<VisualElement>("FillXP");
+        fillXP = root.Q<VisualElement>("FillXP");
         currentXPLabel = root.Q<Label>("CurrentXP");
-        maxXPLabel     = root.Q<Label>("MaxXP");
+        maxXPLabel = root.Q<Label>("MaxXP");
 
         progress.ResetXP();
 
@@ -40,11 +42,11 @@ public class XPUIManager : MonoBehaviour
 
     private void UpdateXP(int current, int max)
     {
-        float percent = (float)current / max;
+        float percent = max > 0 ? Mathf.Clamp01((float)current / max) : 0f;
 
-        fillXP.style.width = Length.Percent(percent * 100);
+        fillXP.style.width = FillMaxWidth * percent;
 
         if (currentXPLabel != null) currentXPLabel.text = current.ToString();
-        if (maxXPLabel != null)     maxXPLabel.text     = $"/ {max}";
+        if (maxXPLabel != null) maxXPLabel.text = $"/ {max}";
     }
 }
