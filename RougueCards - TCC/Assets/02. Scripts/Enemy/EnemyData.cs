@@ -40,4 +40,8 @@ public class EnemyData : ScriptableObject
 
     /// <summary> Som tocado quando o inimigo morre. </summary>
     public AudioClip deathSound;
+
+    [Header("Inimigo Especial")]
+    /// <summary> Se marcado, o jogador que der o golpe final neste inimigo ganha o direito exclusivo de escolher a próxima carta de upgrade. </summary>
+    public bool isSpecialEnemy = false;
 }

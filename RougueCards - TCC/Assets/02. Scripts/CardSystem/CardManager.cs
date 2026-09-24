@@ -32,7 +32,10 @@ public class CardManager : MonoBehaviour
 
         cardPanel.RegisterCallback<GeometryChangedEvent>(_ =>
         {
-            if (!isPanelVisible || isLoadingCards) return;
+            if (!isPanelVisible || isLoadingCards)
+            {
+                return;
+            }
 
             if (controllers == null)
             {
@@ -99,12 +102,16 @@ public class CardManager : MonoBehaviour
     {
         menuBlurController.AtivarBlur();
         SetPanelVisible(true);
+
+        AttributeMaestro.Instance?.LockOutNonDecidingPlayer();
     }
 
     public void HidePanel()
     {
         menuBlurController.DesativarBlur();
         SetPanelVisible(false);
+
+        AttributeMaestro.Instance?.RestoreLockedPlayerInput();
     }
 
     private void LoadCards()

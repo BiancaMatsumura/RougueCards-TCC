@@ -28,11 +28,17 @@ public class PlayerInputManager : MonoBehaviour
 
     void Update()
     {
-        if (player01Joined && player02Joined) return;
+        if (player01Joined && player02Joined)
+        {
+            return;
+        }
 
         foreach (var gamepad in Gamepad.all)
         {
-            if (usedGamepads.Contains(gamepad)) continue;
+            if (usedGamepads.Contains(gamepad))
+            {
+                continue;
+            }
             if (gamepad.buttonSouth.wasPressedThisFrame)
             {
                 JoinPlayer(InputType.Gamepad, gamepad);
@@ -41,7 +47,10 @@ public class PlayerInputManager : MonoBehaviour
         }
 
         var keyboard = Keyboard.current;
-        if (keyboard == null) return;
+        if (keyboard == null)
+        {
+            return;
+        }
 
         if (!wasdUsed && keyboard.spaceKey.wasPressedThisFrame)
         {
@@ -118,6 +127,7 @@ public class PlayerInputManager : MonoBehaviour
 
         var playerInput = obj.GetComponent<PlayerInput>();
 
+        AttributeMaestro.Instance?.RegisterPlayerInput(statsInstance.playerID, playerInput);
 
         if (inputType == InputType.Gamepad)
         {
