@@ -1,3 +1,4 @@
+using RougueCards.Attributes;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
@@ -63,7 +64,9 @@ public class Enemy : MonoBehaviour
     void Start()
     {
         if (!_initialized && data != null)
+        {
             Initialize(data);
+        }
     }
 
     public void Initialize(EnemyData newData)
@@ -76,7 +79,9 @@ public class Enemy : MonoBehaviour
             foreach (Transform child in transform)
             {
                 if (child.CompareTag("Visual"))
+                {
                     Destroy(child.gameObject);
+                }
             }
 
             GameObject model = Instantiate(data.visualPrefab, transform);
@@ -85,7 +90,9 @@ public class Enemy : MonoBehaviour
 
             Animator anim = model.GetComponent<Animator>();
             if (anim != null && data.animatorController != null)
+            {
                 anim.runtimeAnimatorController = data.animatorController;
+            }
 
             slideLife = model.GetComponentInChildren<Slider>(true);
         }
@@ -97,14 +104,19 @@ public class Enemy : MonoBehaviour
         damageDealer.damage = data.damageToPlayer;
 
         if (enemyXP != null)
+        {
             enemyXP.SetXPValue(data.xpValue);
+        }
 
         SetupHealthSlider();
     }
 
     private void SetupHealthSlider()
     {
-        if (slideLife == null) return;
+        if (slideLife == null)
+        {
+            return;
+        }
 
         slideLife.minValue = 0;
         slideLife.maxValue = health.maxHealth;
@@ -116,13 +128,18 @@ public class Enemy : MonoBehaviour
     private void UpdateSlider(int _, int current, int max)
     {
         if (slideLife != null)
+        {
             slideLife.value = current;
+        }
     }
 
     // SOM DE DANO
     private void HandleHitSound()
     {
-        if (data == null || data.damageSound == null) return;
+        if (data == null || data.damageSound == null)
+        {
+            return;
+        }
 
         audioSource.PlayOneShot(data.damageSound);
     }
@@ -130,9 +147,18 @@ public class Enemy : MonoBehaviour
     // MORTE (CORRIGIDO DEFINITIVAMENTE)
     private void HandleDeath()
     {
-        if (isDying) return;
+        if (isDying)
+        {
+            return;
+        }
 
         isDying = true;
+
+        if (data != null && data.isSpecialEnemy && health.lastAttacker != null)
+        {
+            AttributeMaestro.Instance?.RegisterSpecialEnemyKill(health.lastAttacker);
+        }
+
         StartCoroutine(DeathRoutine());
     }
 
@@ -171,7 +197,10 @@ public class Enemy : MonoBehaviour
 
     private void HandleAI()
     {
-        if (data == null) return;
+        if (data == null)
+        {
+            return;
+        }
 
         targetTimer += Time.deltaTime;
 
@@ -181,7 +210,10 @@ public class Enemy : MonoBehaviour
             targetTimer = 0;
         }
 
-        if (isKnockedBack || target == null) return;
+        if (isKnockedBack || target == null)
+        {
+            return;
+        }
 
         Vector3 dir = (target.position - transform.position).normalized;
         transform.position += dir * data.speed * Time.deltaTime;
@@ -209,8 +241,15 @@ public class Enemy : MonoBehaviour
 
         foreach (var p in players)
         {
-            if (!p.activeInHierarchy) continue;
-            if (p.GetComponent<DownedState>()?.IsDowned == true) continue;
+            if (!p.activeInHierarchy)
+            {
+                continue;
+            }
+
+            if (p.GetComponent<DownedState>()?.IsDowned == true)
+            {
+                continue;
+            }
 
             float dist = Vector3.Distance(transform.position, p.transform.position);
 

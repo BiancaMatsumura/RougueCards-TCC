@@ -1,6 +1,7 @@
 using RougueCards.Combo;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace RougueCards.Attributes
 {
@@ -21,6 +22,18 @@ namespace RougueCards.Attributes
         /// <summary> Referência aos atributos e estado do Jogador 2. </summary>
         public PlayerStats player2;
 
+        /// <summary> Referência ao PlayerInput do Jogador 1, usada para bloquear/restaurar seus controles. </summary>
+        public PlayerInput player1Input;
+
+        /// <summary> Referência ao PlayerInput do Jogador 2, usada para bloquear/restaurar seus controles. </summary>
+        public PlayerInput player2Input;
+
+        /// <summary> Último jogador que eliminou um inimigo especial. Enquanto definido, ele tem prioridade de escolha sobre a regra de combo. </summary>
+        private PlayerStats lastSpecialEnemyKiller;
+
+        /// <summary> Jogador que teve o input bloqueado durante a escolha exclusiva de carta (null se ninguém estiver bloqueado). </summary>
+        private PlayerStats lockedOutPlayer;
+
         [Header("Sistema de Sinergia")]
         /// <summary> Banco de dados contendo todas as combinações de cartas que geram bônus especiais. </summary>
         public ComboDatabase comboDatabase;
@@ -33,7 +46,10 @@ namespace RougueCards.Attributes
         /// </summary>
         private void Awake()
         {
-            if (Instance == null) Instance = this;
+            if (Instance == null)
+            {
+                Instance = this;
+            }
         }
 
         /// <summary>
@@ -78,13 +94,26 @@ namespace RougueCards.Attributes
 
         /// <summary>
         /// Determina qual jogador tem o direito de escolha no painel de cartas.
-        /// A decisão é baseada em quem possui o maior combo de eliminações atual.
+        /// Se um inimigo especial já foi eliminado, quem deu o golpe final nele tem prioridade.
+        /// Caso contrário, a decisão é baseada em quem possui o maior combo de eliminações atual.
         /// </summary>
         /// <returns>A instância de PlayerStats do jogador decisor.</returns>
         public PlayerStats GetDecidingPlayer()
         {
-            if (player1 == null) return player2;
-            if (player2 == null) return player1;
+            if (lastSpecialEnemyKiller != null)
+            {
+                return lastSpecialEnemyKiller;
+            }
+
+            if (player1 == null)
+            {
+                return player2;
+            }
+
+            if (player2 == null)
+            {
+                return player1;
+            }
 
             if (player1.currentCombo >= player2.currentCombo)
             {
@@ -94,6 +123,81 @@ namespace RougueCards.Attributes
             {
                 return player2;
             }
+        }
+
+        /// <summary>
+        /// Registra a referência de PlayerInput de um jogador, permitindo que o Maestro
+        /// bloqueie e restaure seus controles posteriormente (ex: durante a escolha exclusiva de carta).
+        /// </summary>
+        /// <param name="playerID">1 ou 2.</param>
+        /// <param name="input">O componente PlayerInput da instância do jogador.</param>
+        public void RegisterPlayerInput(int playerID, PlayerInput input)
+        {
+            if (playerID == 1)
+            {
+                player1Input = input;
+            }
+            else if (playerID == 2)
+            {
+                player2Input = input;
+            }
+        }
+
+        /// <summary>
+        /// Chamado quando um inimigo especial é eliminado. O jogador que deu o golpe final
+        /// passa a ter prioridade de escolha na próxima liberação de upgrade.
+        /// </summary>
+        /// <param name="killer">O jogador que eliminou o inimigo especial.</param>
+        public void RegisterSpecialEnemyKill(PlayerStats killer)
+        {
+            lastSpecialEnemyKiller = killer;
+            Debug.Log($"[Maestro] Inimigo especial eliminado por Player {killer.playerID}. Ele decidirá a próxima carta.");
+        }
+
+        /// <summary>
+        /// Bloqueia o input do jogador que NÃO tem prioridade de escolha (ver <see cref="GetDecidingPlayer"/>),
+        /// permitindo que apenas o jogador decisor consiga escolher a carta.
+        /// </summary>
+        public void LockOutNonDecidingPlayer()
+        {
+            PlayerStats decider = GetDecidingPlayer();
+            if (decider == null)
+            {
+                return;
+            }
+
+            lockedOutPlayer = (decider == player1) ? player2 : player1;
+            if (lockedOutPlayer == null)
+            {
+                return;
+            }
+
+            PlayerInput input = (lockedOutPlayer == player1) ? player1Input : player2Input;
+            if (input != null && input.inputIsActive)
+            {
+                input.DeactivateInput();
+                Debug.Log($"[Maestro] Input do Player {lockedOutPlayer.playerID} bloqueado durante a escolha de carta.");
+            }
+        }
+
+        /// <summary>
+        /// Restaura o input do jogador que foi bloqueado em <see cref="LockOutNonDecidingPlayer"/>.
+        /// </summary>
+        public void RestoreLockedPlayerInput()
+        {
+            if (lockedOutPlayer == null)
+            {
+                return;
+            }
+
+            PlayerInput input = (lockedOutPlayer == player1) ? player1Input : player2Input;
+            if (input != null && !input.inputIsActive)
+            {
+                input.ActivateInput();
+                Debug.Log($"[Maestro] Input do Player {lockedOutPlayer.playerID} restaurado.");
+            }
+
+            lockedOutPlayer = null;
         }
 
         /// <summary>
@@ -134,15 +238,28 @@ namespace RougueCards.Attributes
         /// </summary>
         public void CheckForCardCombos()
         {
-            if (comboDatabase == null) return;
+            if (comboDatabase == null)
+            {
+                return;
+            }
 
             List<CardData> combinedCards = new List<CardData>();
-            if (player1 != null) combinedCards.AddRange(player1.inventoryCards);
-            if (player2 != null) combinedCards.AddRange(player2.inventoryCards);
+            if (player1 != null)
+            {
+                combinedCards.AddRange(player1.inventoryCards);
+            }
+
+            if (player2 != null)
+            {
+                combinedCards.AddRange(player2.inventoryCards);
+            }
 
             foreach (var combo in comboDatabase.allPossibleCombos)
             {
-                if (activeCombos.Contains(combo)) continue;
+                if (activeCombos.Contains(combo))
+                {
+                    continue;
+                }
 
                 if (combo.IsSatisifed(combinedCards))
                 {
