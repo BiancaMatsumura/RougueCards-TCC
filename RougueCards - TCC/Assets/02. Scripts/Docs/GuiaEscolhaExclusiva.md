@@ -22,12 +22,12 @@
     *   **Para que serve:**
         1.  **Prioridade:** `RegisterSpecialEnemyKill(killer)` guarda o último jogador que eliminou o inimigo especial.
         2.  **Arbitragem Atualizada:** `GetDecidingPlayer()` passa a checar primeiro esse jogador; só cai na regra antiga (maior combo) se nenhum inimigo especial tiver sido eliminado ainda.
-        3.  **Bloqueio de Input:** `LockOutNonDecidingPlayer()` desativa o `PlayerInput` do jogador que **não** tem prioridade, para que só o jogador decisor consiga interagir com o painel de cartas.
-        4.  **Restauração:** `RestoreLockedPlayerInput()` reativa o `PlayerInput` do jogador bloqueado assim que a escolha termina.
+        3.  **Bloqueio de Input:** `LockOutNonDecidingPlayer()` desativa o `PlayerInput` **e** o dispositivo físico (`InputSystem.DisableDevice()`) do jogador que **não** tem prioridade, para que só o jogador decisor consiga interagir com o painel de cartas (ver seção 2.3 para o motivo de precisar das duas camadas).
+        4.  **Restauração:** `RestoreLockedPlayerInput()` reativa o `PlayerInput` e o dispositivo do jogador bloqueado assim que a escolha termina.
 
 *   **`PlayerInputManager.cs` (MonoBehaviour):**
     *   **O que é:** O script que instancia os jogadores ao entrarem na partida.
-    *   **Para que serve:** Logo após criar o `PlayerInput` de cada jogador, registra essa referência no Maestro via `RegisterPlayerInput(playerID, input)`, para que o bloqueio/restauração funcione depois.
+    *   **Para que serve:** Logo após criar o `PlayerInput` de cada jogador, registra essa referência no Maestro via `RegisterPlayerInput(playerID, input)`. Para jogadores de gamepad, também registra o `Gamepad` físico via `RegisterPlayerDevice(playerID, gamepad)`, necessário para o bloqueio a nível de dispositivo.
 
 ### 1.4. A Camada de UI (O "Gatilho")
 *   **`CardManager.cs` (MonoBehaviour):**
@@ -54,12 +54,16 @@ A prioridade de escolha segue esta ordem, verificada em `GetDecidingPlayer()`:
 O valor da prioridade especial **não é consumido** após uma escolha: ele permanece válido até que um novo inimigo especial morra (o que reflete o fato de que ele pode spawnar várias vezes ao longo da fase).
 
 ### 2.3. Como Funciona o Bloqueio de Input
+O painel de cartas usa um único `InputSystemUIInputModule` **global**, compartilhado pelos dois jogadores (os bindings de `Submit`/`Navigate`/`Click` em `UI_Controls.inputactions` são curinga, ex: `*/{Submit}`, e respondem a qualquer dispositivo conectado). Por isso, só desativar o `PlayerInput` do jogador (que bloqueia apenas as ações de *gameplay* dele) **não é suficiente** — o dispositivo dele continuaria navegando/clicando na UI normalmente. Para resolver isso, o bloqueio acontece em duas camadas.
+
 Ao abrir o painel de cartas (`CardManager.ShowPanel()`):
 1.  O Maestro descobre o jogador decisor com `GetDecidingPlayer()`.
-2.  O `PlayerInput` do **outro** jogador é desativado com `DeactivateInput()` — isso bloqueia as ações de gameplay dele (mover, atacar, pular, etc.).
-3.  Ao fechar o painel (`CardManager.HidePanel()`, chamado automaticamente após a escolha em `HandlePickUp()`), o `PlayerInput` desse jogador é reativado com `ActivateInput()`.
+2.  O `PlayerInput` do **outro** jogador é desativado com `DeactivateInput()` — bloqueia as ações de gameplay dele (mover, atacar, pular, etc.).
+3.  O dispositivo físico dele (ex: o `Gamepad`, registrado via `RegisterPlayerDevice()` quando o jogador entra com um controle) é desativado com `InputSystem.DisableDevice()` — isso impede que ele continue disparando `Submit`/`Navigate`/`Click` no módulo de UI compartilhado, já que um dispositivo desativado não gera nenhum evento de input para ninguém.
 
-**Atenção:** a navegação do painel de cartas usa um único `InputSystemUIInputModule` global, compartilhado pelos dois jogadores. O bloqueio acima impede as ações de **gameplay** do jogador não-decisor, mas não impede fisicamente o dispositivo dele de navegar pela UI compartilhada — isso é uma limitação de arquitetura já existente antes desta mecânica.
+Ao fechar o painel (`CardManager.HidePanel()`, chamado automaticamente após a escolha em `HandlePickUp()`), o `PlayerInput` e o dispositivo do jogador bloqueado são reativados com `ActivateInput()` e `InputSystem.EnableDevice()`.
+
+**Limitação conhecida (jogadores de teclado):** o bloqueio por dispositivo funciona perfeitamente para jogadores de **gamepad**, pois cada um tem seu próprio `Gamepad` físico. Já os dois jogadores de teclado (`WASD_Player` e `SETAS_Player`) compartilham o **mesmo** `Keyboard` físico — não é possível desativar só "metade" do teclado sem afetar os dois. Nesse caso, o jogador bloqueado continua impedido de se mover/atacar (passo 2), mas ainda pode, em teoria, apertar Espaço/Enter para navegar no painel de cartas. Isso não quebra a recompensa (o `CardManager.HandlePickUp()` sempre credita a carta ao jogador decisor, não a quem clicou), mas a exclusividade visual da escolha fica limitada nesse cenário específico.
 
 ### 2.4. Como Configurar o Sistema em uma Nova Cena
 Segue a mesma ordem de conexão do `GuiaAtributos.md` (seção 2.3). Nenhuma conexão extra no Inspector é necessária: o registro de `PlayerInput` no Maestro acontece automaticamente pelo `PlayerInputManager` ao dar Play.
@@ -69,7 +73,8 @@ Segue a mesma ordem de conexão do `GuiaAtributos.md` (seção 2.3). Nenhuma con
 ## 3. Notas de Debug e Verificação
 *   **Console:** O sistema avisa no Console:
     *   *"[Maestro] Inimigo especial eliminado por Player [ID]. Ele decidirá a próxima carta."* (Confirma o registro da eliminação especial).
-    *   *"[Maestro] Input do Player [ID] bloqueado durante a escolha de carta."* (Confirma que o jogador não-decisor foi bloqueado).
-    *   *"[Maestro] Input do Player [ID] restaurado."* (Confirma que o input voltou ao normal após a escolha).
-*   **Inspector em Tempo Real:** Durante o jogo, selecione o objeto do `AttributeMaestro` na Hierarchy e observe os campos `Player1 Input` / `Player2 Input`. Se um deles estiver com o comportamento pausado no painel de cartas, o bloqueio está funcionando.
-*   **Teste Rápido:** Mate o inimigo especial com o Player 2 e libere um upgrade em seguida. Se o Player 1 não conseguir mais se mover enquanto o painel estiver aberto, a mecânica está correta.
+    *   *"[Maestro] Input do Player [ID] bloqueado durante a escolha de carta."* (Confirma que o gameplay do jogador não-decisor foi bloqueado).
+    *   *"[Maestro] Dispositivo do Player [ID] desativado durante a escolha de carta."* (Confirma que o dispositivo físico dele foi desativado — só aparece para jogadores de gamepad, ver limitação na seção 2.3).
+    *   *"[Maestro] Input do Player [ID] restaurado."* / *"[Maestro] Dispositivo do Player [ID] reativado."* (Confirmam que tudo voltou ao normal após a escolha).
+*   **Inspector em Tempo Real:** Durante o jogo, selecione o objeto do `AttributeMaestro` na Hierarchy e observe os campos `Player1 Input`/`Player2 Input` e `Player1 Device`/`Player2 Device`. Se o dispositivo do jogador não-decisor estiver desativado enquanto o painel de cartas está aberto, o bloqueio está funcionando.
+*   **Teste Rápido:** Com os dois jogadores em **gamepads**, mate o inimigo especial com o Player 2 e libere um upgrade em seguida. O Player 1 não deve conseguir mais se mover, nem navegar/clicar no painel de cartas, enquanto ele estiver aberto.
