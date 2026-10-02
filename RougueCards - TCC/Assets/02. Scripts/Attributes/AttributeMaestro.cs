@@ -28,11 +28,25 @@ namespace RougueCards.Attributes
         /// <summary> Referência ao PlayerInput do Jogador 2, usada para bloquear/restaurar seus controles. </summary>
         public PlayerInput player2Input;
 
+        /// <summary>
+        /// Dispositivo físico (ex: Gamepad) do Jogador 1. Só é preenchido para jogadores de gamepad, pois
+        /// jogadores de teclado compartilham o mesmo dispositivo físico e não podem ser isolados por device.
+        /// Necessário porque o painel de cartas usa um único InputSystemUIInputModule global e compartilhado:
+        /// apenas desativar o PlayerInput não impede o dispositivo de continuar navegando/clicando na UI.
+        /// </summary>
+        public InputDevice player1Device;
+
+        /// <summary> Dispositivo físico (ex: Gamepad) do Jogador 2. Mesma ressalva de <see cref="player1Device"/>. </summary>
+        public InputDevice player2Device;
+
         /// <summary> Último jogador que eliminou um inimigo especial. Enquanto definido, ele tem prioridade de escolha sobre a regra de combo. </summary>
         private PlayerStats lastSpecialEnemyKiller;
 
         /// <summary> Jogador que teve o input bloqueado durante a escolha exclusiva de carta (null se ninguém estiver bloqueado). </summary>
         private PlayerStats lockedOutPlayer;
+
+        /// <summary> Dispositivo que foi desativado pelo Maestro para o bloqueio atual, guardado para ser reativado depois. </summary>
+        private InputDevice disabledDevice;
 
         [Header("Sistema de Sinergia")]
         /// <summary> Banco de dados contendo todas as combinações de cartas que geram bônus especiais. </summary>
@@ -144,6 +158,25 @@ namespace RougueCards.Attributes
         }
 
         /// <summary>
+        /// Registra o dispositivo físico (ex: Gamepad) usado por um jogador. Só deve ser chamado para
+        /// jogadores de gamepad — jogadores de teclado compartilham o mesmo dispositivo físico (o Keyboard)
+        /// e por isso não podem ser bloqueados individualmente a nível de dispositivo.
+        /// </summary>
+        /// <param name="playerID">1 ou 2.</param>
+        /// <param name="device">O dispositivo físico do jogador (ex: o Gamepad dele).</param>
+        public void RegisterPlayerDevice(int playerID, InputDevice device)
+        {
+            if (playerID == 1)
+            {
+                player1Device = device;
+            }
+            else if (playerID == 2)
+            {
+                player2Device = device;
+            }
+        }
+
+        /// <summary>
         /// Chamado quando um inimigo especial é eliminado. O jogador que deu o golpe final
         /// passa a ter prioridade de escolha na próxima liberação de upgrade.
         /// </summary>
@@ -157,6 +190,9 @@ namespace RougueCards.Attributes
         /// <summary>
         /// Bloqueia o input do jogador que NÃO tem prioridade de escolha (ver <see cref="GetDecidingPlayer"/>),
         /// permitindo que apenas o jogador decisor consiga escolher a carta.
+        /// Além de desativar o PlayerInput dele (bloqueia o gameplay), desativa também o dispositivo físico
+        /// dele (quando registrado), já que o painel de cartas usa um InputSystemUIInputModule global e
+        /// compartilhado — sem isso, o dispositivo do jogador bloqueado ainda conseguiria navegar/clicar na UI.
         /// </summary>
         public void LockOutNonDecidingPlayer()
         {
@@ -178,6 +214,14 @@ namespace RougueCards.Attributes
                 input.DeactivateInput();
                 Debug.Log($"[Maestro] Input do Player {lockedOutPlayer.playerID} bloqueado durante a escolha de carta.");
             }
+
+            InputDevice device = (lockedOutPlayer == player1) ? player1Device : player2Device;
+            if (device != null && device.enabled)
+            {
+                InputSystem.DisableDevice(device);
+                disabledDevice = device;
+                Debug.Log($"[Maestro] Dispositivo do Player {lockedOutPlayer.playerID} desativado durante a escolha de carta.");
+            }
         }
 
         /// <summary>
@@ -195,6 +239,13 @@ namespace RougueCards.Attributes
             {
                 input.ActivateInput();
                 Debug.Log($"[Maestro] Input do Player {lockedOutPlayer.playerID} restaurado.");
+            }
+
+            if (disabledDevice != null)
+            {
+                InputSystem.EnableDevice(disabledDevice);
+                Debug.Log($"[Maestro] Dispositivo do Player {lockedOutPlayer.playerID} reativado.");
+                disabledDevice = null;
             }
 
             lockedOutPlayer = null;

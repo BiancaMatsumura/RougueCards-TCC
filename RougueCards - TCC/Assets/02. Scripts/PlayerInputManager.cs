@@ -133,6 +133,7 @@ public class PlayerInputManager : MonoBehaviour
         {
 
             playerInput.SwitchCurrentControlScheme(scheme, gamepad);
+            AttributeMaestro.Instance?.RegisterPlayerDevice(statsInstance.playerID, gamepad);
         }
         else
         {
