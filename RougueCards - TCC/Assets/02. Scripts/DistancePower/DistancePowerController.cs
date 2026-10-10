@@ -169,6 +169,7 @@ public class DistancePowerController : MonoBehaviour
     private IEnumerator PowerRoutine()
     {
         float pulseDuration = 0.4f;
+        float pulseScale = 1.05f; 
 
         for (int i = 0; i < 3; i++)
         {
@@ -176,7 +177,7 @@ public class DistancePowerController : MonoBehaviour
             while (elapsed < pulseDuration)
             {
                 float smooth = Mathf.SmoothStep(0f, 1f, elapsed / pulseDuration);
-                float scale = Mathf.Lerp(1f, 1.1f, smooth);
+                float scale = Mathf.Lerp(1f, pulseScale, smooth);
                 _powerContainerP1.style.scale = new Scale(new Vector3(scale, scale, 1f));
                 _powerContainerP2.style.scale = new Scale(new Vector3(scale, scale, 1f));
                 elapsed += Time.deltaTime;
@@ -187,7 +188,7 @@ public class DistancePowerController : MonoBehaviour
             while (elapsed < pulseDuration)
             {
                 float smooth = Mathf.SmoothStep(0f, 1f, elapsed / pulseDuration);
-                float scale = Mathf.Lerp(1.1f, 1f, smooth);
+                float scale = Mathf.Lerp(pulseScale, 1f, smooth);
                 _powerContainerP1.style.scale = new Scale(new Vector3(scale, scale, 1f));
                 _powerContainerP2.style.scale = new Scale(new Vector3(scale, scale, 1f));
                 elapsed += Time.deltaTime;
@@ -203,7 +204,7 @@ public class DistancePowerController : MonoBehaviour
         var (p1, p2) = splitManager.Players;
         Vector3 center = (p1.position + p2.position) / 2f;
         OnPowerActivated?.Invoke(center);
-        _canRecharge = false; // precisa drenar de novo antes do próximo uso
+        _canRecharge = false; 
     }
 
     /// <summary>Verifica se 'from' está com o forward apontando para 'to' dentro do threshold.</summary>

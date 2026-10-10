@@ -19,17 +19,18 @@ public class Health : MonoBehaviour
 
     //Animation
     private Animator anim;
+
     void Awake()
-    {   
-       
+    {
         pStats = GetComponentInParent<PlayerStats>();
-        GameOverWatcher.Instance?.RegisterPlayer(this);
         if (currentHealth <= 0) currentHealth = maxHealth;
     }
 
     void Start()
     {
         anim = GetComponent<Animator>();
+        GameOverWatcher.Instance?.RegisterPlayer(this);
+
         if (pStats != null)
             RefreshMaxHP();
 
@@ -77,7 +78,7 @@ public class Health : MonoBehaviour
         if (_isDead) return;
         _isDead = true;
 
-       
+
 
         lastAttacker?.AddKill();
 
@@ -140,6 +141,6 @@ public class Health : MonoBehaviour
         currentHealth = (int)(maxHealth * hpPercent);
         OnHealthChanged?.Invoke(playerID, currentHealth, maxHealth);
         if (anim != null) { anim.Play("Revived"); }
-        
+
     }
 }

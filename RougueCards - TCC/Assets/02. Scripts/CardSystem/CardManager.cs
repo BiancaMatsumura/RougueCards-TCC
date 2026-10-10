@@ -13,6 +13,9 @@ public class CardManager : MonoBehaviour
 
     [SerializeField] private AutoShooter autoShooter;
     [SerializeField] private MenuBlurController menuBlurController;
+
+    [SerializeField] private int staggerMs = 60;
+    private VisualElement[] slotPanels;
     private Shooter shooter;
 
     private CardController[] controllers;
@@ -27,6 +30,14 @@ public class CardManager : MonoBehaviour
     {
         root = GetComponent<UIDocument>().rootVisualElement;
         cardPanel = root.Q<VisualElement>("CardsPanel");
+
+        slotPanels = new[]
+        {
+            root.Q<VisualElement>("Slot0Panel"),
+            root.Q<VisualElement>("Slot1Panel"),
+            root.Q<VisualElement>("Slot2Panel")
+        };
+        foreach (var s in slotPanels) s.AddToClassList("card-slot");
 
         SetPanelVisible(false);
 
@@ -50,6 +61,7 @@ public class CardManager : MonoBehaviour
         yield return null;
 
         LoadCards();
+        PlayEnterAnimation();   // <- nova linha
         isLoadingCards = false;
 
         if (controllers != null && controllers.Length > 0)
@@ -138,8 +150,21 @@ public class CardManager : MonoBehaviour
 
         if (!visible)
         {
+            // Prepara o estado escondido para a próxima abertura
+            foreach (var s in slotPanels) s.AddToClassList("card-slot--hidden");
+
             controllers = null;
-            OnPanelClosed?.Invoke(); // linha nova
+            OnPanelClosed?.Invoke();
+        }
+    }
+
+    private void PlayEnterAnimation()
+    {
+        for (int i = 0; i < slotPanels.Length; i++)
+        {
+            var slot = slotPanels[i];
+            slot.schedule.Execute(() => slot.RemoveFromClassList("card-slot--hidden"))
+                         .StartingIn(30 + i * staggerMs);
         }
     }
 
@@ -194,7 +219,7 @@ public class CardManager : MonoBehaviour
         if (shooter == null)
             shooter = FindFirstObjectByType<Shooter>();
 
-        if (shooter != null )
+        if (shooter != null)
         {
             shooter.ApplyWeaponAnimations();
             Debug.Log("Arma adicionada: " + data.rangedWeapon.name);

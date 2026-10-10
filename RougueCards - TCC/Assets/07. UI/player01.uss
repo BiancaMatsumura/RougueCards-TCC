@@ -88,6 +88,17 @@
     max-height: 350px;
 }
 
+.card-slot {
+    transition-property: translate, opacity;
+    transition-duration: 0.4s, 0.2s;
+    transition-timing-function: ease-out-back, ease-out;
+}
+
+.card-slot--hidden {
+    translate: 0 -80px;
+    opacity: 0;
+}
+
 .cardButton {
     max-width: 80px;
     max-height: 30px;

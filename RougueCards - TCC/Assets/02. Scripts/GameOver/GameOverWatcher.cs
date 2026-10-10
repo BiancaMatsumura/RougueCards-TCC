@@ -25,8 +25,23 @@ public class GameOverWatcher : MonoBehaviour
     // Chamado por cada Health ao nascer
     public void RegisterPlayer(Health health)
     {
+        // Só quem tem a tag "Player" entra na contagem (inimigos ficam de fora)
+        if (!health.CompareTag("Player"))
+        {
+            return;
+        }
+
         registeredHealths.Add(health);
-        health.OnDeath += () => HandleDeath(health.playerID);
+
+        // Quando morre de vez
+        health.OnDeath += CheckGameOver;
+
+        // Quando entra no estado abatido
+        var downed = health.GetComponent<DownedState>();
+        if (downed != null)
+        {
+            downed.OnDowned += CheckGameOver;
+        }
     }
 
     private void HandleDeath(int playerID)
@@ -46,18 +61,23 @@ public class GameOverWatcher : MonoBehaviour
 
     private void CheckGameOver()
     {
-        if (gameOverTriggered)
+        Debug.Log($"[GameOver] Checando. Registrados: {registeredHealths.Count}");
+        if (gameOverTriggered || registeredHealths.Count == 0)
         {
             return;
         }
 
-        bool soloMode = registeredHealths.Count == 1;
-
-        if (soloMode || (player1Dead && player2Dead))
+        // Se algum jogador ainda está de pé, não acaba
+        foreach (var health in registeredHealths)
         {
-            gameOverTriggered = true;
-            uiController.ShowGameOver(BuildPlayersStats());
+            if (health != null && !health._isDead)
+            {
+                return;
+            }
         }
+
+        gameOverTriggered = true;
+        uiController.ShowGameOver(BuildPlayersStats());
     }
 
     /// <summary> Reúne as estatísticas de cada jogador registrado para exibir no Game Over. </summary>
