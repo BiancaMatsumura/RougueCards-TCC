@@ -16,3 +16,4 @@ MonoBehaviour:
   baseDamage: 10
   comboWindowMultiplier: 2
   comboMax: 2
+  WeaponPrefab: {fileID: 8635893145716036386, guid: d2d65b414d428e446aba1dc0831b2f3e, type: 3}

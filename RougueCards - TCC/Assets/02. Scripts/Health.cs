@@ -1,5 +1,6 @@
 using RougueCards.Attributes;
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Health : MonoBehaviour
@@ -16,10 +17,11 @@ public class Health : MonoBehaviour
     public PlayerStats lastAttacker;
     public bool _isDead = false;
     public bool isInvincible = false;
-
+    
     //Animation
     private Animator anim;
 
+    private PopusManager popusManager;
     void Awake()
     {
         pStats = GetComponentInParent<PlayerStats>();
@@ -28,6 +30,7 @@ public class Health : MonoBehaviour
 
     void Start()
     {
+        popusManager = FindFirstObjectByType<PopusManager>();
         anim = GetComponent<Animator>();
         GameOverWatcher.Instance?.RegisterPlayer(this);
 
@@ -69,8 +72,11 @@ public class Health : MonoBehaviour
 
         OnHealthChanged?.Invoke(playerID, currentHealth, maxHealth);
         OnHit?.Invoke();
-
+        if (attacker != null){
+            popusManager.POPUP(this.gameObject.transform.position, amount);
+        }
         if (currentHealth <= 0) Die();
+        
     }
 
     private void Die()

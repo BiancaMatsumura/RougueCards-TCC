@@ -14,11 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardName: Shotgun
   description: + 5 disparos em cadeia
-  cardImage: {fileID: 21300000, guid: 62fe6dbdd5582b741aaf913be2252898, type: 3}
+  cardImage: {fileID: 21300000, guid: 66ed37fc2b2cab748b87ed4409552fc0, type: 3}
   xpRequired: 0
   effectType: 1
   statToUpgrade: 0
   upgradeValue: 0
   isPercentage: 0
   rangedWeapon: {fileID: 11400000, guid: 397891c723cc57a43bb6fd5cd9dc3ddf, type: 2}
-  meleeWeapon: {fileID: 0}
+  meleeWeapon: {fileID: 11400000, guid: ae3e5918eb841024498eb73e08eb3b2e, type: 2}

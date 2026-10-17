@@ -223,6 +223,7 @@ public class CardManager : MonoBehaviour
         {
             shooter.ApplyWeaponAnimations();
             Debug.Log("Arma adicionada: " + data.rangedWeapon.name);
+            if (data.meleeWeapon != null) { shooter.SwichWeaponMesh(data.meleeWeapon); }
         }
         else
         {

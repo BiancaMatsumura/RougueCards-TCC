@@ -7,9 +7,15 @@ public class MeleeWeaponData : ScriptableObject
     public int baseDamage = 10;
     public float comboWindowMultiplier = 1f;
     public int comboMax = 0;
+    public GameObject WeaponPrefab;
 
     public void ApplyOverride(Animator Anim) 
     {
-        Anim.runtimeAnimatorController = controler;
+        if(controler != null) 
+        {
+            Anim.runtimeAnimatorController = controler;
+        }
+        else { Debug.LogWarning("Não existe animator controler, será usado o padrão"); }
+        
     }
 }

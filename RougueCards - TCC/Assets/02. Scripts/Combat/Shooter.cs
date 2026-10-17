@@ -19,12 +19,13 @@ public class Shooter : MonoBehaviour
     public float ComoboWindow = 2f;
 
     public bool IsShooter;
-    public GameObject Hands;
+    public GameObject WeaponPrefab;
+    public Transform HandsPosition;
     private Health life;
     private Damage damage;
-
     void Start()
     {
+        InitWeaponMesh(weaponData);
         ApplyWeaponAnimations();
         damage = GetComponentInChildren<Damage>();
         life = GetComponent<Health>();
@@ -36,11 +37,9 @@ public class Shooter : MonoBehaviour
             ComboLengthMax = weaponData.comboMax;
             ComoboWindow *= weaponData.comboWindowMultiplier;
         }
+  
 
-        if (IsShooter && Hands != null)
-        {
-            Hands.SetActive(true);
-        }
+       
     }
 
     public void ATK(InputAction.CallbackContext context)
@@ -107,4 +106,30 @@ public class Shooter : MonoBehaviour
             weaponData.ApplyOverride(control);
         }
     }
+
+    public void SwichWeaponMesh(MeleeWeaponData weaponData) 
+    {
+        
+        if (IsShooter)
+        {
+            if (WeaponPrefab != null)
+            {
+                DestroyImmediate(WeaponPrefab,true);
+            }
+            if (weaponData.WeaponPrefab != null)
+            {
+                WeaponPrefab = Instantiate(weaponData.WeaponPrefab, HandsPosition);
+            }
+            else { Debug.Log("Nao tem prefab droga!"); }
+            }
+        }
+    public void InitWeaponMesh(MeleeWeaponData weaponData) 
+    {
+        if (weaponData.WeaponPrefab != null)
+        {
+            WeaponPrefab = Instantiate(weaponData.WeaponPrefab, HandsPosition);
+        }
+        else { Debug.Log("Nao tem prefab droga!"); }
+    }
+
 }

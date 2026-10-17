@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardName: Carta de Vida
   description: +20 de vida
-  cardImage: {fileID: 21300000, guid: 6aec468adc59d2c459e7bb6b143c8804, type: 3}
+  cardImage: {fileID: 21300000, guid: 9af7d9cf1bcb3f746b88e23ab401e93e, type: 3}
   xpRequired: 0
   effectType: 0
   statToUpgrade: 0
