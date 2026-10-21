@@ -68,6 +68,7 @@ public class Shooter : MonoBehaviour
         SlashVfx();
         ComboSteps(ComboLengthMax);
         Debug.Log(counter);
+        
     }
 
     IEnumerator ComboTimer()

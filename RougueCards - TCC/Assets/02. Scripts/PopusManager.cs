@@ -1,4 +1,4 @@
-
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,12 +21,14 @@ public class PopusManager : MonoBehaviour
         var classepop = allpopups[prefabNumber];
         if(classepop.existentpopups.Count >= classepop.Limit)
         {
-            if(classepop.existentpopups.Contains(classepop.existentpopups[Random.Range(0,classepop.Limit+1)])){
-                
-                classepop.existentpopups[Random.Range(0,classepop.Limit+1)].transform.position = transform;
-                classepop.existentpopups[Random.Range(0,classepop.Limit+1)].GetComponent<Animation>().Play();
+            if(classepop.existentpopups.Contains(classepop.existentpopups[0])){
+              
+                classepop.existentpopups[0].transform.position = transform;
+                classepop.existentpopups[0].GetComponent<Animation>().Play();
                 // Set value define o valor do popup em ROTATE CAM
-                classepop.existentpopups[Random.Range(0,classepop.Limit+1)].GetComponent<RotateToCam>().SetValue(value,classepop.BeforSimble);
+                classepop.existentpopups[0].GetComponent<RotateToCam>().SetValue(value,classepop.BeforSimble);
+                classepop.existentpopups.RemoveAt(0);
+                
                 }
         }
         else

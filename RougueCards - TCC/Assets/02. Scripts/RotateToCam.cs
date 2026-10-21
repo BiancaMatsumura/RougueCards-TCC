@@ -21,6 +21,7 @@ public class RotateToCam : MonoBehaviour
         Manager = FindFirstObjectByType<PopusManager>();
         Recta = GetComponent<RectTransform>();
         textval = GetComponent<TextMeshPro>();
+        
     }
     void FixedUpdate()
     {
