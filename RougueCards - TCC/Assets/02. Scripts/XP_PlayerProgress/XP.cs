@@ -14,6 +14,11 @@ public class XP : MonoBehaviour
     private Transform target;
     private float timer;
 
+    private PopusManager popusManager;
+    void Start()
+    {
+        popusManager = FindFirstObjectByType<PopusManager>();
+    }
     void Update()
     {
         // Se ainda não estiver sendo atraído, verifica se há algum jogador por perto
@@ -114,6 +119,7 @@ public class XP : MonoBehaviour
 
             if (playerProgress != null)
             {
+                popusManager.POPUP(other.gameObject.transform.position, xpValue ,1);
                 playerProgress.AddXP(finalXP);
                 Debug.Log($"XP Coletado: {finalXP} (Base: {xpValue} x Bônus: {multiplier})");
             }

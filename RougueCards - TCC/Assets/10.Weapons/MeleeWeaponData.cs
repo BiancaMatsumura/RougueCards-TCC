@@ -15,7 +15,7 @@ public class MeleeWeaponData : ScriptableObject
         {
             Anim.runtimeAnimatorController = controler;
         }
-        else { Debug.LogWarning("Não existe animator controler, será usado o padrão"); }
+        else { Debug.LogWarning("Nï¿½o existe animator controler, serï¿½ usado o padrï¿½o"); }
         
     }
 }

@@ -73,7 +73,7 @@ public class Health : MonoBehaviour
         OnHealthChanged?.Invoke(playerID, currentHealth, maxHealth);
         OnHit?.Invoke();
         if (attacker != null){
-            popusManager.POPUP(this.gameObject.transform.position, amount);
+            popusManager.POPUP(this.gameObject.transform.position, amount,0);
         }
         if (currentHealth <= 0) Die();
         

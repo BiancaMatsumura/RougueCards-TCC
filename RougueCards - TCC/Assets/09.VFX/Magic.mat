@@ -55,15 +55,15 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Fps: 14.9
-    - _N_de_Frames: 18.97
+    - _Fps: 8.4
+    - _N_de_Frames: 16.9
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _Rotation: 3.7
-    - _Velocity: 0.909
+    - _Rotation: 4.73
+    - _Velocity: 0.06
     m_Colors:
-    - _Brilho: {r: 0.051818464, g: 0.31458277, b: 0, a: 1}
-    - _DefaultColor: {r: 0, g: 2.3245065, b: 0, a: 1}
-    - _Tilling: {r: 2.66, g: 0.35, b: 0, a: 0}
+    - _Brilho: {r: 0.9852151, g: 6.0628657, b: 0, a: 1}
+    - _DefaultColor: {r: 0, g: 1.8255287, b: 0, a: 1}
+    - _Tilling: {r: 1.1, g: -0.31, b: 0, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

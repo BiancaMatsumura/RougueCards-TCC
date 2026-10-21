@@ -14,6 +14,9 @@ public class Shooter : MonoBehaviour
     private bool IsInCombo;
     public  int counter;
 
+    public float CoolDownBetween;
+    
+    
     [Header("Combo System")]
     public int ComboLengthMax = 3;
     public float ComoboWindow = 2f;
@@ -23,13 +26,17 @@ public class Shooter : MonoBehaviour
     public Transform HandsPosition;
     private Health life;
     private Damage damage;
+
+    [Header("SlashVfx")]
+    public GameObject slashprefab;
+    private Animator slashanimation;
     void Start()
     {
         InitWeaponMesh(weaponData);
         ApplyWeaponAnimations();
         damage = GetComponentInChildren<Damage>();
         life = GetComponent<Health>();
-
+        slashanimation = slashprefab.GetComponent<Animator>();
       
 
         if (weaponData != null)
@@ -51,8 +58,14 @@ public class Shooter : MonoBehaviour
             StartCoroutine(ComboTimer());
             Debug.Log("combo start");
         }
-
+        StartCoroutine(BeguinAtack());
+       
+    }
+    IEnumerator BeguinAtack()
+    {
+        yield return new WaitForSeconds(CoolDownBetween);
         counter++;
+        SlashVfx();
         ComboSteps(ComboLengthMax);
         Debug.Log(counter);
     }
@@ -132,4 +145,8 @@ public class Shooter : MonoBehaviour
         else { Debug.Log("Nao tem prefab droga!"); }
     }
 
+    void SlashVfx()
+    {
+            slashanimation.Rebind();
+    }
 }

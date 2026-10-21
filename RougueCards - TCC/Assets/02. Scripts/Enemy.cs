@@ -1,7 +1,7 @@
 using RougueCards.Attributes;
 using UnityEngine;
 using UnityEngine.UI;
-using System.Collections.Generic;
+
 
 /// <summary>
 /// Controlador unificado do inimigo. 
@@ -210,7 +210,7 @@ public class Enemy : MonoBehaviour
             targetTimer = 0;
         }
 
-        if (isKnockedBack || target == null)
+        if ( target == null)
         {
             return;
         }
@@ -229,6 +229,7 @@ public class Enemy : MonoBehaviour
     public void ApplyKnockback(Vector3 direction, float force)
     {
         knockbackVelocity = direction * force;
+        
   
     }
 
@@ -257,6 +258,7 @@ public class Enemy : MonoBehaviour
             {
                 minDist = dist;
                 closest = p.transform;
+                Debug.Log($"{p.name}");
             }
         }
 

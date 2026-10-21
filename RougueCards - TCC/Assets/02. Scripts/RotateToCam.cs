@@ -14,6 +14,8 @@ public class RotateToCam : MonoBehaviour
     private TextMeshPro textval;
 
     public int popvalue;
+
+    private string  beforstringapply; 
     void Start()
     {
         Manager = FindFirstObjectByType<PopusManager>();
@@ -27,7 +29,7 @@ public class RotateToCam : MonoBehaviour
         SelectCamFollower();
         var direction = cameratofollow.transform.position - Recta.position;
         Recta.rotation =  Quaternion.LookRotation(-direction,-direction);
-        textval.SetText($"{popvalue}");
+        textval.SetText($"{beforstringapply}{popvalue}");
         }
     } 
 
@@ -57,9 +59,10 @@ public class RotateToCam : MonoBehaviour
 
     }
 
-    public void SetValue(int value)
+    public void SetValue(int value, string beforstring)
     {
         popvalue = value;
+        beforstringapply = beforstring;
         
 
 
