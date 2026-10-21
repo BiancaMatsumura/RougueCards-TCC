@@ -41,6 +41,56 @@ public class EnemySpawner : MonoBehaviour
     {
         enabled = false;
         enterPlayersUI.OnSelectionComplete += StartSpawner;
+        CheckSpecialEnemySetup();
+    }
+
+    /// <summary>
+    /// Avisa no Console se a lista de inimigos atrapalha a escolha exclusiva de carta:
+    /// todos especiais (quem escolhe passa a mudar a cada abate, parecendo aleatório) ou nenhum especial
+    /// (quem escolhe a carta é quem tem mais combo). O ideal é marcar só 1 tipo de inimigo como especial.
+    /// </summary>
+    private void CheckSpecialEnemySetup()
+    {
+        if (dadosInimigosDisponiveis == null)
+        {
+            return;
+        }
+
+        int total = 0;
+        int special = 0;
+
+        foreach (EnemyData data in dadosInimigosDisponiveis)
+        {
+            if (data == null)
+            {
+                continue;
+            }
+
+            total++;
+
+            if (data.isSpecialEnemy)
+            {
+                special++;
+            }
+        }
+
+        if (total < 2)
+        {
+            return;
+        }
+
+        if (special == total)
+        {
+            Debug.LogWarning("[Inimigo Especial] TODOS os inimigos da lista do EnemySpawner estão marcados como 'Is Special Enemy'. " +
+                             "Assim, quem escolhe a carta muda a cada abate e parece aleatório. " +
+                             "Deixe marcado só 1 tipo de inimigo (abra o EnemyData e desmarque nos outros).");
+        }
+        else if (special == 0)
+        {
+            Debug.Log("[Inimigo Especial] Nenhum inimigo da lista está marcado como 'Is Special Enemy'. " +
+                      "Por enquanto quem escolhe a carta é o jogador com mais combo. " +
+                      "Para usar a escolha por inimigo especial, marque 'Is Special Enemy' em 1 EnemyData.");
+        }
     }
     private void StartSpawner()
     {

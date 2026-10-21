@@ -2,9 +2,18 @@ using RougueCards.Combo;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.UI;
 
 namespace RougueCards.Attributes
 {
+    /// <summary> Qual metade do teclado um jogador usa (os dois jogadores de teclado dividem o mesmo dispositivo físico). </summary>
+    public enum KeyboardLayout
+    {
+        None,
+        Wasd,
+        Arrows
+    }
+
     /// <summary>
     /// O Maestro orquestra a comunicação entre os dois jogadores.
     /// É responsável por aplicar upgrades compartilhados, gerenciar a prioridade de escolha de cartas
@@ -15,7 +24,14 @@ namespace RougueCards.Attributes
         /// <summary> Instância estática para acesso global (Padrão Singleton). </summary>
         public static AttributeMaestro Instance;
 
-        [Header("Referências dos Jogadores")]
+        [Header("Escolha Exclusiva de Carta (configure aqui)")]
+        [Tooltip("Ligado: se o jogador SEM prioridade joga de CONTROLE (Xbox, PS5, Switch), ele fica bloqueado durante a escolha. Desligado: ele também pode escolher.")]
+        public bool exclusiveChoiceGamepad = true;
+
+        [Tooltip("Ligado: se o jogador SEM prioridade joga de TECLADO, ele fica bloqueado durante a escolha. Desligado: ele também pode escolher.")]
+        public bool exclusiveChoiceKeyboard = true;
+
+        [Header("Preenchidos sozinhos ao jogar (não precisa mexer)")]
         /// <summary> Referência aos atributos e estado do Jogador 1. </summary>
         public PlayerStats player1;
 
@@ -39,6 +55,40 @@ namespace RougueCards.Attributes
         /// <summary> Dispositivo físico (ex: Gamepad) do Jogador 2. Mesma ressalva de <see cref="player1Device"/>. </summary>
         public InputDevice player2Device;
 
+        /// <summary> Metade do teclado usada pelo Jogador 1 (None se ele joga de controle). </summary>
+        public KeyboardLayout player1Keyboard = KeyboardLayout.None;
+
+        /// <summary> Metade do teclado usada pelo Jogador 2 (None se ele joga de controle). </summary>
+        public KeyboardLayout player2Keyboard = KeyboardLayout.None;
+
+        /// <summary> Ações de UI (Submit/Navigate) usadas para bloquear as teclas de um jogador. Se nulo, é buscado no InputSystemUIInputModule da cena. </summary>
+        [System.NonSerialized]
+        public InputActionAsset uiActions;
+
+        /// <summary> Teclas de UI do jogador WASD: movimento e Espaço (confirmar). </summary>
+        private static readonly string[] WasdUiKeys =
+        {
+            "<Keyboard>/w", "<Keyboard>/a", "<Keyboard>/s", "<Keyboard>/d", "<Keyboard>/space"
+        };
+
+        /// <summary> Teclas de UI do jogador das setas: setas e Enter (confirmar). </summary>
+        private static readonly string[] ArrowUiKeys =
+        {
+            "<Keyboard>/upArrow", "<Keyboard>/downArrow", "<Keyboard>/leftArrow", "<Keyboard>/rightArrow", "<Keyboard>/enter"
+        };
+
+        /// <summary> Binding curinga de Submit da UI: casa com qualquer dispositivo, inclusive a tecla Enter (que tem o uso "Submit"). </summary>
+        private const string WildcardSubmitPath = "*/{Submit}";
+
+        /// <summary> Troca do curinga enquanto o teclado das setas está bloqueado: Submit passa a valer só para controles. </summary>
+        private const string GamepadSubmitPath = "<Gamepad>/{Submit}";
+
+        /// <summary> Bindings de UI desativados pelo bloqueio atual, guardados para serem restaurados depois. </summary>
+        private readonly List<(InputAction action, int bindingIndex)> keyboardOverrides = new List<(InputAction, int)>();
+
+        /// <summary> Jogador bloqueado no momento (null se ninguém estiver bloqueado, por exemplo quando a exclusividade está desligada para o tipo de controle dele). </summary>
+        public PlayerStats LockedOutPlayer => lockedOutPlayer;
+
         /// <summary> Último jogador que eliminou um inimigo especial. Enquanto definido, ele tem prioridade de escolha sobre a regra de combo. </summary>
         private PlayerStats lastSpecialEnemyKiller;
 
@@ -48,7 +98,7 @@ namespace RougueCards.Attributes
         /// <summary> Dispositivo que foi desativado pelo Maestro para o bloqueio atual, guardado para ser reativado depois. </summary>
         private InputDevice disabledDevice;
 
-        [Header("Sistema de Sinergia")]
+        [Header("Sistema de Sinergia (configure aqui)")]
         /// <summary> Banco de dados contendo todas as combinações de cartas que geram bônus especiais. </summary>
         public ComboDatabase comboDatabase;
 
@@ -177,6 +227,23 @@ namespace RougueCards.Attributes
         }
 
         /// <summary>
+        /// Registra qual metade do teclado um jogador usa. Só deve ser chamado para jogadores de teclado.
+        /// </summary>
+        /// <param name="playerID">1 ou 2.</param>
+        /// <param name="layout">Wasd ou Arrows.</param>
+        public void RegisterPlayerKeyboard(int playerID, KeyboardLayout layout)
+        {
+            if (playerID == 1)
+            {
+                player1Keyboard = layout;
+            }
+            else if (playerID == 2)
+            {
+                player2Keyboard = layout;
+            }
+        }
+
+        /// <summary>
         /// Chamado quando um inimigo especial é eliminado. O jogador que deu o golpe final
         /// passa a ter prioridade de escolha na próxima liberação de upgrade.
         /// </summary>
@@ -188,47 +255,67 @@ namespace RougueCards.Attributes
         }
 
         /// <summary>
-        /// Bloqueia o input do jogador que NÃO tem prioridade de escolha (ver <see cref="GetDecidingPlayer"/>),
+        /// Bloqueia o jogador que NÃO tem prioridade de escolha (ver <see cref="GetDecidingPlayer"/>),
         /// permitindo que apenas o jogador decisor consiga escolher a carta.
-        /// Além de desativar o PlayerInput dele (bloqueia o gameplay), desativa também o dispositivo físico
-        /// dele (quando registrado), já que o painel de cartas usa um InputSystemUIInputModule global e
-        /// compartilhado — sem isso, o dispositivo do jogador bloqueado ainda conseguiria navegar/clicar na UI.
+        /// O bloqueio só acontece se a exclusividade estiver ligada para o tipo de controle dele
+        /// (<see cref="exclusiveChoiceGamepad"/> ou <see cref="exclusiveChoiceKeyboard"/>). Se estiver desligada, os dois escolhem.
+        /// Quando acontece, desativa o PlayerInput dele (gameplay) e a entrada dele na UI compartilhada:
+        /// o dispositivo inteiro (controle) ou as teclas de UI da metade do teclado dele.
         /// </summary>
         public void LockOutNonDecidingPlayer()
         {
+            RestoreLockedPlayerInput();
+
             PlayerStats decider = GetDecidingPlayer();
             if (decider == null)
             {
                 return;
             }
 
-            lockedOutPlayer = (decider == player1) ? player2 : player1;
-            if (lockedOutPlayer == null)
+            PlayerStats candidate = (decider == player1) ? player2 : player1;
+            if (candidate == null)
             {
                 return;
             }
 
-            PlayerInput input = (lockedOutPlayer == player1) ? player1Input : player2Input;
+            if (!IsExclusiveFor(candidate))
+            {
+                Debug.Log($"[Maestro] Exclusividade desligada para o tipo de controle do Player {candidate.playerID}: os dois podem escolher.");
+                return;
+            }
+
+            lockedOutPlayer = candidate;
+
+            PlayerInput input = (candidate == player1) ? player1Input : player2Input;
             if (input != null && input.inputIsActive)
             {
                 input.DeactivateInput();
-                Debug.Log($"[Maestro] Input do Player {lockedOutPlayer.playerID} bloqueado durante a escolha de carta.");
+                Debug.Log($"[Maestro] Input do Player {candidate.playerID} bloqueado durante a escolha de carta.");
             }
 
-            InputDevice device = (lockedOutPlayer == player1) ? player1Device : player2Device;
+            InputDevice device = (candidate == player1) ? player1Device : player2Device;
             if (device != null && device.enabled)
             {
                 InputSystem.DisableDevice(device);
                 disabledDevice = device;
-                Debug.Log($"[Maestro] Dispositivo do Player {lockedOutPlayer.playerID} desativado durante a escolha de carta.");
+                Debug.Log($"[Maestro] Dispositivo do Player {candidate.playerID} desativado durante a escolha de carta.");
+            }
+
+            KeyboardLayout layout = (candidate == player1) ? player1Keyboard : player2Keyboard;
+            if (layout != KeyboardLayout.None)
+            {
+                BlockKeyboardUi(layout);
             }
         }
 
         /// <summary>
-        /// Restaura o input do jogador que foi bloqueado em <see cref="LockOutNonDecidingPlayer"/>.
+        /// Restaura o jogador que foi bloqueado em <see cref="LockOutNonDecidingPlayer"/>
+        /// (PlayerInput, dispositivo e teclas de UI). Não faz nada se ninguém estiver bloqueado.
         /// </summary>
         public void RestoreLockedPlayerInput()
         {
+            RestoreKeyboardUi();
+
             if (lockedOutPlayer == null)
             {
                 return;
@@ -249,6 +336,104 @@ namespace RougueCards.Attributes
             }
 
             lockedOutPlayer = null;
+        }
+
+        /// <summary>
+        /// Diz se o bloqueio está ligado para o tipo de controle do jogador (controle ou teclado).
+        /// Jogador sem controle registrado (ex: testes) segue a regra antiga e é sempre bloqueado.
+        /// </summary>
+        /// <param name="player">O jogador que seria bloqueado.</param>
+        private bool IsExclusiveFor(PlayerStats player)
+        {
+            InputDevice device = (player == player1) ? player1Device : player2Device;
+            KeyboardLayout layout = (player == player1) ? player1Keyboard : player2Keyboard;
+
+            if (device != null)
+            {
+                return exclusiveChoiceGamepad;
+            }
+
+            if (layout != KeyboardLayout.None)
+            {
+                return exclusiveChoiceKeyboard;
+            }
+
+            return true;
+        }
+
+        /// <summary>
+        /// Desativa, nas ações de UI (Submit/Navigate), as teclas da metade do teclado informada.
+        /// Os dois jogadores de teclado dividem o mesmo dispositivo, então não dá para desligar o dispositivo:
+        /// a alternativa é remover só as teclas dele dos bindings. É desfeito por <see cref="RestoreKeyboardUi"/>.
+        /// </summary>
+        /// <param name="layout">A metade do teclado a bloquear.</param>
+        private void BlockKeyboardUi(KeyboardLayout layout)
+        {
+            InputActionAsset asset = ResolveUiActions();
+            if (asset == null)
+            {
+                Debug.LogWarning("[Maestro] Ações de UI não encontradas: o teclado do jogador bloqueado continuará navegando no painel.");
+                return;
+            }
+
+            string[] keys = (layout == KeyboardLayout.Wasd) ? WasdUiKeys : ArrowUiKeys;
+
+            foreach (InputAction action in asset)
+            {
+                for (int i = 0; i < action.bindings.Count; i++)
+                {
+                    string path = action.bindings[i].path;
+
+                    if (layout == KeyboardLayout.Arrows && path == WildcardSubmitPath)
+                    {
+                        action.ApplyBindingOverride(i, GamepadSubmitPath);
+                        keyboardOverrides.Add((action, i));
+                        continue;
+                    }
+
+                    if (System.Array.IndexOf(keys, path) < 0)
+                    {
+                        continue;
+                    }
+
+                    action.ApplyBindingOverride(i, string.Empty);
+                    keyboardOverrides.Add((action, i));
+                }
+            }
+
+            Debug.Log($"[Maestro] Teclas de UI do teclado {layout} desativadas durante a escolha de carta.");
+        }
+
+        /// <summary> Devolve as teclas de UI desativadas por <see cref="BlockKeyboardUi"/>. </summary>
+        private void RestoreKeyboardUi()
+        {
+            foreach ((InputAction action, int bindingIndex) in keyboardOverrides)
+            {
+                action.RemoveBindingOverride(bindingIndex);
+            }
+
+            keyboardOverrides.Clear();
+        }
+
+        /// <summary> Retorna as ações de UI, buscando-as no InputSystemUIInputModule da cena na primeira vez. </summary>
+        private InputActionAsset ResolveUiActions()
+        {
+            if (uiActions == null)
+            {
+                InputSystemUIInputModule module = FindFirstObjectByType<InputSystemUIInputModule>();
+                if (module != null)
+                {
+                    uiActions = module.actionsAsset;
+                }
+            }
+
+            return uiActions;
+        }
+
+        /// <summary> Garante que nenhuma tecla de UI fique desativada se o objeto for destruído com o painel aberto. </summary>
+        private void OnDestroy()
+        {
+            RestoreKeyboardUi();
         }
 
         /// <summary>

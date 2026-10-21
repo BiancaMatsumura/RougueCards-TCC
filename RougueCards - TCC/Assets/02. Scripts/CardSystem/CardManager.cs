@@ -16,6 +16,7 @@ public class CardManager : MonoBehaviour
 
     [SerializeField] private int staggerMs = 60;
     private VisualElement[] slotPanels;
+    private Label chooserBanner;
     private Shooter shooter;
 
     private CardController[] controllers;
@@ -37,7 +38,15 @@ public class CardManager : MonoBehaviour
             root.Q<VisualElement>("Slot1Panel"),
             root.Q<VisualElement>("Slot2Panel")
         };
-        foreach (var s in slotPanels) s.AddToClassList("card-slot");
+        foreach (var s in slotPanels)
+        {
+            s.AddToClassList("card-slot");
+        }
+
+        chooserBanner = new Label();
+        chooserBanner.AddToClassList("card-chooser-banner");
+        chooserBanner.pickingMode = PickingMode.Ignore;
+        cardPanel.Add(chooserBanner);
 
         SetPanelVisible(false);
 
@@ -65,7 +74,9 @@ public class CardManager : MonoBehaviour
         isLoadingCards = false;
 
         if (controllers != null && controllers.Length > 0)
+        {
             controllers[0].FocusFlip();
+        }
     }
 
     void OnEnable()
@@ -85,10 +96,14 @@ public class CardManager : MonoBehaviour
     void OnDisable()
     {
         if (toggleAction != null)
+        {
             toggleAction.action.performed -= OnToggleInput;
+        }
 
         if (playerProgress != null)
+        {
             playerProgress.OnStageCompleted -= OnStageCompleted;
+        }
     }
 
     private void OnStageCompleted(int stage)
@@ -105,9 +120,13 @@ public class CardManager : MonoBehaviour
     public void TogglePanel()
     {
         if (isPanelVisible)
+        {
             HidePanel();
+        }
         else
+        {
             ShowPanel();
+        }
     }
 
     public void ShowPanel()
@@ -116,6 +135,36 @@ public class CardManager : MonoBehaviour
         SetPanelVisible(true);
 
         AttributeMaestro.Instance?.LockOutNonDecidingPlayer();
+        UpdateChooserBanner();
+    }
+
+    /// <summary>
+    /// Atualiza o aviso no topo do painel informando qual jogador está escolhendo a carta e qual está aguardando,
+    /// para ficar claro por que um dos jogadores está sem controle durante a escolha.
+    /// </summary>
+    private void UpdateChooserBanner()
+    {
+        AttributeMaestro maestro = AttributeMaestro.Instance;
+        PlayerStats decider = maestro != null ? maestro.GetDecidingPlayer() : null;
+
+        if (decider == null)
+        {
+            chooserBanner.style.display = DisplayStyle.None;
+            return;
+        }
+
+        PlayerStats waiting = maestro.LockedOutPlayer;
+
+        if (waiting != null)
+        {
+            chooserBanner.text = $"JOGADOR {decider.playerID} ESCOLHE A CARTA\nJogador {waiting.playerID} aguarda";
+        }
+        else
+        {
+            chooserBanner.text = "ESCOLHA UMA CARTA";
+        }
+
+        chooserBanner.style.display = DisplayStyle.Flex;
     }
 
     public void HidePanel()
@@ -151,7 +200,10 @@ public class CardManager : MonoBehaviour
         if (!visible)
         {
             // Prepara o estado escondido para a próxima abertura
-            foreach (var s in slotPanels) s.AddToClassList("card-slot--hidden");
+            foreach (var s in slotPanels)
+            {
+                s.AddToClassList("card-slot--hidden");
+            }
 
             controllers = null;
             OnPanelClosed?.Invoke();
@@ -202,7 +254,9 @@ public class CardManager : MonoBehaviour
     private void EquipWeapon(CardData data)
     {
         if (autoShooter == null)
+        {
             autoShooter = FindFirstObjectByType<AutoShooter>();
+        }
 
         if (autoShooter != null && data.rangedWeapon != null)
         {
@@ -217,13 +271,18 @@ public class CardManager : MonoBehaviour
     private void EquipWeaponMelee(CardData data)
     {
         if (shooter == null)
+        {
             shooter = FindFirstObjectByType<Shooter>();
+        }
 
         if (shooter != null)
         {
             shooter.ApplyWeaponAnimations();
             Debug.Log("Arma adicionada: " + data.rangedWeapon.name);
-            if (data.meleeWeapon != null) { shooter.SwichWeaponMesh(data.meleeWeapon); }
+            if (data.meleeWeapon != null)
+            {
+                shooter.SwichWeaponMesh(data.meleeWeapon);
+            }
         }
         else
         {
