@@ -16,7 +16,7 @@ Saímos de variáveis simples para um sistema matemático robusto:
 *   **Knockback (Repulsão)**: Implementamos o impacto físico onde os tiros empurram os inimigos baseados no atributo de força do jogador.
 
 ### 4. Sistema de Inimigos Modulares
-*   **EnemyData**: Criamos um sistema onde você define a vida, velocidade, dano e visual do inimigo em um ScriptableObject.
+*   **EnemyData**: Criamos um sistema onde você define a vida, velocidade, dano e visual do inimigo em um ScriptableObject. O campo **`Is Special Enemy`** marca o inimigo "especial": quem der o golpe final nele ganha o direito de escolher a próxima carta (veja `Docs/GuiaEscolhaExclusiva.md`). Marque em **só 1 tipo** de inimigo; se todos forem especiais, a escolha parece aleatória (o `EnemySpawner` avisa isso no Console ao dar Play).
 *   **Enemy (IA)**: Um script único e autônomo que pode se transformar em qualquer monstro (Zumbi, Boss, Slime) ao ler o `EnemyData`.
 *   **EnemySpawner**: Controla a população de inimigos, evita "nascimentos" antes dos jogadores entrarem e sorteia diferentes tipos de monstros para a cena.
 

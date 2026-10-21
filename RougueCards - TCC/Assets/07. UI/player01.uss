@@ -99,6 +99,18 @@
     opacity: 0;
 }
 
+.card-chooser-banner {
+    position: absolute;
+    top: -90px;
+    left: 0;
+    right: 0;
+    font-size: 30px;
+    -unity-font-style: bold;
+    -unity-text-align: middle-center;
+    white-space: normal;
+    color: rgb(255, 255, 255);
+}
+
 .cardButton {
     max-width: 80px;
     max-height: 30px;

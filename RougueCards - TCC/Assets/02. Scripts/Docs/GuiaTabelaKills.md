@@ -1,5 +1,17 @@
 # Manual Técnico: Tabela de Estatísticas no Game Over
 
+## 0. Resumo rápido (leia isto primeiro)
+
+**O que é:** a tabela que aparece na tela de **Game Over** mostrando, para cada jogador, quantos inimigos ele abateu. O jogador com mais abates ganha o título dourado com "MAIS ABATES" (só se não houver empate).
+
+**Quero mostrar uma estatística nova (ex: "Mortes"):** abra `Assets/02. Scripts/GameOver/GameOverStats.cs`, vá no método `Build` e copie a linha do `"Abates"`, trocando o texto e o valor. Não precisa mexer em mais nada (veja a seção 2.1).
+
+**Quero mudar as cores ou o tamanho do texto:** é no arquivo `mainMenu02.uss` (seção 2.3).
+
+**Como testar:** o teste automático confere a contagem de abates (`GuiaTestes.md`). O desenho da tabela só se confere jogando até o Game Over (dica: os cheats do `GuiaCheats.md` ajudam a chegar lá mais rápido).
+
+---
+
 ## 1. Anatomia dos Arquivos (O que é e para que serve)
 
 ### 1.1. A Camada de Dados (O "Molde")
@@ -53,6 +65,9 @@ Para que uma nova estatística apareça na tabela do Game Over, você só precis
     ```
 3.  Pronto. Não é preciso mexer no UXML, na USS, no `GameOverScreen` ou no `GameOverWatcher` — a nova linha aparece automaticamente embaixo de "Abates" na coluna de cada jogador.
 
+### 2.1.1. Destaque do Líder
+O jogador com mais abates (apenas quando não há empate e há 2+ jogadores) recebe `IsTopPlayer = true`, definido por `GameOverStatsBuilder.MarkTopPlayer()` (chamado no `GameOverWatcher.BuildPlayersStats()`). No `GameOverScreen`, o título dele ganha a linha "MAIS ABATES" e a classe `.gameover-stats-title--top` (dourado, em `mainMenu02.uss`). Os nomes agora aparecem como "JOGADOR 1"/"JOGADOR 2" em vez de "P1"/"P2".
+
 ### 2.2. Como Mudar o Texto ou a Formatação de uma Estatística
 *   **Texto do rótulo:** Troque a primeira string do `GameOverStatEntry` (ex: `"Abates"` → `"Kills"`).
 *   **Formatação do valor:** Troque o `.ToString()` por um formato específico, por exemplo `stats.kills.ToString("00")` para manter dois dígitos, igual ao HUD (`KillCounterUI.cs`).
@@ -76,6 +91,7 @@ Se você criar uma fase nova, a tabela funciona automaticamente desde que:
 ## 3. Notas de Debug e Verificação
 *   **Inspector em Tempo Real:** Para confirmar que os kills estão sendo contados, selecione o jogador na Hierarchy enquanto o jogo roda e observe o campo `Kills` dentro do componente `PlayerStats`.
 *   **Console:** Toda vez que um jogador mata algo, aparece `"[Player {ID}] Kills: {total}"` no Console (vem de `PlayerStats.AddKill()`).
+*   **Teste Automático:** o teste descrito em `GuiaTestes.md` mata inimigos em código e confere que o valor da linha "Abates" montada por `GameOverStatsBuilder.Build()` é igual aos abates contados pelo jogo. Ele **não** abre a tela de Game Over nem confere o desenho da tabela — isso continua sendo conferido jogando.
 *   **Tabela vazia ou sem colunas:** Se a tabela aparecer vazia no Game Over, confira:
     1.  Se o `VisualElement` `StatsTable` existe dentro de `GameOverMenu` na `UI_HUD.uxml` (o nome precisa ser exatamente `StatsTable`).
     2.  Se `GameOverWatcher` está mesmo recebendo os jogadores — cada `Health` chama `GameOverWatcher.Instance?.RegisterPlayer(this)` no `Awake()`; se o Watcher não existir na cena antes dos jogadores nascerem, o registro é silenciosamente ignorado (`?.`).

@@ -137,6 +137,10 @@ public class PlayerInputManager : MonoBehaviour
         }
         else
         {
+            AttributeMaestro.Instance?.RegisterPlayerKeyboard(
+                statsInstance.playerID,
+                inputType == InputType.KeyboardWASD ? KeyboardLayout.Wasd : KeyboardLayout.Arrows);
+
             // Teclado: cria um InputUser separado e COMPARTILHA o dispositivo
             var user = InputUser.CreateUserWithoutPairedDevices();
             InputUser.PerformPairingWithDevice(Keyboard.current, user: user,

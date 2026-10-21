@@ -84,6 +84,7 @@ public class GameOverWatcher : MonoBehaviour
     private List<GameOverPlayerStats> BuildPlayersStats()
     {
         var result = new List<GameOverPlayerStats>();
+        var kills = new List<int>();
 
         foreach (var health in registeredHealths)
         {
@@ -91,8 +92,12 @@ public class GameOverWatcher : MonoBehaviour
             {
                 continue;
             }
+
             result.Add(GameOverStatsBuilder.Build(health.pStats));
+            kills.Add(health.pStats.kills);
         }
+
+        GameOverStatsBuilder.MarkTopPlayer(result, kills);
 
         return result;
     }
