@@ -122,6 +122,10 @@
     -unity-text-align: middle-center;
 }
 
+.gameover-stats-title--top {
+    color: rgb(255, 214, 79);
+}
+
 .gameover-stats-row {
     flex-direction: row;
     justify-content: space-between;

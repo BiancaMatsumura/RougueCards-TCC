@@ -57,8 +57,12 @@ public class GameOverScreen : BaseScreen
             var column = new VisualElement();
             column.AddToClassList("gameover-stats-column");
 
-            var nameLabel = new Label(player.PlayerName);
+            var nameLabel = new Label(player.IsTopPlayer ? $"{player.PlayerName}\nMAIS ABATES" : player.PlayerName);
             nameLabel.AddToClassList("gameover-stats-title");
+            if (player.IsTopPlayer)
+            {
+                nameLabel.AddToClassList("gameover-stats-title--top");
+            }
             column.Add(nameLabel);
 
             foreach (var stat in player.Stats)
