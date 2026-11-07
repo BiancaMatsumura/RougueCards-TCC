@@ -8576,7 +8576,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 1015
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 8400000, guid: ae0c832ccae56fe498d410d9e1c3049b, type: 2}
   m_TargetDisplay: 0
@@ -13956,7 +13956,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 1527
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 8400000, guid: 34d89b3ec62ef4945bf41cfb03df6bd7, type: 2}
   m_TargetDisplay: 0
@@ -22719,13 +22719,21 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1962024329}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b957d0763d740f34dae3f3e624da03d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uiDocument: {fileID: 1962024330}
   splitManager: {fileID: 1243163941}
+  arrowPrefab: {fileID: 7821319270251573217, guid: 9f530db72da3bca4b8499049e0787ff0, type: 3}
+  radius: 1.3
+  groundOffsetY: -0.7
+  arrowScale: 2
+  layerP1: ArrowP1
+  layerP2: ArrowP2
+  nearDistance: 15
+  farDistance: 35
+  colorSmoothing: 8
 --- !u!114 &1962024341
 MonoBehaviour:
   m_ObjectHideFlags: 0
