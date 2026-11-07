@@ -1,6 +1,6 @@
 <engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" xmlns:custom="RadialFillElement" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/07.%20UI/player01.uss?fileID=7433441132597879392&amp;guid=366a9650e9bf5c5408667bffb5e865a4&amp;type=3#player01"/>
-    <Style src="project://database/Assets/07.%20UI/mainMenu02.uss?fileID=7433441132597879392&amp;guid=224a81ce6ba1f554f9bb3c7288b5a867&amp;type=3"/>
+    <Style src="project://database/Assets/07.%20UI/mainMenu02.uss?fileID=7433441132597879392&amp;guid=224a81ce6ba1f554f9bb3c7288b5a867&amp;type=3#mainMenu02"/>
     <engine:VisualElement name="PlayerContainers" style="flex-grow: 1; flex-direction: row; justify-content: center; background-color: rgba(255, 255, 255, 0); background-image: none; -unity-background-image-tint-color: rgb(0, 0, 0); background-size: 100% 100%;">
         <engine:VisualElement name="HUD_PLAYERS" style="flex-grow: 1; position: absolute; width: 100%; height: 100%; background-image: none; flex-direction: row; background-size: 100% 100%;">
             <engine:VisualElement name="Player01" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/05.%20Sprites/NewUI/div_Player01.png?fileID=2800000&amp;guid=aa41604d52a55c344968b82b652c6021&amp;type=3#div_Player01&quot;); background-size: 100% 100%; align-items: flex-start; position: absolute; left: 0; width: 100%; height: 100%;"/>
@@ -52,7 +52,10 @@
         </engine:VisualElement>
         <engine:VisualElement name="FasesContainer" picking-mode="Ignore" style="flex-grow: 1; bottom: auto; width: 100%; height: 100%; align-items: center; position: absolute;">
             <engine:VisualElement name="Fases_Contorno" picking-mode="Ignore" style="flex-grow: 1; width: 200px; height: 226px; bottom: 30px; align-items: center; align-content: center; position: absolute; background-image: url(&quot;project://database/Assets/05.%20Sprites/NewUI/Fases_Contorno.png?fileID=2800000&amp;guid=4c76b3cc56605d94888d2d2c0e384fb5&amp;type=3#Fases_Contorno&quot;); justify-content: space-between; align-self: center;">
-                <engine:VisualElement name="Fases_Card" picking-mode="Ignore" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/05.%20Sprites/NewUI/Fases_Card.png?fileID=2800000&amp;guid=18b4a6b08cfd4a34196c27a10388a1b8&amp;type=3#Fases_Card&quot;); width: 91px; height: 124px; position: absolute; align-items: center; justify-content: space-between; align-self: center; align-content: center; flex-direction: column; top: auto; bottom: 50px;"/>
+                <engine:VisualElement name="Card" picking-mode="Ignore" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/05.%20Sprites/NewUI/Fases_Card.png?fileID=2800000&amp;guid=18b4a6b08cfd4a34196c27a10388a1b8&amp;type=3#Fases_Card&quot;); width: 105px; height: 135px; position: absolute; align-items: center; justify-content: space-around; align-self: center; align-content: center; flex-direction: column; top: auto; bottom: 42px;">
+                    <engine:VisualElement name="Fases_Card" style="flex-grow: 1; top: 8px; width: 78px; height: 0; bottom: auto; max-height: 86px; margin-bottom: 0;"/>
+                    <engine:Label text="..." name="Fases_CardName" style="font-size: 9px; -unity-text-align: middle-center; margin-top: 2px; width: 87px; white-space: pre-wrap; top: 1px;"/>
+                </engine:VisualElement>
             </engine:VisualElement>
         </engine:VisualElement>
     </engine:VisualElement>

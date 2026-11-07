@@ -10,6 +10,7 @@ public class CardData : ScriptableObject
 
     [Header("Progressão")]
     public int xpRequired;
+    public bool bossOnly; 
 
     [Header("Tipo de Efeito")]
     public CardEffectType effectType;

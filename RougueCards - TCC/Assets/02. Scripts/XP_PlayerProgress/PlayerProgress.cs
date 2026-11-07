@@ -33,20 +33,17 @@ public class PlayerProgress : ScriptableObject
 
     public void CompleteStage()
     {
-        bool wasLastStage = currentStage >= xpPerStage.Length - 1;
-
         OnStageCompleted?.Invoke(currentStage);
         currentStage++;
         currentXP = 0;
         OnXPChanged?.Invoke(currentXP, MaxXP);
-
-        if (wasLastStage)
-        {
-            Debug.Log("[PlayerProgress] Todos os estágios completados!");
-            OnAllStagesCompleted?.Invoke();
-        }
     }
 
+    public void FinishGame()
+    {
+        Debug.Log("[PlayerProgress] Todos os estágios completados!");
+        OnAllStagesCompleted?.Invoke();
+    }
     public void ResetXP()
     {
         currentXP = 0;

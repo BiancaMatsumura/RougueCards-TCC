@@ -8,5 +8,6 @@ public class ArcanoMaior : ScriptableObject
     public int xpStageRequired;
     public int killsRequired;
     public float timeRequired;
+    public CardData[] rewardCards;
 
 }

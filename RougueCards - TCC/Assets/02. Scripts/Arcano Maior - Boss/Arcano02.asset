@@ -16,4 +16,5 @@ MonoBehaviour:
   bossEnemyData: {fileID: 11400000, guid: 4ffe7196f4318464aa664f902872b734, type: 2}
   xpStageRequired: 4
   killsRequired: 60
-  timeRequired: 60
+  timeRequired: 120
+  rewardCards: []

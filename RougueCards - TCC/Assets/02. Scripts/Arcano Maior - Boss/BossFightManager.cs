@@ -91,11 +91,25 @@ public class BossFightManager : MonoBehaviour
 
     void OnBossDied()
     {
+        var defeated = bosses[_currentBossIndex];
+
         _bossAlive = false;
         playerProgress.bossAlive = false;
         _currentBossIndex++;
+
+        cardManager.SetBossPool(defeated.rewardCards);
         playerProgress.CompleteStage();
+
         bossHUD.Hide();
+
+        if (_currentBossIndex >= bosses.Count)
+            cardManager.OnPanelClosed += FinishAfterPanel;
+    }
+
+    void FinishAfterPanel()
+    {
+        cardManager.OnPanelClosed -= FinishAfterPanel;
+        playerProgress.FinishGame();
     }
 
     void OnPanelClosed()

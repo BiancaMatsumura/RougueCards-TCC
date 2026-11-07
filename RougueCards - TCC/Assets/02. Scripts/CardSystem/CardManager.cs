@@ -29,6 +29,9 @@ public class CardManager : MonoBehaviour
 
     private Label p1StatusLabel;
     private Label p2StatusLabel;
+    private CardData[] bossPool;
+
+    public event System.Action<CardData> OnBossCardPicked;
 
     void Awake()
     {
@@ -217,8 +220,12 @@ public class CardManager : MonoBehaviour
 
     private void LoadCards()
     {
-        var availableCards =
-            cardDatabase.GetAvailableCards(playerProgress, 3, true);
+        CardData[] availableCards;
+
+        if (bossPool != null && bossPool.Length > 0)
+            availableCards = cardDatabase.GetBossCards(bossPool, 3);
+        else
+            availableCards = cardDatabase.GetAvailableCards(playerProgress, 3, true);
 
         controllers = new CardController[availableCards.Length];
 
@@ -230,6 +237,11 @@ public class CardManager : MonoBehaviour
         }
     }
 
+    public void SetBossPool(CardData[] pool)
+    {
+        bossPool = pool;
+    }
+
     private void SetPanelVisible(bool visible)
     {
         isPanelVisible = visible;
@@ -239,13 +251,11 @@ public class CardManager : MonoBehaviour
 
         if (!visible)
         {
-            // Prepara o estado escondido para a próxima abertura
             foreach (var s in slotPanels)
-            {
                 s.AddToClassList("card-slot--hidden");
-            }
 
             controllers = null;
+            bossPool = null; // <- novo
             OnPanelClosed?.Invoke();
         }
     }
@@ -287,6 +297,9 @@ public class CardManager : MonoBehaviour
 
             AttributeMaestro.Instance.CheckForCardCombos();
         }
+
+        if (data.bossOnly)
+            OnBossCardPicked?.Invoke(data);
 
         HidePanel();
     }

@@ -22570,6 +22570,7 @@ GameObject:
   - component: {fileID: 1962024343}
   - component: {fileID: 1962024344}
   - component: {fileID: 1962024345}
+  - component: {fileID: 1962024346}
   m_Layer: 5
   m_Name: '-- UI  -- '
   m_TagString: Untagged
@@ -22841,6 +22842,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fasesContainer: {fileID: 28360391}
   fasesFillImage: {fileID: 295392438}
+--- !u!114 &1962024346
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1962024329}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a06d68305b7e6554db802fed6337c578, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FasesCardHUD
+  hudDocument: {fileID: 1962024330}
+  cardManager: {fileID: 1962024334}
+  startingCard: {fileID: 11400000, guid: c3ccfea6e6986f748a51f595ed7bfff3, type: 2}
+  imageElementName: Fases_Card
+  nameLabelName: Fases_CardName
 --- !u!1001 &1965585503
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -17,3 +17,7 @@ MonoBehaviour:
   xpStageRequired: 2
   killsRequired: 30
   timeRequired: 30
+  rewardCards:
+  - {fileID: 11400000, guid: 930bfb0e2372dfb45acf890ba5b98f95, type: 2}
+  - {fileID: 11400000, guid: e3787d6c530d02b4580500eee68989d2, type: 2}
+  - {fileID: 11400000, guid: 35c2d6b0b119b374980dc89711297862, type: 2}
