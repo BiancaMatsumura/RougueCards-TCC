@@ -27,6 +27,9 @@ public class CardManager : MonoBehaviour
     private bool isLoadingCards = false;
     public event System.Action OnPanelClosed;
 
+    private Label p1StatusLabel;
+    private Label p2StatusLabel;
+
     void Awake()
     {
         root = GetComponent<UIDocument>().rootVisualElement;
@@ -43,11 +46,6 @@ public class CardManager : MonoBehaviour
             s.AddToClassList("card-slot");
         }
 
-        chooserBanner = new Label();
-        chooserBanner.AddToClassList("card-chooser-banner");
-        chooserBanner.pickingMode = PickingMode.Ignore;
-        cardPanel.Add(chooserBanner);
-
         SetPanelVisible(false);
 
         cardPanel.RegisterCallback<GeometryChangedEvent>(_ =>
@@ -63,6 +61,10 @@ public class CardManager : MonoBehaviour
                 StartCoroutine(LoadCardsNextFrame());
             }
         });
+
+        p1StatusLabel = root.Q<Label>("p1StatusLabel");
+        p2StatusLabel = root.Q<Label>("p2StatusLabel");
+        Debug.Log($"P1 label: {(p1StatusLabel == null ? "NULL" : "ok")} | P2 label: {(p2StatusLabel == null ? "NULL" : "ok")}");
     }
 
     private IEnumerator LoadCardsNextFrame()
@@ -149,22 +151,60 @@ public class CardManager : MonoBehaviour
 
         if (decider == null)
         {
-            chooserBanner.style.display = DisplayStyle.None;
+            SetStatus(p1StatusLabel, null, false);
+            SetStatus(p2StatusLabel, null, false);
             return;
         }
 
         PlayerStats waiting = maestro.LockedOutPlayer;
 
-        if (waiting != null)
+        // Jogo solo: só o painel de quem escolhe aparece
+        // Co-op: o decisor vê "escolha", o outro vê "aguarde"
+        ApplyStatusForPlayer(1, p1StatusLabel, decider, waiting);
+        ApplyStatusForPlayer(2, p2StatusLabel, decider, waiting);
+
+        Debug.Log($"decider: {(decider != null ? decider.playerID.ToString() : "null")} | waiting: {(waiting != null ? waiting.playerID.ToString() : "null")}");
+    }
+
+    private void ApplyStatusForPlayer(int playerID, Label label, PlayerStats decider, PlayerStats waiting)
+    {
+        if (decider.playerID == playerID)
         {
-            chooserBanner.text = $"JOGADOR {decider.playerID} ESCOLHE A CARTA\nJogador {waiting.playerID} aguarda";
+            SetStatus(label, "ESCOLHA UMA CARTA", true, "status--choosing");
+        }
+        else if (waiting != null && waiting.playerID == playerID)
+        {
+            SetStatus(label, "Aguarde o outro jogador escolher...", true, "status--waiting");
         }
         else
         {
-            chooserBanner.text = "ESCOLHA UMA CARTA";
+            // Esse jogador não participa (ex.: solo)
+            SetStatus(label, null, false);
+        }
+    }
+
+    private void SetStatus(Label label, string text, bool visible, string stateClass = null)
+    {
+        if (label == null)
+        {
+            return;
         }
 
-        chooserBanner.style.display = DisplayStyle.Flex;
+        label.RemoveFromClassList("status--choosing");
+        label.RemoveFromClassList("status--waiting");
+
+        if (!visible)
+        {
+            label.style.display = DisplayStyle.None;
+            return;
+        }
+
+        label.text = text;
+        if (stateClass != null)
+        {
+            label.AddToClassList(stateClass);
+        }
+        label.style.display = DisplayStyle.Flex;
     }
 
     public void HidePanel()

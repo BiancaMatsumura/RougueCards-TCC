@@ -123,6 +123,58 @@
     margin-bottom: 12px;
 }
 
+.status--choosing {
+    color: rgb(255, 220, 90);
+    -unity-font-style: bold;
+}
+
+.status--waiting {
+    color: rgb(180, 180, 190);
+    -unity-font-style: italic;
+}
+
+.gameover-stats-row {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 12px;
+    margin-bottom: 4px;
+    background-color: rgba(0, 0, 0, 0.06); /* escuro translúcido, combina com fonte preta */
+    border-radius: 6px;
+}
+
+.gameover-stats-label {
+    font-size: 22px;
+    color: black;
+    -unity-text-align: middle-left;
+}
+
+.gameover-stats-value {
+    font-size: 24px;
+    -unity-font-style: bold;
+    color: black;
+    -unity-text-align: middle-right;
+}
+
+/* Destaque do jogador com mais abates */
+.gameover-stats-value--top {
+    color: rgb(85, 65, 95);
+}
+
+/* Selo "MAIS ABATES" (aplique essa classe no TopBadgeLabel no UI Builder) */
+.gameover-top-badge {
+    color: rgb(85, 65, 95);
+    -unity-font-style: bold;
+    font-size: 20px;
+}
+
+.gameover-stats-title {
+    color: black;
+    font-size: 28px;
+    -unity-font-style: bold;
+    -unity-text-align: middle-center;
+}
+
 .cards:focus {
     flex-grow: 1;
     width: 250px;

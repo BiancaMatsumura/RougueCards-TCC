@@ -1,6 +1,6 @@
 <engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" xmlns:custom="RadialFillElement" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/07.%20UI/player01.uss?fileID=7433441132597879392&amp;guid=366a9650e9bf5c5408667bffb5e865a4&amp;type=3#player01"/>
-    <Style src="project://database/Assets/07.%20UI/mainMenu02.uss?fileID=7433441132597879392&amp;guid=224a81ce6ba1f554f9bb3c7288b5a867&amp;type=3#mainMenu02"/>
+    <Style src="project://database/Assets/07.%20UI/mainMenu02.uss?fileID=7433441132597879392&amp;guid=224a81ce6ba1f554f9bb3c7288b5a867&amp;type=3"/>
     <engine:VisualElement name="PlayerContainers" style="flex-grow: 1; flex-direction: row; justify-content: center; background-color: rgba(255, 255, 255, 0); background-image: none; -unity-background-image-tint-color: rgb(0, 0, 0); background-size: 100% 100%;">
         <engine:VisualElement name="HUD_PLAYERS" style="flex-grow: 1; position: absolute; width: 100%; height: 100%; background-image: none; flex-direction: row; background-size: 100% 100%;">
             <engine:VisualElement name="Player01" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/05.%20Sprites/NewUI/div_Player01.png?fileID=2800000&amp;guid=aa41604d52a55c344968b82b652c6021&amp;type=3#div_Player01&quot;); background-size: 100% 100%; align-items: flex-start; position: absolute; left: 0; width: 100%; height: 100%;"/>
@@ -58,7 +58,8 @@
     </engine:VisualElement>
     <engine:VisualElement name="CardsContainer" style="flex-grow: 1; position: absolute; width: 1920px; height: 1080px; margin-left: 0; background-color: rgba(0, 0, 0, 0); top: 0; left: 1px; border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px;">
         <engine:VisualElement name="CardsPanel" class="containerCards" style="flex-grow: 1; flex-direction: row; align-items: center; justify-content: space-around; display: none; top: 114px; left: auto; -unity-background-image-tint-color: rgb(255, 255, 255); -unity-slice-left: 12; -unity-slice-top: 12; -unity-slice-right: 12; -unity-slice-bottom: 12; -unity-slice-scale: 2px; background-image: url(&quot;project://database/Assets/05.%20Sprites/NewUI/CardsContainer.png?fileID=21300000&amp;guid=f6779499863fe5042ac0ffc042e9c5f2&amp;type=3#CardsContainer&quot;); width: 1200px; height: 700px; align-content: center; background-color: rgba(0, 0, 0, 0); -unity-background-scale-mode: stretch-to-fill; background-position-x: center; background-position-y: center; aspect-ratio: auto;">
-            <engine:VisualElement name="Slot0Panel" style="flex-grow: 1; justify-content: flex-start; align-items: center; width: auto; height: 450px; max-width: 250px; display: flex;">
+            <engine:Label text="MAKE YOUR CHOICE" name="title" style="position: absolute; top: 106px; width: auto; left: 20%; right: 20%; -unity-text-align: upper-center; font-size: 38px; color: rgb(255, 255, 255);"/>
+            <engine:VisualElement name="Slot0Panel" style="flex-grow: 1; justify-content: flex-start; align-items: center; width: auto; height: 450px; max-width: 250px; display: flex; top: 68px;">
                 <engine:VisualElement name="Slot0" picking-mode="Ignore" class="cards" style="flex-grow: 1; justify-content: flex-start; align-items: stretch; flex-direction: column; height: 1350px;">
                     <engine:VisualElement name="back" picking-mode="Ignore" class="backCard" style="background-image: url(&quot;project://database/Assets/05.%20Sprites/NewUI/Card_Back.png?fileID=21300000&amp;guid=371f979184225df42be4f169e4820ffc&amp;type=3#Card_Back&quot;); -unity-background-image-tint-color: rgb(255, 255, 255); border-top-left-radius: 10px; border-top-right-radius: 0; border-bottom-right-radius: 10px; border-bottom-left-radius: 0; display: none; background-color: rgba(255, 255, 255, 0);">
                         <engine:Label text="Card Description" name="CardDescription" style="font-size: 15px; -unity-font-style: bold; -unity-text-align: middle-center; white-space: pre-wrap; width: 95%; height: 80%; padding-top: 17px; padding-right: 17px; padding-bottom: 17px; padding-left: 17px; top: 15px; color: rgb(53, 43, 35);"/>
@@ -73,7 +74,7 @@
                     <engine:Button text="PICK UP" name="pickUp" class="cardButton cardButton_Att NewButton01" style="-unity-font-style: bold;"/>
                 </engine:VisualElement>
             </engine:VisualElement>
-            <engine:VisualElement name="Slot1Panel" style="flex-grow: 1; justify-content: flex-start; align-items: center; width: auto; height: 450px; max-width: 250px; display: flex;">
+            <engine:VisualElement name="Slot1Panel" style="flex-grow: 1; justify-content: flex-start; align-items: center; width: auto; height: 450px; max-width: 250px; display: flex; top: 68px;">
                 <engine:VisualElement name="Slot1" picking-mode="Ignore" class="cards" style="flex-grow: 1; justify-content: flex-start; align-items: stretch; flex-direction: column; height: 1350px;">
                     <engine:VisualElement name="back" picking-mode="Ignore" class="backCard" style="background-image: url(&quot;project://database/Assets/05.%20Sprites/NewUI/Card_Back.png?fileID=21300000&amp;guid=371f979184225df42be4f169e4820ffc&amp;type=3#Card_Back&quot;); -unity-background-image-tint-color: rgb(255, 255, 255); border-top-left-radius: 10px; border-top-right-radius: 0; border-bottom-right-radius: 10px; border-bottom-left-radius: 0; display: none; background-color: rgba(255, 255, 255, 0);">
                         <engine:Label text="Card Description" name="CardDescription" style="font-size: 15px; -unity-font-style: bold; -unity-text-align: middle-center; white-space: pre-wrap; width: 95%; height: 80%; padding-top: 17px; padding-right: 17px; padding-bottom: 17px; padding-left: 17px; top: 15px; color: rgb(53, 43, 35);"/>
@@ -88,7 +89,7 @@
                     <engine:Button text="PICK UP" name="pickUp" class="cardButton cardButton_Att NewButton01" style="-unity-font-style: bold;"/>
                 </engine:VisualElement>
             </engine:VisualElement>
-            <engine:VisualElement name="Slot2Panel" style="flex-grow: 1; justify-content: flex-start; align-items: center; width: auto; height: 450px; max-width: 250px; display: flex;">
+            <engine:VisualElement name="Slot2Panel" style="flex-grow: 1; justify-content: flex-start; align-items: center; width: auto; height: 450px; max-width: 250px; display: flex; top: 68px;">
                 <engine:VisualElement name="Slot2" picking-mode="Ignore" class="cards" style="flex-grow: 1; justify-content: flex-start; align-items: stretch; flex-direction: column; height: 1350px;">
                     <engine:VisualElement name="back" picking-mode="Ignore" class="backCard" style="background-image: url(&quot;project://database/Assets/05.%20Sprites/NewUI/Card_Back.png?fileID=21300000&amp;guid=371f979184225df42be4f169e4820ffc&amp;type=3#Card_Back&quot;); -unity-background-image-tint-color: rgb(255, 255, 255); border-top-left-radius: 10px; border-top-right-radius: 0; border-bottom-right-radius: 10px; border-bottom-left-radius: 0; display: none; background-color: rgba(255, 255, 255, 0);">
                         <engine:Label text="Card Description" name="CardDescription" style="font-size: 15px; -unity-font-style: bold; -unity-text-align: middle-center; white-space: pre-wrap; width: 95%; height: 80%; padding-top: 17px; padding-right: 17px; padding-bottom: 17px; padding-left: 17px; top: 15px; color: rgb(53, 43, 35);"/>
@@ -102,6 +103,14 @@
                     <engine:Button text="FLIP" name="flip" class="cardButton cardButton_Att NewButton01"/>
                     <engine:Button text="PICK UP" name="pickUp" class="cardButton cardButton_Att NewButton01" style="-unity-font-style: bold;"/>
                 </engine:VisualElement>
+            </engine:VisualElement>
+            <engine:VisualElement name="PanelChooseP1" style="flex-grow: 1; position: absolute; width: 300px; height: 300px; left: -320px; top: 210px; bottom: auto; align-self: center; align-content: center; -unity-background-image-tint-color: rgba(0, 0, 0, 0.2); background-color: rgba(0, 0, 0, 0.263); border-top-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; border-bottom-left-radius: 5px; align-items: center; justify-content: center;">
+                <engine:Label text="PLAYER 01" name="title" style="color: rgb(255, 255, 255); -unity-text-align: middle-center; width: 280px; font-size: 35px;"/>
+                <engine:Label text="text" name="p1StatusLabel" style="color: rgb(255, 255, 255); -unity-text-align: middle-center; font-size: 27px; align-items: center; justify-content: flex-end; flex-wrap: nowrap; flex-direction: column; white-space: pre-wrap; padding-left: 4px; margin-left: 4px; margin-bottom: 4px; padding-right: 4px; width: 280px; height: 100px;"/>
+            </engine:VisualElement>
+            <engine:VisualElement name="PanelChooseP2" style="flex-grow: 1; position: absolute; width: 300px; height: 300px; left: auto; top: 210px; bottom: auto; align-self: center; align-content: center; -unity-background-image-tint-color: rgba(0, 0, 0, 0.2); background-color: rgba(0, 0, 0, 0.263); border-top-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; border-bottom-left-radius: 5px; align-items: center; justify-content: center; right: -320px;">
+                <engine:Label text="PLAYER 02" name="title" style="color: rgb(255, 255, 255); -unity-text-align: middle-center; width: 280px; font-size: 35px;"/>
+                <engine:Label text="text" name="p2StatusLabel" style="color: rgb(255, 255, 255); -unity-text-align: middle-center; font-size: 27px; align-items: center; justify-content: flex-end; flex-wrap: nowrap; flex-direction: column; white-space: pre-wrap; padding-left: 4px; margin-left: 4px; margin-bottom: 4px; padding-right: 4px; width: 280px; height: 100px;"/>
             </engine:VisualElement>
         </engine:VisualElement>
     </engine:VisualElement>
@@ -120,10 +129,22 @@
     </engine:VisualElement>
     <engine:VisualElement name="GameOverContainer" picking-mode="Ignore" style="flex-grow: 1; height: 1080px; width: 1920px; opacity: 1; visibility: visible; position: absolute; background-color: rgba(0, 0, 0, 0); align-items: auto; justify-content: flex-end; align-self: auto; align-content: auto;">
         <engine:VisualElement name="GameOverMenu" picking-mode="Ignore" style="align-items: center; justify-content: flex-end; display: none; visibility: visible; flex-direction: column; align-content: auto; width: 100%; top: auto; height: 100%; background-image: url(&quot;project://database/Assets/05.%20Sprites/UI/TELA%20DE%20GAME%20OVER.png?fileID=21300000&amp;guid=a492d494475fb1140bf7d7efeaed14ec&amp;type=3#TELA DE GAME OVER&quot;); align-self: auto; bottom: 0;">
-            <engine:VisualElement name="StatsTable" picking-mode="Ignore" style="flex-direction: row; justify-content: center; align-items: flex-start; width: 100%; margin-bottom: 30px;"/>
             <engine:VisualElement name="ButtonContainer" picking-mode="Ignore" style="flex-grow: 1; width: 1363px; height: 657px; max-height: 657px; align-items: center; bottom: 80px; justify-content: space-evenly; align-self: center;">
                 <engine:Button text="RESTART" name="RestartButton" enable-rich-text="false" class="Button" style="width: 430px; height: 80px; font-size: 40px;"/>
                 <engine:Button text="MAIN MENU" name="MainMenu" enable-rich-text="false" class="Button" style="width: 430px; height: 80px; font-size: 40px;"/>
+                <engine:Label text="YOUR PROGRESS" name="title" style="font-size: 40px;"/>
+                <engine:VisualElement name="StatsTable" picking-mode="Ignore" style="flex-direction: row; justify-content: space-between; align-items: flex-start; width: 1150px; margin-bottom: 30px; align-self: auto;">
+                    <engine:VisualElement name="P1Panel" style="flex-grow: 1;">
+                        <engine:Label text="Label" name="NameLabel" class="gameover-stats-value--top gameover-stats-title" style="flex-grow: 1; -unity-text-align: middle-center;"/>
+                        <engine:Label text="MAIS ABATES" name="TopBadgeLabel" class="gameover-stats-value--top gameover-top-badge" style="-unity-text-align: middle-center;"/>
+                        <engine:VisualElement name="StatsContainer" style="flex-grow: 1;"/>
+                    </engine:VisualElement>
+                    <engine:VisualElement name="P2Panel" style="flex-grow: 1;">
+                        <engine:Label text="Label" name="NameLabel" class="gameover-stats-value--top gameover-stats-title" style="-unity-text-align: middle-center;"/>
+                        <engine:Label text="MAIS ABATES" name="TopBadgeLabel" class="gameover-stats-value--top gameover-top-badge" style="-unity-text-align: middle-center;"/>
+                        <engine:VisualElement name="StatsContainer"/>
+                    </engine:VisualElement>
+                </engine:VisualElement>
             </engine:VisualElement>
         </engine:VisualElement>
     </engine:VisualElement>

@@ -119,9 +119,15 @@ public class XP : MonoBehaviour
 
             if (playerProgress != null)
             {
-                popusManager.POPUP(other.gameObject.transform.position, xpValue ,1);
+                popusManager.POPUP(other.gameObject.transform.position, xpValue, 1);
                 playerProgress.AddXP(finalXP);
                 Debug.Log($"XP Coletado: {finalXP} (Base: {xpValue} x Bônus: {multiplier})");
+            }
+
+            // XP individual: soma no jogador que pegou o orbe
+            if (stats != null)
+            {
+                stats.AddXPCollected(finalXP);
             }
 
             Destroy(gameObject);

@@ -32,6 +32,7 @@ namespace RougueCards.Attributes
 
         [Header("Pontuação")]
         public int kills = 0;
+        public int xpCollected = 0;
 
         private void Awake()
         {
@@ -59,6 +60,11 @@ namespace RougueCards.Attributes
                     AttributeMaestro.Instance.OnPlayerComboStarted(playerID);
                 }
             }
+        }
+
+        public void AddXPCollected(int amount)
+        {
+            xpCollected += amount;
         }
 
         private void Update()

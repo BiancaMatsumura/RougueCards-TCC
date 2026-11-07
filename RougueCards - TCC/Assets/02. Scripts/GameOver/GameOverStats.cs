@@ -40,11 +40,14 @@ namespace RougueCards.GameOver
             var data = new GameOverPlayerStats
             {
                 PlayerID = stats.playerID,
-                PlayerName = $"JOGADOR {stats.playerID}"
+                PlayerName = $"PLAYER {stats.playerID}"
             };
 
             data.Stats.Add(new GameOverStatEntry("Abates", stats.kills.ToString()));
             // Novas estatísticas (ex: Mortes, Dano Causado) entram aqui como novas linhas.
+            data.Stats.Add(new GameOverStatEntry("XP Coletada", stats.xpCollected.ToString()));
+            data.Stats.Add(new GameOverStatEntry("Cartas Coletadas", stats.inventoryCards.Count.ToString()));
+        
 
             return data;
         }

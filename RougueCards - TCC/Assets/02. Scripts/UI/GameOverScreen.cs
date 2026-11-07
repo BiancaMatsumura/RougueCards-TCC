@@ -1,3 +1,4 @@
+using UnityEngine;
 using UnityEngine.UIElements;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,16 @@ public class GameOverScreen : BaseScreen
 
     private Button restartBtn;
     private Button mainMenuBtn;
-    private VisualElement statsTable;
+
+    private class PlayerPanel
+    {
+        public VisualElement Root;
+        public Label NameLabel;
+        public VisualElement TopBadge;
+        public VisualElement StatsContainer;
+    }
+
+    private PlayerPanel[] panels;
 
     public GameOverScreen(VisualElement root) : base(root) { }
 
@@ -18,8 +28,12 @@ public class GameOverScreen : BaseScreen
     {
         restartBtn = root.Q<Button>("RestartButton");
         mainMenuBtn = root.Q<Button>("MainMenu");
-        statsTable = root.Q<VisualElement>("StatsTable");
 
+        panels = new[]
+        {
+            BuildPanel("P1Panel"),
+            BuildPanel("P2Panel")
+        };
 
         if (restartBtn != null)
         {
@@ -32,56 +46,96 @@ public class GameOverScreen : BaseScreen
         }
     }
 
+    private PlayerPanel BuildPanel(string panelName)
+    {
+        var panelRoot = root.Q<VisualElement>(panelName);
+        if (panelRoot == null)
+        {
+            Debug.LogWarning($"[GameOverScreen] Painel '{panelName}' não encontrado no UXML.");
+            return null;
+        }
+
+        return new PlayerPanel
+        {
+            Root = panelRoot,
+            NameLabel = panelRoot.Q<Label>("NameLabel"),
+            TopBadge = panelRoot.Q<VisualElement>("TopBadgeLabel"),
+            StatsContainer = panelRoot.Q<VisualElement>("StatsContainer")
+        };
+    }
+
     protected override void OnShow()
     {
         restartBtn.Focus();
     }
 
-    /// <summary> Monta dinamicamente uma coluna de estatísticas por jogador. </summary>
+    /// <summary> Preenche os painéis fixos de cada jogador com as estatísticas. </summary>
     public void SetPlayerStats(List<GameOverPlayerStats> playersStats)
     {
-        if (statsTable == null)
+        // Esconde todos os painéis; só os que tiverem jogador voltam a aparecer
+        foreach (var panel in panels)
         {
-            return;
+            if (panel != null)
+            {
+                panel.Root.style.display = DisplayStyle.None;
+            }
         }
-
-        statsTable.Clear();
 
         if (playersStats == null)
         {
             return;
         }
 
-        foreach (var player in playersStats)
+        for (int i = 0; i < playersStats.Count && i < panels.Length; i++)
         {
-            var column = new VisualElement();
-            column.AddToClassList("gameover-stats-column");
+            FillPanel(panels[i], playersStats[i]);
+        }
+    }
 
-            var nameLabel = new Label(player.IsTopPlayer ? $"{player.PlayerName}\nMAIS ABATES" : player.PlayerName);
-            nameLabel.AddToClassList("gameover-stats-title");
+    private void FillPanel(PlayerPanel panel, GameOverPlayerStats player)
+    {
+        if (panel == null)
+        {
+            return;
+        }
+
+        panel.Root.style.display = DisplayStyle.Flex;
+
+        if (panel.NameLabel != null)
+        {
+            panel.NameLabel.text = player.PlayerName;
+        }
+
+        if (panel.TopBadge != null)
+        {
+            panel.TopBadge.style.visibility = player.IsTopPlayer ? Visibility.Visible : Visibility.Hidden;
+        }
+
+        if (panel.StatsContainer == null)
+        {
+            return;
+        }
+
+        panel.StatsContainer.Clear();
+
+        foreach (var stat in player.Stats)
+        {
+            var row = new VisualElement();
+            row.AddToClassList("gameover-stats-row");
+
+            var label = new Label(stat.Label);
+            label.AddToClassList("gameover-stats-label");
+
+            var value = new Label(stat.Value);
+            value.AddToClassList("gameover-stats-value");
             if (player.IsTopPlayer)
             {
-                nameLabel.AddToClassList("gameover-stats-title--top");
-            }
-            column.Add(nameLabel);
-
-            foreach (var stat in player.Stats)
-            {
-                var row = new VisualElement();
-                row.AddToClassList("gameover-stats-row");
-
-                var label = new Label(stat.Label);
-                label.AddToClassList("gameover-stats-label");
-
-                var value = new Label(stat.Value);
-                value.AddToClassList("gameover-stats-value");
-
-                row.Add(label);
-                row.Add(value);
-                column.Add(row);
+                value.AddToClassList("gameover-stats-value--top");
             }
 
-            statsTable.Add(column);
+            row.Add(label);
+            row.Add(value);
+            panel.StatsContainer.Add(row);
         }
     }
 }
