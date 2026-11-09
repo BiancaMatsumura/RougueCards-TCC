@@ -13,6 +13,7 @@ public class CheatManager : MonoBehaviour
     [Header("Referências")]
     [SerializeField] private PlayerProgress playerProgress;
     [SerializeField] private int xpPerCheat = 50;
+    public EnemySpawner enemySpawner;
 
     [Header("Teclas")]
     [SerializeField] private Key godModeKey = Key.F1;
@@ -20,6 +21,8 @@ public class CheatManager : MonoBehaviour
     [SerializeField] private Key healPlayersKey = Key.F3;
     [SerializeField] private Key addXPKey = Key.F4;
     [SerializeField] private Key completeStageKey = Key.F5;
+    [SerializeField] private Key nextwave = Key.F6;
+    [SerializeField] private Key nextwavenoclear = Key.F7;
 
     private bool godMode = false;
 
@@ -56,8 +59,26 @@ public class CheatManager : MonoBehaviour
         {
             CompleteStageInstantly();
         }
+        if(kb[nextwave].wasPressedThisFrame)
+        {
+            NextWave();
+        }
+         if(kb[nextwavenoclear].wasPressedThisFrame)
+        {
+            NextWaveNoClear();
+        }
     }
 
+    private void NextWave()
+    {
+        KillAllEnemies();
+        StartCoroutine(enemySpawner.NextWave());
+        KillAllEnemies();
+    }
+    private void NextWaveNoClear()
+    {
+        StartCoroutine(enemySpawner.NextWave());
+    }
     private void ToggleGodMode()
     {
         godMode = !godMode;
@@ -76,7 +97,7 @@ public class CheatManager : MonoBehaviour
 
         foreach (var enemyObj in enemies)
         {
-            enemyObj.GetComponent<Health>()?.Kill();
+            Destroy(enemyObj);
         }
 
         Debug.Log($"[Cheat] {enemies.Length} inimigo(s) eliminado(s).");

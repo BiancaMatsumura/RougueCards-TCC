@@ -6,6 +6,8 @@ public class PlayerProgress : ScriptableObject
     public int currentXP;
     public int currentStage = 0;
 
+    
+
     [Tooltip("XP necessário para completar cada estágio")]
     public int[] xpPerStage = { 100, 150, 200 };
 

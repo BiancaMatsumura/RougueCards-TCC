@@ -55,6 +55,12 @@ public class CaoticEvents : MonoBehaviour
        IsEnable = false;
     }
 
+    public void Reward()
+    {
+        IsEnable = true;
+        StopAllCoroutines();
+        StartCoroutine(SpawnPrefab(PrefabToSpawn));
+    }
     void Awake()
     {
         float angle = Random.Range(0f, Mathf.PI * 2f);

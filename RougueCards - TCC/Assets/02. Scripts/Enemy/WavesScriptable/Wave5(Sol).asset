@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 485ea8333b40c074f93e6ef6166265f2, type: 3}
+  m_Name: Wave5(Sol)
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyWaveConfig
+  Wavename: Wave1
+  prefabsInimigos:
+  - {fileID: 64197260445343202, guid: 643ab63be91d49a45b9f9d1f5cfe66c1, type: 3}
+  dadosInimigosDisponiveis:
+  - {fileID: 11400000, guid: b63acc000fe550142a66de7516d1c09a, type: 2}
+  HasCaoticEvents: 1
+  CaoticGameObjects:
+  - {fileID: 97078503559723508, guid: 315ceeffc87d52a4cabb00f9ac8fd423, type: 3}
+  - {fileID: 5070605873663505100, guid: 6cd8d40812c30a544b9fafec15224ca8, type: 3}

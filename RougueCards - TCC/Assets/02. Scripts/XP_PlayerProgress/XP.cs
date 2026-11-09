@@ -11,6 +11,7 @@ public class XP : MonoBehaviour
 
     public bool isAttracted = false;
 
+
     private Transform target;
     private float timer;
 
@@ -119,8 +120,9 @@ public class XP : MonoBehaviour
 
             if (playerProgress != null)
             {
-                popusManager.POPUP(other.gameObject.transform.position, xpValue, 1);
+      
                 playerProgress.AddXP(finalXP);
+                popusManager.POPUP(other.gameObject.transform.position, xpValue ,1);
                 Debug.Log($"XP Coletado: {finalXP} (Base: {xpValue} x Bônus: {multiplier})");
             }
 

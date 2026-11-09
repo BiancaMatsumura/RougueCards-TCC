@@ -75,7 +75,7 @@ public class BossFightManager : MonoBehaviour
         spawner.enabled = false;
 
         Vector3 pos = spawner.ObterPosicaoAleatoriaProxima(_p1.transform);
-        GameObject bossObj = Instantiate(spawner.prefabsInimigos[0], pos, Quaternion.identity);
+        GameObject bossObj = Instantiate(spawner.Waves[spawner.hordaAtual].prefabsInimigos[0], pos, Quaternion.identity);
 
         var enemy = bossObj.GetComponent<Enemy>();
         if (enemy != null)

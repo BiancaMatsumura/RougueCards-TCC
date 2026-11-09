@@ -11391,6 +11391,7 @@ MonoBehaviour:
   flashColor: {r: 1, g: 0, b: 0, a: 1}
   flashDuration: 0.1
   flashIntensity: 3
+  hitsound: {fileID: -6374334154129839403}
 --- !u!82 &-6374334154129839403
 AudioSource:
   m_ObjectHideFlags: 0
@@ -11402,7 +11403,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: -5812710903785746306, guid: 3111422dbe9acbf40b74aab2db39c5e5, type: 2}
   m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 0}
+  m_Resource: {fileID: 8300000, guid: fdd8c5ff59c5a8241b0d46aa1e926305, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1

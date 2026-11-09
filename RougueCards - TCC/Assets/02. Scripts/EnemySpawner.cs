@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.PlayerLoop;
 
 /// <summary>
 /// Spawner estilo Vampire Survivors:
@@ -9,8 +10,11 @@ using System.Collections.Generic;
 public class EnemySpawner : MonoBehaviour
 {
     [Header("Prefabs de Inimigos")]
-    [SerializeField] public GameObject[] prefabsInimigos;
-    [SerializeField] private EnemyData[] dadosInimigosDisponiveis;
+    
+    [SerializeField] public EnemyWaveConfig[] Waves;
+   
+    public int hordaAtual = 0;
+    public Transform ancorcaos;
 
     [Header("Jogadores")]
     [SerializeField] public Transform jogador1;
@@ -29,7 +33,6 @@ public class EnemySpawner : MonoBehaviour
     public SplitScreenManager splitManager;
     [SerializeField] private EnterPlayersUI enterPlayersUI;
 
-
     private List<GameObject> inimigosAtivos = new List<GameObject>();
 
     public bool spawnNoJogador1 = true;
@@ -38,7 +41,7 @@ public class EnemySpawner : MonoBehaviour
 
 
     void Start()
-    {
+    {   
         enabled = false;
         enterPlayersUI.OnSelectionComplete += StartSpawner;
         CheckSpecialEnemySetup();
@@ -51,7 +54,7 @@ public class EnemySpawner : MonoBehaviour
     /// </summary>
     private void CheckSpecialEnemySetup()
     {
-        if (dadosInimigosDisponiveis == null)
+        if (Waves[0].dadosInimigosDisponiveis == null)
         {
             return;
         }
@@ -59,7 +62,7 @@ public class EnemySpawner : MonoBehaviour
         int total = 0;
         int special = 0;
 
-        foreach (EnemyData data in dadosInimigosDisponiveis)
+        foreach (EnemyData data in Waves[0].dadosInimigosDisponiveis)
         {
             if (data == null)
             {
@@ -114,40 +117,44 @@ public class EnemySpawner : MonoBehaviour
     {
         while (true)
         {
+           
             float tempo = 0f;
-
+            
             while (inimigosAtivos.Count > 0 && tempo < tempoMaximoHorda)
             {
                 tempo += Time.deltaTime;
                 yield return null;
             }
 
+    
+            StopTraps();
+            InitializeCaoticEvents();
+            Debug.LogWarning($"Onda atual é {hordaAtual}");
+            
+
             OnHordaCompleted?.Invoke();
 
-            yield return StartCoroutine(SpawnHorda(inimigosPorHorda));
+            yield return StartCoroutine(SpawnHorda(inimigosPorHorda,hordaAtual));
         }
     }
 
-    IEnumerator SpawnHorda(int quantidade)
+    IEnumerator SpawnHorda(int quantidade, int waveactual)
     {
         for (int i = 0; i < quantidade; i++)
         {
-            SpawnInimigo();
+            SpawnInimigo(waveactual);
             yield return new WaitForSeconds(intervaloEntreSpawns);
         }
     }
 
-    void SpawnInimigo()
+    void SpawnInimigo(int waveactual)
     {
-        if (prefabsInimigos.Length == 0 || dadosInimigosDisponiveis.Length == 0)
+        if (Waves[waveactual].prefabsInimigos.Length == 0 || Waves[waveactual].dadosInimigosDisponiveis.Length == 0)
             return;
-
         GameObject prefab =
-            prefabsInimigos[Random.Range(0, prefabsInimigos.Length)];
-
+           Waves[waveactual].prefabsInimigos[Random.Range(0, Waves[waveactual].prefabsInimigos.Length)];
         EnemyData dados =
-            dadosInimigosDisponiveis[Random.Range(0, dadosInimigosDisponiveis.Length)];
-
+            Waves[waveactual].dadosInimigosDisponiveis[Random.Range(0, Waves[waveactual].dadosInimigosDisponiveis.Length)];
         Transform jogadorAlvo =
             spawnNoJogador1 ? jogador1 : jogador2;
 
@@ -188,5 +195,53 @@ public class EnemySpawner : MonoBehaviour
 
         return jogador.position +
                direcaoNormalizada * distanciaMinimaJogador;
+    }
+    public IEnumerator NextWave()
+    {  
+        if(Waves.Length < hordaAtual)
+        {
+            Debug.LogError("Horda máxima atingida");
+            yield return 0;
+        }
+        else
+        {
+            hordaAtual += 1 ;
+            StopAllCoroutines();
+            inimigosAtivos.Clear();
+            Debug.LogError("Corrtinas paradas");
+            StartCoroutine(CicloDeHordas());
+            Debug.LogError("Corrtinas iniciadas");
+            
+        }
+    }
+    public void InitializeCaoticEvents()
+    {
+        if(Waves[hordaAtual].HasCaoticEvents)
+        {
+              Debug.LogError("temos caos");
+            foreach(var caos in Waves[hordaAtual].CaoticGameObjects)
+            {
+                if(caos != null){
+                     var obj = Instantiate(caos,ancorcaos); 
+                     obj.GetComponent<CaoticEvents>().SpawnCenter = ancorcaos;
+                     obj.GetComponent<CaoticEvents>().Reward(); 
+                     Debug.LogError("temos caoitc gameobjecrs");
+                    }
+                
+            }
+        }
+        else
+        {
+             StopTraps();
+        }
+        }
+
+    public void StopTraps()
+    {
+        GameObject[] a = GameObject.FindGameObjectsWithTag("caoticevents");
+             foreach(var caos in a)
+            {
+                caos.GetComponent<CaoticEvents>().StopSpawn();
+            }
     }
 }

@@ -10,6 +10,7 @@ public class HitFlash : MonoBehaviour
     private Renderer[] _renderers;
     private MaterialPropertyBlock _mpb;
 
+    public AudioSource hitsound;
     void Awake()
     {
         _mpb = new MaterialPropertyBlock();
@@ -39,6 +40,10 @@ public class HitFlash : MonoBehaviour
 
     private void Flash()
     {
+        if(hitsound != null)
+        {
+            hitsound.Play();
+        }
         if (_renderers == null || _renderers.Length == 0)
             RefreshRenderers();
 

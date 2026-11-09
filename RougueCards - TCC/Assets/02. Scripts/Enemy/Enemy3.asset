@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cae05e17d344a374fb11f6f698d7d87f, type: 3}
-  m_Name: Enemy2 1
+  m_Name: Enemy3
   m_EditorClassIdentifier: 
   enemyName: Enemy3
-  visualPrefab: {fileID: 1490487471348683284, guid: e39ffce908a960d4fa857ee7396285fa, type: 3}
+  visualPrefab: {fileID: 1338481006240149234, guid: a58e49a3ddc98ce4187245877f4764b4, type: 3}
   animatorController: {fileID: 0}
   speed: 3
   maxHealth: 80
@@ -22,3 +22,4 @@ MonoBehaviour:
   modelScale: 1
   damageSound: {fileID: 8300000, guid: 986f492ba4744e34a8a03248837799a7, type: 3}
   deathSound: {fileID: 8300000, guid: 5522bc1d8ce463b4f9dd93b59d388073, type: 3}
+  isSpecialEnemy: 0

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Enemy1
   m_EditorClassIdentifier: 
   enemyName: Enemy1
-  visualPrefab: {fileID: 5427188821400822598, guid: f06af539705ca1d49aa52fdde8cb596a, type: 3}
+  visualPrefab: {fileID: 1338481006240149234, guid: f6b6e979af43ff74db7280fa9c449907, type: 3}
   animatorController: {fileID: 0}
   speed: 3
   maxHealth: 50
