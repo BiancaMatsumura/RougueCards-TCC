@@ -162,25 +162,12 @@ public class Enemy : MonoBehaviour
         StartCoroutine(DeathRoutine());
     }
 
-   /* private void PlayDeathSoundSafe(AudioClip clip)
-    {
-        GameObject tempAudio = new GameObject("DeathSound");
-        AudioSource src = tempAudio.AddComponent<AudioSource>();
-
-        src.clip = clip;
-
-
-        src.Play();
-
-        Destroy(tempAudio, clip.length + 0.1f);
-    }*/
 
     private System.Collections.IEnumerator DeathRoutine()
     {
         if (data != null && data.deathSound != null)
         {
             audioSource.PlayOneShot(data.deathSound);
-            Debug.Log($"Playing death sound: {data.deathSound.name}");
             yield return new WaitForSeconds(data.deathSound.length);
         }
 
@@ -258,7 +245,6 @@ public class Enemy : MonoBehaviour
             {
                 minDist = dist;
                 closest = p.transform;
-                Debug.Log($"{p.name}");
             }
         }
 

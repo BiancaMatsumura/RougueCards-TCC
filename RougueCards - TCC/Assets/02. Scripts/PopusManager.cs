@@ -28,9 +28,11 @@ public class PopusManager : MonoBehaviour
                 // Set value define o valor do popup em ROTATE CAM
                 classepop.existentpopups[0].GetComponent<RotateToCam>().SetValue(value,classepop.BeforSimble);
                 classepop.existentpopups.RemoveAt(0);
-                classepop.existentpopups[0].GetComponent<AudioSource>().Play();
-                
+                if(classepop.existentpopups[0].GetComponent<AudioSource>() != null)
+                {
+                    classepop.existentpopups[0].GetComponent<AudioSource>().Play();
                 }
+            }
         }
         else
         {

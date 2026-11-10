@@ -8,7 +8,7 @@ public class ClickDebug : MonoBehaviour
         var root = GetComponent<UIDocument>().rootVisualElement;
         root.RegisterCallback<PointerDownEvent>(e =>
         {
-            Debug.Log($"[ClickDebug] Clique recebido no UI Toolkit! target: {e.target}");
+            //($"[ClickDebug] Clique recebido no UI Toolkit! target: {e.target}");
         }, TrickleDown.TrickleDown);
     }
 }

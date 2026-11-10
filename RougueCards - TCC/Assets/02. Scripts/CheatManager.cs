@@ -72,12 +72,12 @@ public class CheatManager : MonoBehaviour
     private void NextWave()
     {
         KillAllEnemies();
-        StartCoroutine(enemySpawner.NextWave());
+        enemySpawner.NextWave();
         KillAllEnemies();
     }
     private void NextWaveNoClear()
     {
-        StartCoroutine(enemySpawner.NextWave());
+        enemySpawner.NextWave();
     }
     private void ToggleGodMode()
     {

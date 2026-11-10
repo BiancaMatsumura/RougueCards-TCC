@@ -116,7 +116,9 @@ public class Health : MonoBehaviour
             OnHealthChanged?.Invoke(playerID, currentHealth, maxHealth);
 
             if (playerID > 0)
-                Debug.Log($"[Health] Player {playerID} MaxHP sincronizado: {maxHealth}");
+            {
+                //Debug.Log($"[Health] Player {playerID} MaxHP sincronizado: {maxHealth}");
+            }
         }
     }
 

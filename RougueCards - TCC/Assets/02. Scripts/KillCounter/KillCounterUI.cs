@@ -14,7 +14,7 @@ public class KillCounterUI : MonoBehaviour
         var root = GetComponent<UIDocument>().rootVisualElement;
         killsP1Label = root.Q<Label>("killsP1Label");
         killsP2Label = root.Q<Label>("killsP2Label");
-        Debug.Log($"P1 Label: {killsP1Label}, P2 Label: {killsP2Label}");
+        
     }
 
     void Start()

@@ -47,7 +47,6 @@ namespace RougueCards.Attributes
         public void AddKill()
         {
             kills++;
-            Debug.Log($"[Player {playerID}] Kills: {kills}");
             currentCombo++;
             comboTimer = comboDuration;
 

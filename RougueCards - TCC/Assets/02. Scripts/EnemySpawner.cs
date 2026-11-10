@@ -1,7 +1,6 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine.PlayerLoop;
 
 /// <summary>
 /// Spawner estilo Vampire Survivors:
@@ -10,9 +9,9 @@ using UnityEngine.PlayerLoop;
 public class EnemySpawner : MonoBehaviour
 {
     [Header("Prefabs de Inimigos")]
-    
+
     [SerializeField] public EnemyWaveConfig[] Waves;
-   
+
     public int hordaAtual = 0;
     public Transform ancorcaos;
 
@@ -41,7 +40,7 @@ public class EnemySpawner : MonoBehaviour
 
 
     void Start()
-    {   
+    {
         enabled = false;
         enterPlayersUI.OnSelectionComplete += StartSpawner;
         CheckSpecialEnemySetup();
@@ -117,24 +116,24 @@ public class EnemySpawner : MonoBehaviour
     {
         while (true)
         {
-           
+
             float tempo = 0f;
-            
+
             while (inimigosAtivos.Count > 0 && tempo < tempoMaximoHorda)
             {
                 tempo += Time.deltaTime;
                 yield return null;
             }
 
-    
+
             StopTraps();
             InitializeCaoticEvents();
             Debug.LogWarning($"Onda atual é {hordaAtual}");
-            
+
 
             OnHordaCompleted?.Invoke();
 
-            yield return StartCoroutine(SpawnHorda(inimigosPorHorda,hordaAtual));
+            yield return StartCoroutine(SpawnHorda(inimigosPorHorda, hordaAtual));
         }
     }
 
@@ -196,52 +195,55 @@ public class EnemySpawner : MonoBehaviour
         return jogador.position +
                direcaoNormalizada * distanciaMinimaJogador;
     }
-    public IEnumerator NextWave()
-    {  
-        if(Waves.Length < hordaAtual)
+    public void StopSpawning()
+    {
+        StopAllCoroutines();
+        enabled = false;
+    }
+
+    public void NextWave()
+    {
+        if (hordaAtual + 1 >= Waves.Length)
         {
-            Debug.LogError("Horda máxima atingida");
-            yield return 0;
+            Debug.LogWarning("Última onda já atingida");
+            return;
         }
-        else
-        {
-            hordaAtual += 1 ;
-            StopAllCoroutines();
-            inimigosAtivos.Clear();
-            Debug.LogError("Corrtinas paradas");
-            StartCoroutine(CicloDeHordas());
-            Debug.LogError("Corrtinas iniciadas");
-            
-        }
+
+        hordaAtual++;
+        StopAllCoroutines();
+        inimigosAtivos.Clear();
+        enabled = true;
+        StartCoroutine(CicloDeHordas());
     }
     public void InitializeCaoticEvents()
     {
-        if(Waves[hordaAtual].HasCaoticEvents)
+        if (Waves[hordaAtual].HasCaoticEvents)
         {
-              Debug.LogError("temos caos");
-            foreach(var caos in Waves[hordaAtual].CaoticGameObjects)
+            Debug.LogError("temos caos");
+            foreach (var caos in Waves[hordaAtual].CaoticGameObjects)
             {
-                if(caos != null){
-                     var obj = Instantiate(caos,ancorcaos); 
-                     obj.GetComponent<CaoticEvents>().SpawnCenter = ancorcaos;
-                     obj.GetComponent<CaoticEvents>().Reward(); 
-                     Debug.LogError("temos caoitc gameobjecrs");
-                    }
-                
+                if (caos != null)
+                {
+                    var obj = Instantiate(caos, ancorcaos);
+                    obj.GetComponent<CaoticEvents>().SpawnCenter = ancorcaos;
+                    obj.GetComponent<CaoticEvents>().Reward();
+                    Debug.LogError("temos caoitc gameobjecrs");
+                }
+
             }
         }
         else
         {
-             StopTraps();
+            StopTraps();
         }
-        }
+    }
 
     public void StopTraps()
     {
         GameObject[] a = GameObject.FindGameObjectsWithTag("caoticevents");
-             foreach(var caos in a)
-            {
-                caos.GetComponent<CaoticEvents>().StopSpawn();
-            }
+        foreach (var caos in a)
+        {
+            caos.GetComponent<CaoticEvents>().StopSpawn();
+        }
     }
 }

@@ -67,7 +67,6 @@ public class CardManager : MonoBehaviour
 
         p1StatusLabel = root.Q<Label>("p1StatusLabel");
         p2StatusLabel = root.Q<Label>("p2StatusLabel");
-        Debug.Log($"P1 label: {(p1StatusLabel == null ? "NULL" : "ok")} | P2 label: {(p2StatusLabel == null ? "NULL" : "ok")}");
     }
 
     private IEnumerator LoadCardsNextFrame()

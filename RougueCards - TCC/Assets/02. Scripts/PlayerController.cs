@@ -6,7 +6,6 @@ using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] private float speed = 5f;
-    [SerializeField] private float jumpHeight = 3f;
     [SerializeField] private float gravity = -9.8f;
     private DistancePowerController distancePower;
 
@@ -14,7 +13,6 @@ public class PlayerController : MonoBehaviour
     private CharacterController controller;
     private Vector2 moveInput;
     private Vector3 velocity;
-    private bool jumpRequested;
     private HealthUIManager healthUI;
     private PlayerStats pStats;
     private Animator animator;
@@ -116,14 +114,6 @@ public class PlayerController : MonoBehaviour
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 10f);
         }
 
-        if (jumpRequested && grounded)
-        {
-            float h = pStats != null ? pStats.stats.JumpHeight.Value : jumpHeight;
-            velocity.y = Mathf.Sqrt(h * -2f * gravity);
-            animator?.SetBool("IsJumping", true);
-            jumpRequested = false;
-        }
-
         velocity.y += gravity * Time.deltaTime;
 
         Vector3 finalMove = (currentSpeed * move) + new Vector3(0, velocity.y, 0);
@@ -138,18 +128,11 @@ public class PlayerController : MonoBehaviour
         animator.SetFloat("Speed", move.magnitude * currentSpeed, 0.1f, Time.deltaTime);
         //animator.SetBool("IsGrounded", grounded);
 
-        if (velocity.y < 0) // grounded &&
-            animator.SetBool("IsJumping", false);
     }
 
 
     public void Move(InputAction.CallbackContext context) => moveInput = context.ReadValue<Vector2>();
 
-    public void Jump(InputAction.CallbackContext context)
-    {
-        if (_downedState != null && _downedState.IsDowned) return;
-        if (context.performed) jumpRequested = true;
-    }
     public void Revive(InputAction.CallbackContext context)
     {
         if (_reviveInteraction == null) return;

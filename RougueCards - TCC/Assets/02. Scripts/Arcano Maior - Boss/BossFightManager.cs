@@ -16,6 +16,7 @@ public class BossFightManager : MonoBehaviour
     private PlayerStats _p2;
     private int _currentBossIndex = 0;
     private bool _bossAlive = false;
+    private bool _nextWavePending;
 
     [SerializeField] private EnemySpawner spawner;
 
@@ -72,7 +73,7 @@ public class BossFightManager : MonoBehaviour
     {
         _bossAlive = true;
         playerProgress.bossAlive = true;
-        spawner.enabled = false;
+        spawner.StopSpawning();
 
         Vector3 pos = spawner.ObterPosicaoAleatoriaProxima(_p1.transform);
         GameObject bossObj = Instantiate(spawner.Waves[spawner.hordaAtual].prefabsInimigos[0], pos, Quaternion.identity);
@@ -97,13 +98,27 @@ public class BossFightManager : MonoBehaviour
         playerProgress.bossAlive = false;
         _currentBossIndex++;
 
-        cardManager.SetBossPool(defeated.rewardCards);
-        playerProgress.CompleteStage();
-
         bossHUD.Hide();
 
+        // A flag precisa estar pronta ANTES de CompleteStage, que abre o painel
         if (_currentBossIndex >= bosses.Count)
             cardManager.OnPanelClosed += FinishAfterPanel;
+        else
+            _nextWavePending = true;
+
+        cardManager.SetBossPool(defeated.rewardCards);
+        playerProgress.CompleteStage();
+    }
+
+    void OnPanelClosed()
+    {
+        if (_bossAlive) return;
+
+        if (_nextWavePending)
+        {
+            _nextWavePending = false;
+            spawner.NextWave();
+        }
     }
 
     void FinishAfterPanel()
@@ -112,9 +127,4 @@ public class BossFightManager : MonoBehaviour
         playerProgress.FinishGame();
     }
 
-    void OnPanelClosed()
-    {
-        if (!_bossAlive)
-            spawner.enabled = true;
-    }
 }

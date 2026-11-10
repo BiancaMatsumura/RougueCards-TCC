@@ -42,7 +42,7 @@ public class DamageDealer : MonoBehaviour
                     // Define quando será o próximo ataque (Tempo Atual + Intervalo)
                     nextDamageTime = Time.time + damageInterval;
                     
-                    Debug.Log($"Dano aplicado! Próximo ataque em: {damageInterval}s");
+                    //Debug.Log($"Dano aplicado! Próximo ataque em: {damageInterval}s");
                 }
             }
         }
