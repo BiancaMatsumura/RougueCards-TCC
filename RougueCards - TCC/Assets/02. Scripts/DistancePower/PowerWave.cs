@@ -36,10 +36,10 @@ public class PowerWave : MonoBehaviour
                 
             }
             Vector3 dir = (root.transform.position - center).normalized;
-            var enemy = root.GetComponent<Enemy>();
+            var enemy = root.GetComponent<Knockback>();
             if (enemy != null)
             {
-                enemy.ApplyKnockback(dir, knockbackForce);
+               StartCoroutine(enemy.ApplyKnockback(dir));
             }
         }
     }

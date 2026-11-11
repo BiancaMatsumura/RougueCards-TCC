@@ -29,7 +29,7 @@ public class CaoticParticle : MonoBehaviour
         {
             Debug.Log("Colidiu c chao");
             moving = false;
-            PS.Play();
+            PS.Play(true);
             Audio.Play();
 
             StartCoroutine(Destroyer());

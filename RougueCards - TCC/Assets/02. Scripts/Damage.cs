@@ -1,5 +1,6 @@
 using RougueCards.Attributes;
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -25,9 +26,13 @@ public class Damage : MonoBehaviour
         if (other.CompareTag("Enemy"))
         {
             var health = other.GetComponent<Health>();
+            var knock = other.GetComponent<Knockback>();
+            var enemy = other.GetComponent<Enemy>();
+            StartCoroutine(knock.ApplyKnockbackPerson(other.gameObject.transform.position - gameObject.transform.position, 1.9f, 0.3f));
             if (health != null)
                 health.TakeDamage(damage, pStats);
-            else { Debug.Log("enemy não encontrado"); }
+        
+            else { Debug.Log("enemy nï¿½o encontrado"); }
         }
     }
 

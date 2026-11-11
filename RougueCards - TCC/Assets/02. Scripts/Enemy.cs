@@ -1,4 +1,6 @@
+using System.Collections;
 using RougueCards.Attributes;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,7 +17,7 @@ public class Enemy : MonoBehaviour
     [Header("Configurações de Dados")]
     [SerializeField] private EnemyData data;
 
-    [SerializeField] private float updateTargetRate = 0.5f;
+    [SerializeField] private float CooldownBetwenSpawns = 0.5f;
 
     [Header("Configurações de Knockback")]
     [SerializeField] private float knockbackResistance = 5f;
@@ -23,6 +25,7 @@ public class Enemy : MonoBehaviour
     [Header("Slider de Vida")]
     [SerializeField] private Slider slideLife;
 
+    private Knockback knockback;
     private Health health;
     private DamageDealer damageDealer;
     private EnemyXP enemyXP;
@@ -34,6 +37,7 @@ public class Enemy : MonoBehaviour
     private bool isKnockedBack;
     private bool isDying;
     private bool _initialized = false;
+    private bool isstop = false;
 
     void Awake()
     {
@@ -111,6 +115,8 @@ public class Enemy : MonoBehaviour
         SetupHealthSlider();
     }
 
+
+
     private void SetupHealthSlider()
     {
         if (slideLife == null)
@@ -176,50 +182,53 @@ public class Enemy : MonoBehaviour
 
     void Update()
     {
-      
-        HandleAI();
+        FindClosestPlayer();
+        StartCoroutine(HandleAI());
+        if(target != null){
+            if(!isstop){
+                Vector3 dir = (target.position - transform.position).normalized;
+                transform.position += dir * data.speed * Time.deltaTime;
+
+                if (dir != Vector3.zero)
+                {
+                    Quaternion rot = Quaternion.LookRotation(dir);
+                    transform.rotation =
+                        Quaternion.Slerp(transform.rotation, rot, Time.deltaTime * 5f);
+                }
+                
+                }
+        }else{Debug.LogWarning("No target assign waiting");}
+        
     }
 
   
 
-    private void HandleAI()
+    private IEnumerator HandleAI()
     {
+        while(true){
+            
         if (data == null)
         {
-            return;
+            yield return false;
+            Debug.LogError("Sem data");
         }
 
-        targetTimer += Time.deltaTime;
 
-        if (targetTimer >= updateTargetRate)
-        {
-            FindClosestPlayer();
-            targetTimer = 0;
-        }
+        yield return new WaitForSeconds(CooldownBetwenSpawns);
+        FindClosestPlayer();
 
         if ( target == null)
         {
-            return;
+            yield return false;
+            Debug.LogError("Sem target");
         }
 
-        Vector3 dir = (target.position - transform.position).normalized;
-        transform.position += dir * data.speed * Time.deltaTime;
-
-        if (dir != Vector3.zero)
-        {
-            Quaternion rot = Quaternion.LookRotation(dir);
-            transform.rotation =
-                Quaternion.Slerp(transform.rotation, rot, Time.deltaTime * 5f);
-        }
-    }
-
-    public void ApplyKnockback(Vector3 direction, float force)
-    {
-        knockbackVelocity = direction * force;
         
-  
+        }
     }
 
+
+    
     private void FindClosestPlayer()
     {
         var players = GameObject.FindGameObjectsWithTag("Player");
@@ -249,5 +258,25 @@ public class Enemy : MonoBehaviour
         }
 
         target = closest;
+    }
+    public void SwichEnemyMove(bool IsStop)
+    {
+        if(IsStop)
+        {
+            if(isstop){StartCoroutine(HandleAI());}
+            isstop = true;
+        }
+        else
+        {
+            StopCoroutine(HandleAI());
+            isstop = false;
+        }
+    }
+
+    public IEnumerator Freeze(float Time)
+    {
+        SwichEnemyMove(false);
+        yield return new WaitForSeconds(Time);
+        SwichEnemyMove(true);
     }
 }

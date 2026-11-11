@@ -67,6 +67,7 @@ public class Health : MonoBehaviour
             amount = Mathf.Max(1, amount - (int)armorValue);
         }
 
+      
         currentHealth -= amount;
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
 

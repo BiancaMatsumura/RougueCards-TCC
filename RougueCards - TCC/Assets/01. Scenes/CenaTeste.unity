@@ -8326,6 +8326,7 @@ MonoBehaviour:
   playerProgress: {fileID: 11400000, guid: 00a38000d9bba5a42b1cef107458d7c8, type: 2}
   xpPerCheat: 50
   enemySpawner: {fileID: 1584813345}
+  pwwave: {fileID: 1665086898}
   godModeKey: 94
   killAllEnemiesKey: 95
   healPlayersKey: 96
@@ -8333,6 +8334,8 @@ MonoBehaviour:
   completeStageKey: 98
   nextwave: 99
   nextwavenoclear: 100
+  stopenemys: 101
+  wavepower: 102
 --- !u!1 &640431967 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 8a859f87c334b7e42a5c193f665caacb, type: 3}

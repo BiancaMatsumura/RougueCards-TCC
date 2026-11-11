@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 9063050185275164066}
   - component: {fileID: 4810684557102577108}
   - component: {fileID: 7740249721388357540}
+  - component: {fileID: -2808871390998646428}
   m_Layer: 8
   m_Name: NewEnemy
   m_TagString: Enemy
@@ -53,7 +54,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 0}
-  updateTargetRate: 0.3
+  CooldownBetwenSpawns: 0.5
   knockbackResistance: 0
   slideLife: {fileID: 0}
 --- !u!65 &5767922539996724424
@@ -86,10 +87,10 @@ Rigidbody:
   m_GameObject: {fileID: 64197260445343202}
   serializedVersion: 5
   m_Mass: 1
-  m_LinearDamping: 0
-  m_AngularDamping: 0
+  m_LinearDamping: 13.2
+  m_AngularDamping: 11.49
   m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaTensor: {x: 5.86, y: 6.71, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
   m_IncludeLayers:
     serializedVersion: 2
@@ -99,10 +100,10 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 84
+  m_Constraints: 4
   m_CollisionDetection: 0
 --- !u!114 &-4453271482895477748
 MonoBehaviour:
@@ -280,3 +281,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &-2808871390998646428
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 64197260445343202}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51f0b2e30dc3e5242946ed24d5756713, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Knockback
+  rigidbodys: {fileID: 542973585866644192}
+  force: 3.12
+  Duration: 1.33

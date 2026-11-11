@@ -1,3 +1,4 @@
+using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -14,7 +15,7 @@ public class CheatManager : MonoBehaviour
     [SerializeField] private PlayerProgress playerProgress;
     [SerializeField] private int xpPerCheat = 50;
     public EnemySpawner enemySpawner;
-
+    public PowerWave pwwave;
     [Header("Teclas")]
     [SerializeField] private Key godModeKey = Key.F1;
     [SerializeField] private Key killAllEnemiesKey = Key.F2;
@@ -23,9 +24,11 @@ public class CheatManager : MonoBehaviour
     [SerializeField] private Key completeStageKey = Key.F5;
     [SerializeField] private Key nextwave = Key.F6;
     [SerializeField] private Key nextwavenoclear = Key.F7;
+    [SerializeField] private Key stopenemys = Key.F8;
+    [SerializeField] private Key wavepower = Key.F9;
 
     private bool godMode = false;
-
+    private bool isfreeze = false;
     void Update()
     {
         if (!cheatsEnabled)
@@ -67,8 +70,34 @@ public class CheatManager : MonoBehaviour
         {
             NextWaveNoClear();
         }
+           if(kb[stopenemys].wasPressedThisFrame)
+        {
+            FreezeAllEnemys();
+        }
+        if(kb[wavepower].wasPressedThisFrame)
+        {
+            WaveP();
+        }
     }
 
+
+    private void WaveP()
+    {
+    
+        var pA = GameObject.FindGameObjectsWithTag("Player");
+        
+        if(pA[0] != null && pA[1] != null)
+        {
+            var p0 = pA[1].GetComponent<Transform>();
+            var p1 = pA[0].GetComponent<Transform>();
+
+           Vector3 media = (p0.position + p1.position) / 2f;
+            media.y = 0;
+            pwwave.Activate(media);
+        }
+        
+   
+    }
     private void NextWave()
     {
         KillAllEnemies();
@@ -98,6 +127,20 @@ public class CheatManager : MonoBehaviour
         foreach (var enemyObj in enemies)
         {
             Destroy(enemyObj);
+        }
+
+        Debug.Log($"[Cheat] {enemies.Length} inimigo(s) eliminado(s).");
+    }
+    private void FreezeAllEnemys()
+    {
+        var enemies = GameObject.FindGameObjectsWithTag("Enemy");
+       
+        isfreeze = !isfreeze;
+
+        foreach (var enemyObj in enemies)
+        {
+            var enemies2 = enemyObj.GetComponent<Enemy>();
+            enemies2.SwichEnemyMove(isfreeze);
         }
 
         Debug.Log($"[Cheat] {enemies.Length} inimigo(s) eliminado(s).");
