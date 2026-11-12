@@ -15,7 +15,9 @@ MonoBehaviour:
   Wavename: Wave1
   prefabsInimigos:
   - {fileID: 64197260445343202, guid: 643ab63be91d49a45b9f9d1f5cfe66c1, type: 3}
+  - {fileID: 64197260445343202, guid: 643ab63be91d49a45b9f9d1f5cfe66c1, type: 3}
   dadosInimigosDisponiveis:
   - {fileID: 11400000, guid: 9477e5eaedeeef04d8b38d0a4d180c07, type: 2}
+  - {fileID: 11400000, guid: bfc33a0bcf8aaa84ca71538d00e013e8, type: 2}
   HasCaoticEvents: 0
   CaoticGameObjects: []

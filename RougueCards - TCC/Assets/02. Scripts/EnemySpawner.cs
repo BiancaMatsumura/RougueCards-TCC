@@ -148,12 +148,14 @@ public class EnemySpawner : MonoBehaviour
 
     void SpawnInimigo(int waveactual)
     {
+        
         if (Waves[waveactual].prefabsInimigos.Length == 0 || Waves[waveactual].dadosInimigosDisponiveis.Length == 0)
             return;
+        var RandomEnemy = Random.Range(0, Waves[waveactual].prefabsInimigos.Length);
         GameObject prefab =
-           Waves[waveactual].prefabsInimigos[Random.Range(0, Waves[waveactual].prefabsInimigos.Length)];
+           Waves[waveactual].prefabsInimigos[RandomEnemy];
         EnemyData dados =
-            Waves[waveactual].dadosInimigosDisponiveis[Random.Range(0, Waves[waveactual].dadosInimigosDisponiveis.Length)];
+            Waves[waveactual].dadosInimigosDisponiveis[RandomEnemy];
         Transform jogadorAlvo =
             spawnNoJogador1 ? jogador1 : jogador2;
 

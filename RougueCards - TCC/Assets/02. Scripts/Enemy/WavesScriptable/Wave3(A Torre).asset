@@ -17,10 +17,12 @@ MonoBehaviour:
   - {fileID: 64197260445343202, guid: 643ab63be91d49a45b9f9d1f5cfe66c1, type: 3}
   - {fileID: 64197260445343202, guid: 643ab63be91d49a45b9f9d1f5cfe66c1, type: 3}
   - {fileID: 64197260445343202, guid: 643ab63be91d49a45b9f9d1f5cfe66c1, type: 3}
+  - {fileID: 64197260445343202, guid: 643ab63be91d49a45b9f9d1f5cfe66c1, type: 3}
   dadosInimigosDisponiveis:
   - {fileID: 11400000, guid: 735695ab05171f44d9136da4dfed93f4, type: 2}
   - {fileID: 11400000, guid: 32c3e8d17e34d4844b879eaa86e2e182, type: 2}
   - {fileID: 11400000, guid: 67681626dc1d9bf4fb0cebe87aec4fb3, type: 2}
+  - {fileID: 11400000, guid: bfc33a0bcf8aaa84ca71538d00e013e8, type: 2}
   HasCaoticEvents: 1
   CaoticGameObjects:
   - {fileID: 97078503559723508, guid: 315ceeffc87d52a4cabb00f9ac8fd423, type: 3}

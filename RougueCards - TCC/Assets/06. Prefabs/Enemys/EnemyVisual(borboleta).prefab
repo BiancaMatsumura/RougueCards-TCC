@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1061852317371427548}
   - component: {fileID: 1829256435203269567}
   m_Layer: 0
-  m_Name: EnemyVisual 2
+  m_Name: EnemyVisual(borboleta)
   m_TagString: Visual
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cae05e17d344a374fb11f6f698d7d87f, type: 3}
+  m_Name: Fantasma
+  m_EditorClassIdentifier: 
+  enemyName: Enemy2
+  visualPrefab: {fileID: 1338481006240149234, guid: 289edfb6f5589234a8b04d4b9930a0fc, type: 3}
+  animatorController: {fileID: 0}
+  speed: 3
+  maxHealth: 80
+  damageToPlayer: 7
+  xpValue: 20
+  modelScale: 1
+  damageSound: {fileID: 8300000, guid: 986f492ba4744e34a8a03248837799a7, type: 3}
+  deathSound: {fileID: 8300000, guid: 5522bc1d8ce463b4f9dd93b59d388073, type: 3}
+  isSpecialEnemy: 0

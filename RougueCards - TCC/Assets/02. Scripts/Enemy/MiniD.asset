@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cae05e17d344a374fb11f6f698d7d87f, type: 3}
-  m_Name: Enemy0
-  m_EditorClassIdentifier: Assembly-CSharp::EnemyData
-  enemyName: Enemy0
-  visualPrefab: {fileID: 1338481006240149234, guid: 8dbbab9c8bf43a243ad8e69abb7cc023, type: 3}
+  m_Name: MiniD
+  m_EditorClassIdentifier: 
+  enemyName: MiniD
+  visualPrefab: {fileID: 1338481006240149234, guid: a58e49a3ddc98ce4187245877f4764b4, type: 3}
   animatorController: {fileID: 0}
-  speed: 1.79
-  maxHealth: 50
-  damageToPlayer: 2
-  xpValue: 20
+  speed: 2.03
+  maxHealth: 74
+  damageToPlayer: 15
+  xpValue: 28
   modelScale: 1
   damageSound: {fileID: 8300000, guid: 986f492ba4744e34a8a03248837799a7, type: 3}
   deathSound: {fileID: 8300000, guid: 5522bc1d8ce463b4f9dd93b59d388073, type: 3}
-  isSpecialEnemy: 1
+  isSpecialEnemy: 0
