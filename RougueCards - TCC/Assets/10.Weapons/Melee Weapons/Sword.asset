@@ -17,3 +17,4 @@ MonoBehaviour:
   comboWindowMultiplier: 2
   comboMax: 2
   WeaponPrefab: {fileID: 8635893145716036386, guid: d2d65b414d428e446aba1dc0831b2f3e, type: 3}
+  SlashPrefab: {fileID: 4542991849778012283, guid: 8749a889b78b43943823969c9f335805, type: 3}

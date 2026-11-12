@@ -8,6 +8,7 @@ public class MeleeWeaponData : ScriptableObject
     public float comboWindowMultiplier = 1f;
     public int comboMax = 0;
     public GameObject WeaponPrefab;
+    public GameObject SlashPrefab;
 
     public void ApplyOverride(Animator Anim) 
     {

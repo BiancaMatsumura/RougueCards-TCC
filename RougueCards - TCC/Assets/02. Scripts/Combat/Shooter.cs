@@ -23,20 +23,23 @@ public class Shooter : MonoBehaviour
 
     public bool IsShooter;
     public GameObject WeaponPrefab;
+    public GameObject SlashPrefab;
+    public Transform FrontPosition;
     public Transform HandsPosition;
     private Health life;
     private Damage damage;
 
     [Header("SlashVfx")]
-    public GameObject slashprefab;
+    //public GameObject slashprefab;
     private Animator slashanimation;
     void Start()
     {
         InitWeaponMesh(weaponData);
+        InitSlashMesh(weaponData);
         ApplyWeaponAnimations();
         damage = GetComponentInChildren<Damage>();
         life = GetComponent<Health>();
-        slashanimation = slashprefab.GetComponent<Animator>();
+       // slashanimation = slashprefab.GetComponent<Animator>();
       
 
         if (weaponData != null)
@@ -137,11 +140,39 @@ public class Shooter : MonoBehaviour
             else { Debug.Log("Nao tem prefab droga!"); }
             }
         }
+
+    public void SwichSlahsMesh(MeleeWeaponData weaponData) 
+    {
+        
+        if (IsShooter)
+        {
+            if (SlashPrefab != null)
+            {
+                DestroyImmediate(SlashPrefab,true);
+            }
+            if (weaponData.SlashPrefab != null)
+            {
+                SlashPrefab = Instantiate(weaponData.SlashPrefab, FrontPosition);
+                slashanimation = SlashPrefab.GetComponent<Animator>();
+            }
+            else { Debug.Log("Nao tem prefab droga!"); }
+            }
+        }
+
     public void InitWeaponMesh(MeleeWeaponData weaponData) 
     {
         if (weaponData.WeaponPrefab != null)
         {
             WeaponPrefab = Instantiate(weaponData.WeaponPrefab, HandsPosition);
+        }
+        else { Debug.Log("Nao tem prefab droga!"); }
+    }
+    public void InitSlashMesh(MeleeWeaponData weaponData) 
+    {
+        if (weaponData.SlashPrefab != null)
+        {
+            SlashPrefab = Instantiate(weaponData.SlashPrefab, FrontPosition);
+            slashanimation = SlashPrefab.GetComponent<Animator>();
         }
         else { Debug.Log("Nao tem prefab droga!"); }
     }

@@ -334,6 +334,7 @@ public class CardManager : MonoBehaviour
             if (data.meleeWeapon != null)
             {
                 shooter.SwichWeaponMesh(data.meleeWeapon);
+                shooter.SwichSlahsMesh(data.meleeWeapon);
             }
         }
         else
