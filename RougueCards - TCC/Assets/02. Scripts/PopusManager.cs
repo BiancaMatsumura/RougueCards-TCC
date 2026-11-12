@@ -43,8 +43,33 @@ public class PopusManager : MonoBehaviour
             
         }
 
-
-}}
-
-    
+}
+  public void POPUPMensage(Vector3 transform, string oqfalar, int prefabNumber)
+    {
+        var classepop = allpopups[prefabNumber];
+        if(classepop.existentpopups.Count >= classepop.Limit)
+        {
+            if(classepop.existentpopups.Contains(classepop.existentpopups[0])){
+              
+                classepop.existentpopups[0].transform.position = transform;
+                classepop.existentpopups[0].GetComponent<Animation>().Play();
+                // Set value define o valor do popup em ROTATE CAM
+                classepop.existentpopups[0].GetComponent<RotateToCam>().SetMensage(oqfalar);
+                classepop.existentpopups.RemoveAt(0);
+                if(classepop.existentpopups[0].GetComponent<AudioSource>() != null)
+                {
+                    classepop.existentpopups[0].GetComponent<AudioSource>().Play();
+                }
+            }
+        }
+        else
+        {
+            var objeto = Instantiate(classepop.popupObject, transform + Vector3.up * classepop.GroundDistance, Quaternion.identity);
+            classepop.existentpopups.Add(objeto);
+            objeto.GetComponent<RotateToCam>().SetMensage(oqfalar);
+            Debug.LogWarning($"{classepop.existentpopups.Count}");
+            
+        }
+}
+}
 

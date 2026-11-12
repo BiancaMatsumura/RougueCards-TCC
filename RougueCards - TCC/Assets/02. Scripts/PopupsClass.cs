@@ -13,6 +13,8 @@ public class PopupsClass
     public float GroundDistance = 1.5f;
 
     public string BeforSimble = ""; 
+
+    public string Message = "Lore";
     
    
 }

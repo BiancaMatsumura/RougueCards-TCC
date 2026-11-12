@@ -163,6 +163,8 @@ public class Enemy : MonoBehaviour
         if (data != null && data.isSpecialEnemy && health.lastAttacker != null)
         {
             AttributeMaestro.Instance?.RegisterSpecialEnemyKill(health.lastAttacker);
+            GameObject.FindAnyObjectByType<PopusManager>().POPUPMensage(transform.position,$"Player {health.lastAttacker.playerID} is chosen next card!",2);
+          
         }
 
         StartCoroutine(DeathRoutine());

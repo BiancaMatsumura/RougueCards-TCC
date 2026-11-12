@@ -48,7 +48,7 @@ Material:
     - _QueueOffset: 0
     - _Velocity: 0.35
     m_Colors:
-    - _CorDoEffeito: {r: 8.931038, g: 9.082411, b: 0, a: 1}
+    - _CorDoEffeito: {r: 0, g: 0.88694715, b: 12.125731, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
 --- !u!114 &7419275736094647693

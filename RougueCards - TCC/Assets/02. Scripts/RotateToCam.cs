@@ -68,4 +68,11 @@ public class RotateToCam : MonoBehaviour
 
 
     }
+
+    public void SetMensage(string oqfalar)
+    {
+        beforstringapply = oqfalar;
+        
+    }
+ 
 }
