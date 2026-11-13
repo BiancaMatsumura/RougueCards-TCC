@@ -15,6 +15,7 @@ MonoBehaviour:
   enemyName: Borboleta
   visualPrefab: {fileID: 1338481006240149234, guid: c2dd50ca1fe3fd04dbe5a1417a547d28, type: 3}
   animatorController: {fileID: 0}
+  SpawPercent: 9
   speed: 0.96
   maxHealth: 62
   damageToPlayer: 16

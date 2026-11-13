@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using NUnit.Framework.Internal;
 
 /// <summary>
 /// Spawner estilo Vampire Survivors:
@@ -151,34 +152,40 @@ public class EnemySpawner : MonoBehaviour
         
         if (Waves[waveactual].prefabsInimigos.Length == 0 || Waves[waveactual].dadosInimigosDisponiveis.Length == 0)
             return;
-        var RandomEnemy = Random.Range(0, Waves[waveactual].prefabsInimigos.Length);
-        GameObject prefab =
-           Waves[waveactual].prefabsInimigos[RandomEnemy];
-        EnemyData dados =
-            Waves[waveactual].dadosInimigosDisponiveis[RandomEnemy];
-        Transform jogadorAlvo =
-            spawnNoJogador1 ? jogador1 : jogador2;
-
-        spawnNoJogador1 = !spawnNoJogador1;
-
-        if (jogadorAlvo == null)
-            return;
-
-        Vector3 posicaoSpawn =
-            ObterPosicaoAleatoriaProxima(jogadorAlvo);
-
-        GameObject inimigo =
-            Instantiate(prefab, posicaoSpawn, Quaternion.identity);
-
-        Enemy scriptInimigo =
-            inimigo.GetComponent<Enemy>();
-
-        if (scriptInimigo != null)
+        var RandomFinder = true;
+        var RandomEnemy = -1;
+        while(RandomFinder)
         {
-            scriptInimigo.Initialize(dados);
+            RandomEnemy = Random.Range(0, Waves[waveactual].prefabsInimigos.Length);
+            RandomFinder = !RandomEnemyPorcent(Waves[waveactual].dadosInimigosDisponiveis[RandomEnemy].SpawPercent);
         }
+            GameObject prefab =
+            Waves[waveactual].prefabsInimigos[RandomEnemy];
+            EnemyData dados =
+                Waves[waveactual].dadosInimigosDisponiveis[RandomEnemy];
+            Transform jogadorAlvo =
+                spawnNoJogador1 ? jogador1 : jogador2;
 
-        inimigosAtivos.Add(inimigo);
+            spawnNoJogador1 = !spawnNoJogador1;
+
+            if (jogadorAlvo == null)
+                return;
+
+            Vector3 posicaoSpawn =
+                ObterPosicaoAleatoriaProxima(jogadorAlvo);
+
+            GameObject inimigo =
+                Instantiate(prefab, posicaoSpawn, Quaternion.identity);
+
+            Enemy scriptInimigo =
+                inimigo.GetComponent<Enemy>();
+
+            if (scriptInimigo != null)
+            {
+                scriptInimigo.Initialize(dados);
+            }
+
+            inimigosAtivos.Add(inimigo);
     }
 
     public Vector3 ObterPosicaoAleatoriaProxima(Transform jogador)
@@ -246,6 +253,20 @@ public class EnemySpawner : MonoBehaviour
         foreach (var caos in a)
         {
             caos.GetComponent<CaoticEvents>().StopSpawn();
+        }
+    }
+
+    bool RandomEnemyPorcent(int porcent)
+    {
+      
+        var random = Random.Range(0, 100);
+        if(random <= porcent)
+        {
+             return true;   
+        }
+        else
+        {
+            return false;
         }
     }
 }

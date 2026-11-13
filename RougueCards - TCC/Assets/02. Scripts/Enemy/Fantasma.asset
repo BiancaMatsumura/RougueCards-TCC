@@ -15,6 +15,7 @@ MonoBehaviour:
   enemyName: Enemy2
   visualPrefab: {fileID: 1338481006240149234, guid: 289edfb6f5589234a8b04d4b9930a0fc, type: 3}
   animatorController: {fileID: 0}
+  SpawPercent: 33
   speed: 3
   maxHealth: 80
   damageToPlayer: 7

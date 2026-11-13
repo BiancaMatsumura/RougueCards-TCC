@@ -26,8 +26,9 @@ public class Shooter : MonoBehaviour
     public GameObject SlashPrefab;
     public Transform FrontPosition;
     public Transform HandsPosition;
+    
     private Health life;
-    private Damage damage;
+    public Damage damage;
 
     [Header("SlashVfx")]
     //public GameObject slashprefab;
@@ -37,7 +38,6 @@ public class Shooter : MonoBehaviour
         InitWeaponMesh(weaponData);
         InitSlashMesh(weaponData);
         ApplyWeaponAnimations();
-        damage = GetComponentInChildren<Damage>();
         life = GetComponent<Health>();
        // slashanimation = slashprefab.GetComponent<Animator>();
       
@@ -131,11 +131,14 @@ public class Shooter : MonoBehaviour
         {
             if (WeaponPrefab != null)
             {
+                damage.damage = weaponData.baseDamage;
                 DestroyImmediate(WeaponPrefab,true);
             }
             if (weaponData.WeaponPrefab != null)
             {
+                
                 WeaponPrefab = Instantiate(weaponData.WeaponPrefab, HandsPosition);
+                damage.damage = weaponData.baseDamage;
             }
             else { Debug.Log("Nao tem prefab droga!"); }
             }
@@ -163,7 +166,10 @@ public class Shooter : MonoBehaviour
     {
         if (weaponData.WeaponPrefab != null)
         {
+            
             WeaponPrefab = Instantiate(weaponData.WeaponPrefab, HandsPosition);
+             damage.damage = weaponData.baseDamage;
+            
         }
         else { Debug.Log("Nao tem prefab droga!"); }
     }

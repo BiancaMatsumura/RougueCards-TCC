@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 /// <summary>
 /// ScriptableObject que define o "DNA" e os atributos base de um inimigo.
@@ -19,6 +20,10 @@ public class EnemyData : ScriptableObject
 
     [Header("Atributos Base")]
     /// <summary> Velocidade de movimento do inimigo durante a perseguição. </summary>
+    
+    [Range(0, 100)]
+    public  int SpawPercent = 100;
+    
     public float speed = 3f;
 
     /// <summary> Quantidade máxima de pontos de vida (HP) que o inimigo terá ao surgir. </summary>
@@ -44,4 +49,5 @@ public class EnemyData : ScriptableObject
     [Header("Inimigo Especial")]
     /// <summary> Se marcado, o jogador que der o golpe final neste inimigo ganha o direito exclusivo de escolher a próxima carta de upgrade. </summary>
     public bool isSpecialEnemy = false;
+    
 }

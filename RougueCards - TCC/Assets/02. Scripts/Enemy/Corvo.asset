@@ -15,6 +15,7 @@ MonoBehaviour:
   enemyName: Corvo
   visualPrefab: {fileID: 1338481006240149234, guid: 8dbbab9c8bf43a243ad8e69abb7cc023, type: 3}
   animatorController: {fileID: 0}
+  SpawPercent: 58
   speed: 1.53
   maxHealth: 74
   damageToPlayer: 6

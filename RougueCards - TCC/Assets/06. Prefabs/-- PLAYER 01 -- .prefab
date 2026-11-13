@@ -1088,6 +1088,7 @@ MonoBehaviour:
   SlashPrefab: {fileID: 4542991849778012283, guid: 7bcfe0fc182e5414686a6a6bd9a891a7, type: 3}
   FrontPosition: {fileID: 8295758109276463396}
   HandsPosition: {fileID: 4201197435280921751}
+  damage: {fileID: 8595768386521436879}
 --- !u!114 &1173774930197150050
 MonoBehaviour:
   m_ObjectHideFlags: 0

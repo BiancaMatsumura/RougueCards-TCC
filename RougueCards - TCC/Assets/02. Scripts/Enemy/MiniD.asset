@@ -15,6 +15,7 @@ MonoBehaviour:
   enemyName: MiniD
   visualPrefab: {fileID: 1338481006240149234, guid: a58e49a3ddc98ce4187245877f4764b4, type: 3}
   animatorController: {fileID: 0}
+  SpawPercent: 43
   speed: 2.03
   maxHealth: 74
   damageToPlayer: 15

@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e7c886899ec6d5443bedd579c8aac027, type: 3}
-  m_Name: Basic
+  m_Name: Axe
   m_EditorClassIdentifier: 
   controler: {fileID: 22100000, guid: 9bdc659e9054cda48bd1b990b7c8bb77, type: 2}
-  baseDamage: 20
-  comboWindowMultiplier: 1
-  comboMax: 3
-  WeaponPrefab: {fileID: 1855487053908576990, guid: ca3b34a3f18ef9341a1acc0d45cfd746, type: 3}
+  baseDamage: 5
+  comboWindowMultiplier: 2
+  comboMax: 2
+  WeaponPrefab: {fileID: 8635893145716036386, guid: d2d65b414d428e446aba1dc0831b2f3e, type: 3}
   SlashPrefab: {fileID: 4542991849778012283, guid: 7bcfe0fc182e5414686a6a6bd9a891a7, type: 3}

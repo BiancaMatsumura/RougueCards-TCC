@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Sword
   m_EditorClassIdentifier: 
   controler: {fileID: 22100000, guid: b0f06f27f8924cd41a01f2547964cb1a, type: 2}
-  baseDamage: 10
+  baseDamage: 20
   comboWindowMultiplier: 2
   comboMax: 2
-  WeaponPrefab: {fileID: 8635893145716036386, guid: d2d65b414d428e446aba1dc0831b2f3e, type: 3}
+  WeaponPrefab: {fileID: 1855487053908576990, guid: ca3b34a3f18ef9341a1acc0d45cfd746, type: 3}
   SlashPrefab: {fileID: 4542991849778012283, guid: 8749a889b78b43943823969c9f335805, type: 3}
