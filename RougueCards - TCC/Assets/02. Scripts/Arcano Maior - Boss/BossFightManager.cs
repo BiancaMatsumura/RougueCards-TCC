@@ -75,6 +75,9 @@ public class BossFightManager : MonoBehaviour
         playerProgress.bossAlive = true;
         spawner.StopSpawning();
 
+        if (MusicManager.Instance != null)
+            MusicManager.Instance.Play(condition.bossMusic);
+
         Vector3 pos = spawner.ObterPosicaoAleatoriaProxima(_p1.transform);
         GameObject bossObj = Instantiate(spawner.Waves[spawner.hordaAtual].prefabsInimigos[0], pos, Quaternion.identity);
 
@@ -99,6 +102,8 @@ public class BossFightManager : MonoBehaviour
         _currentBossIndex++;
 
         bossHUD.Hide();
+        if (MusicManager.Instance != null)
+            MusicManager.Instance.PlayTema();
 
         // A flag precisa estar pronta ANTES de CompleteStage, que abre o painel
         if (_currentBossIndex >= bosses.Count)

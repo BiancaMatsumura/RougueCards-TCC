@@ -89,7 +89,7 @@ public class PlayerController : MonoBehaviour
             // ou fique flutuando quando o personagem cresce/diminui
             controller.center = baseCenter * newSize;
 
-            Debug.Log($"[PlayerController] Colisor físico ajustado: Altura {controller.height}, Raio {controller.radius}");
+            //Debug.Log($"[PlayerController] Colisor físico ajustado: Altura {controller.height}, Raio {controller.radius}");
         }
     }
 

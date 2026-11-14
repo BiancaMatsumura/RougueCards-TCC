@@ -1105,6 +1105,8 @@ MonoBehaviour:
   playerLayer:
     serializedVersion: 2
     m_Bits: 128
+  shieldDuration: 3
+  shieldMaxHits: 3
 --- !u!114 &7393613333181478184
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1120,6 +1122,8 @@ MonoBehaviour:
   downedDuration: 20
   reviveDuration: 3
   reviveHPPercent: 0.5
+  decayDelay: 0.5
+  decayRate: 0.4
 --- !u!114 &4612006250849140857
 MonoBehaviour:
   m_ObjectHideFlags: 0

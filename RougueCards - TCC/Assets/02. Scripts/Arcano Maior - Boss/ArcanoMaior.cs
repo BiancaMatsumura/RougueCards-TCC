@@ -9,5 +9,6 @@ public class ArcanoMaior : ScriptableObject
     public int killsRequired;
     public float timeRequired;
     public CardData[] rewardCards;
+    public AudioClip bossMusic;
 
 }
