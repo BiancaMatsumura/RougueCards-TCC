@@ -18,3 +18,4 @@ MonoBehaviour:
   killsRequired: 60
   timeRequired: 120
   rewardCards: []
+  bossMusic: {fileID: 8300000, guid: 8081985ae0125c54a951d4b1538097fc, type: 3}
