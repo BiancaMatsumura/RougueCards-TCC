@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Carta_Orbital
   m_EditorClassIdentifier: 
   cardName: Obital Gun
-  description: Adiciona disparos que te orbitam
+  description: 'Oracle: protect her Cartomante: Katana'
   cardImage: {fileID: 21300000, guid: 5d8effd99fbb4d5478ce7856347b9943, type: 3}
   xpRequired: 0
   bossOnly: 0
@@ -22,4 +22,4 @@ MonoBehaviour:
   upgradeValue: 0
   isPercentage: 0
   rangedWeapon: {fileID: 11400000, guid: f15594d16ea8d4b4fb5f61bd6ea5fd58, type: 2}
-  meleeWeapon: {fileID: 11400000, guid: ae3e5918eb841024498eb73e08eb3b2e, type: 2}
+  meleeWeapon: {fileID: 11400000, guid: e47ab3a27affec84a9677fb33ef536c7, type: 2}

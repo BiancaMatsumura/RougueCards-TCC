@@ -22,4 +22,4 @@ MonoBehaviour:
   upgradeValue: 0
   isPercentage: 0
   rangedWeapon: {fileID: 11400000, guid: 17fc19ed3530eeb4c86faf1f63da8efa, type: 2}
-  meleeWeapon: {fileID: 11400000, guid: ae3e5918eb841024498eb73e08eb3b2e, type: 2}
+  meleeWeapon: {fileID: 11400000, guid: 8576236682e3a7949bb4d84d688a594e, type: 2}
