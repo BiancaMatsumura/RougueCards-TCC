@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardName: One of Axe
   description: 'Oracle: DOMO    Cartomante : MACHADO'
-  cardImage: {fileID: 21300000, guid: dc21efb5d53a21348a7a69c3c4ab4303, type: 3}
+  cardImage: {fileID: -2113420551, guid: b73170c98b0687049a11fe892d9d04f0, type: 3}
   xpRequired: 0
   bossOnly: 0
   effectType: 1
@@ -23,3 +23,6 @@ MonoBehaviour:
   isPercentage: 0
   rangedWeapon: {fileID: 11400000, guid: 17fc19ed3530eeb4c86faf1f63da8efa, type: 2}
   meleeWeapon: {fileID: 11400000, guid: 8576236682e3a7949bb4d84d688a594e, type: 2}
+  instantEffectType: 0
+  instantValue: 0
+  instantDuration: 0

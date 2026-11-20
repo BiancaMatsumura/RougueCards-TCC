@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Shield
   m_EditorClassIdentifier: Assembly-CSharp::CardData
   cardName: Shield
-  description: 5
-  cardImage: {fileID: 21300000, guid: 66ed37fc2b2cab748b87ed4409552fc0, type: 3}
+  description: Block the next hits. 5 Times
+  cardImage: {fileID: -2113420551, guid: b73170c98b0687049a11fe892d9d04f0, type: 3}
   xpRequired: 0
   bossOnly: 0
   effectType: 2

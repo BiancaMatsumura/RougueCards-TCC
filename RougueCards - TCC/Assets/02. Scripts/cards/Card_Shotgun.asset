@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardName: Sword of V
   description: "Or\xE1culo: 5 disparos em cadeia . Cartomante: Sword-> 20 dano"
-  cardImage: {fileID: 21300000, guid: 66ed37fc2b2cab748b87ed4409552fc0, type: 3}
+  cardImage: {fileID: 1980329904, guid: 7f8e62e821d9e0f4bb36bf1aff7f4eec, type: 3}
   xpRequired: 0
   bossOnly: 0
   effectType: 1
@@ -23,3 +23,6 @@ MonoBehaviour:
   isPercentage: 0
   rangedWeapon: {fileID: 11400000, guid: 397891c723cc57a43bb6fd5cd9dc3ddf, type: 2}
   meleeWeapon: {fileID: 11400000, guid: ae3e5918eb841024498eb73e08eb3b2e, type: 2}
+  instantEffectType: 0
+  instantValue: 0
+  instantDuration: 0

@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: StopEnemies
   m_EditorClassIdentifier: Assembly-CSharp::CardData
   cardName: Stop Enemies
-  description: 5 seconds to Kill them all
-  cardImage: {fileID: 21300000, guid: 66ed37fc2b2cab748b87ed4409552fc0, type: 3}
+  description: Stop the chaos in its tracks. 5 Seconds
+  cardImage: {fileID: -843294299, guid: f2cac07028e5900468330d6f0c6082fe, type: 3}
   xpRequired: 0
   bossOnly: 0
   effectType: 2

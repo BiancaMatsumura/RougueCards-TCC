@@ -17,5 +17,8 @@ MonoBehaviour:
   xpStageRequired: 4
   killsRequired: 60
   timeRequired: 120
-  rewardCards: []
+  rewardCards:
+  - {fileID: 11400000, guid: ad188d32b4556e04e83b492e0521fba5, type: 2}
+  - {fileID: 11400000, guid: 0c6592b08335df44492d5c10c5d9e412, type: 2}
+  - {fileID: 11400000, guid: a5d346581798beb4399e357f26f74709, type: 2}
   bossMusic: {fileID: 8300000, guid: 8081985ae0125c54a951d4b1538097fc, type: 3}

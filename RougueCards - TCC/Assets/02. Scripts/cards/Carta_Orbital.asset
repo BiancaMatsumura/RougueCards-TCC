@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardName: Obital Gun
   description: 'Oracle: protect her Cartomante: Katana'
-  cardImage: {fileID: 21300000, guid: 5d8effd99fbb4d5478ce7856347b9943, type: 3}
+  cardImage: {fileID: -2057397144, guid: 50c2d37dd12400b498edc633f3f47b2a, type: 3}
   xpRequired: 0
   bossOnly: 0
   effectType: 1
@@ -23,3 +23,6 @@ MonoBehaviour:
   isPercentage: 0
   rangedWeapon: {fileID: 11400000, guid: f15594d16ea8d4b4fb5f61bd6ea5fd58, type: 2}
   meleeWeapon: {fileID: 11400000, guid: e47ab3a27affec84a9677fb33ef536c7, type: 2}
+  instantEffectType: 0
+  instantValue: 0
+  instantDuration: 0

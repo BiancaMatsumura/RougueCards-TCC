@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: KillAll
   m_EditorClassIdentifier: Assembly-CSharp::CardData
   cardName: Kill All Enemies
-  description: 
-  cardImage: {fileID: 21300000, guid: 55fffc781d3041c4aaefc0aca995dd0d, type: 3}
+  description: Clear the field instantly.
+  cardImage: {fileID: -1677907194, guid: b3967a7f6a2361d43b58934f634ef79e, type: 3}
   xpRequired: 0
   bossOnly: 0
   effectType: 2
