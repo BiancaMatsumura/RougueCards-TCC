@@ -131,7 +131,7 @@ public class CheatManager : MonoBehaviour
 
         Debug.Log($"[Cheat] {enemies.Length} inimigo(s) eliminado(s).");
     }
-    private void FreezeAllEnemys()
+    public void FreezeAllEnemys()
     {
         var enemies = GameObject.FindGameObjectsWithTag("Enemy");
        

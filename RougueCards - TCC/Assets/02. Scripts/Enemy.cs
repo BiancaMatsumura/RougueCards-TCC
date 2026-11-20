@@ -38,6 +38,7 @@ public class Enemy : MonoBehaviour
     private bool isDying;
     private bool _initialized = false;
     private bool isstop = false;
+    public bool IsBoss => data != null && data.isBoss;
 
     void Awake()
     {
@@ -163,8 +164,8 @@ public class Enemy : MonoBehaviour
         if (data != null && data.isSpecialEnemy && health.lastAttacker != null)
         {
             AttributeMaestro.Instance?.RegisterSpecialEnemyKill(health.lastAttacker);
-            GameObject.FindAnyObjectByType<PopusManager>().POPUPMensage(transform.position,$"Player {health.lastAttacker.playerID} is chosen next card!",2);
-          
+            GameObject.FindAnyObjectByType<PopusManager>().POPUPMensage(transform.position, $"Player {health.lastAttacker.playerID} is chosen next card!", 2);
+
         }
 
         StartCoroutine(DeathRoutine());
@@ -186,8 +187,10 @@ public class Enemy : MonoBehaviour
     {
         FindClosestPlayer();
         StartCoroutine(HandleAI());
-        if(target != null){
-            if(!isstop){
+        if (target != null)
+        {
+            if (!isstop)
+            {
                 Vector3 dir = (target.position - transform.position).normalized;
                 transform.position += dir * data.speed * Time.deltaTime;
 
@@ -197,40 +200,42 @@ public class Enemy : MonoBehaviour
                     transform.rotation =
                         Quaternion.Slerp(transform.rotation, rot, Time.deltaTime * 5f);
                 }
-                
-                }
-        }else{Debug.LogWarning("No target assign waiting");}
-        
+
+            }
+        }
+        else { Debug.LogWarning("No target assign waiting"); }
+
     }
 
-  
+
 
     private IEnumerator HandleAI()
     {
-        while(true){
-            
-        if (data == null)
+        while (true)
         {
-            yield return false;
-            Debug.LogError("Sem data");
-        }
+
+            if (data == null)
+            {
+                yield return false;
+                Debug.LogError("Sem data");
+            }
 
 
-        yield return new WaitForSeconds(CooldownBetwenSpawns);
-        FindClosestPlayer();
+            yield return new WaitForSeconds(CooldownBetwenSpawns);
+            FindClosestPlayer();
 
-        if ( target == null)
-        {
-            yield return false;
-            Debug.LogError("Sem target");
-        }
+            if (target == null)
+            {
+                yield return false;
+                Debug.LogError("Sem target");
+            }
 
-        
+
         }
     }
 
 
-    
+
     private void FindClosestPlayer()
     {
         var players = GameObject.FindGameObjectsWithTag("Player");
@@ -263,9 +268,9 @@ public class Enemy : MonoBehaviour
     }
     public void SwichEnemyMove(bool IsStop)
     {
-        if(IsStop)
+        if (IsStop)
         {
-            if(isstop){StartCoroutine(HandleAI());}
+            if (isstop) { StartCoroutine(HandleAI()); }
             isstop = true;
         }
         else
@@ -275,10 +280,24 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    public IEnumerator Freeze(float Time)
+    private Coroutine freezeRoutine;
+
+    public void FreezeFor(float seconds)
     {
-        SwichEnemyMove(false);
-        yield return new WaitForSeconds(Time);
-        SwichEnemyMove(true);
+        // Se já estava congelado, reinicia o tempo em vez de empilhar coroutines
+        if (freezeRoutine != null)
+        {
+            StopCoroutine(freezeRoutine);
+        }
+
+        freezeRoutine = StartCoroutine(FreezeRoutine(seconds));
+    }
+
+    private IEnumerator FreezeRoutine(float seconds)
+    {
+        isstop = true;
+        yield return new WaitForSeconds(seconds);
+        isstop = false;
+        freezeRoutine = null;
     }
 }

@@ -3,6 +3,11 @@ using UnityEngine;
 public class EnemyXP : MonoBehaviour
 {
     [SerializeField] private GameObject XPprefab;
+    [SerializeField] private GameObject healthPickupPrefab;
+
+    [Range(0f, 1f)]
+    [SerializeField] private float xpChance = 0.5f; // 50% XP, 50% vida
+
     private int _xpValue;
     private Health health;
 
@@ -13,23 +18,24 @@ public class EnemyXP : MonoBehaviour
     void OnEnable()
     {
         if (health != null)
-        { health.OnDeath += GiveXP; }
+        { health.OnDeath += GiveDrop; }
     }
     void OnDisable()
     {
         if (health != null)
         {
-            health.OnDeath -= GiveXP;
+            health.OnDeath -= GiveDrop;
         }
     }
 
-    void GiveXP()
+    void GiveDrop()
     {
-        if (XPprefab != null)
+        // Sorteia entre 0 e 1: se for menor que xpChance, dropa XP; senão, dropa vida
+        GameObject prefabToSpawn = Random.value < xpChance ? XPprefab : healthPickupPrefab;
+
+        if (prefabToSpawn != null)
         {
-            GameObject xpObj = Instantiate(XPprefab, transform.position, Quaternion.identity);
-            // Se o seu script de XP precisar saber o valor:
-             //xpObj.GetComponent<XP>().SetAmount(_xpValue);
+            Instantiate(prefabToSpawn, transform.position, Quaternion.identity);
         }
     }
 }

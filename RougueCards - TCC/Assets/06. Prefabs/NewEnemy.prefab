@@ -137,6 +137,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   XPprefab: {fileID: 7842632854057511571, guid: 77c1340847dc33e47bfe09f9cc390e83, type: 3}
+  healthPickupPrefab: {fileID: 7842632854057511571, guid: 29ab791256954f749a747894896259b6, type: 3}
+  xpChance: 0.5
 --- !u!111 &-489652007919317186
 Animation:
   m_ObjectHideFlags: 0

@@ -15,6 +15,7 @@ MonoBehaviour:
   enemyName: Arcano 01
   visualPrefab: {fileID: 5427188821400822598, guid: c5e89ad38114f1945b97739bce0f7b76, type: 3}
   animatorController: {fileID: 0}
+  SpawPercent: 100
   speed: 3
   maxHealth: 250
   damageToPlayer: 10
@@ -22,3 +23,5 @@ MonoBehaviour:
   modelScale: 2
   damageSound: {fileID: 8300000, guid: 986f492ba4744e34a8a03248837799a7, type: 3}
   deathSound: {fileID: 8300000, guid: 5522bc1d8ce463b4f9dd93b59d388073, type: 3}
+  isSpecialEnemy: 0
+  isBoss: 1

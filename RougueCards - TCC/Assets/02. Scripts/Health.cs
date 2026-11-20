@@ -17,14 +17,17 @@ public class Health : MonoBehaviour
     public PlayerStats lastAttacker;
     public bool _isDead = false;
     public bool isInvincible = false;
-    
+
     //Animation
     private Animator anim;
-
     private PopusManager popusManager;
+
+    private PlayerBuffs buffs;
+
     void Awake()
     {
         pStats = GetComponentInParent<PlayerStats>();
+        if (pStats != null) buffs = pStats.GetComponent<PlayerBuffs>();
         if (currentHealth <= 0) currentHealth = maxHealth;
     }
 
@@ -54,6 +57,16 @@ public class Health : MonoBehaviour
         if (attacker != null)
             lastAttacker = attacker;
 
+        // Golpe mortal: só quando o alvo é inimigo (sem PlayerStats) e não é boss
+        if (pStats == null
+            && attacker != null
+            && attacker.TryGetComponent(out PlayerBuffs atkBuffs)
+            && atkBuffs.HasOneHitKill)
+        {
+            bool isBoss = TryGetComponent(out Enemy enemy) && enemy.IsBoss;
+            if (!isBoss) amount = currentHealth;
+        }
+
         if (pStats != null)
         {
             float evasionChance = pStats.stats.Evasion.Value;
@@ -65,19 +78,26 @@ public class Health : MonoBehaviour
 
             float armorValue = pStats.stats.Armor.Value;
             amount = Mathf.Max(1, amount - (int)armorValue);
+
+            if (buffs != null)
+            {
+                if (buffs.TryBlockWithShield()) return;
+                if (buffs.TryRedirectDamage(amount, pStats)) return;
+            }
         }
 
-      
+
         currentHealth -= amount;
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
 
         OnHealthChanged?.Invoke(playerID, currentHealth, maxHealth);
         OnHit?.Invoke();
-        if (attacker != null){
-            popusManager.POPUP(this.gameObject.transform.position, amount,0);
+        if (attacker != null)
+        {
+            popusManager.POPUP(this.gameObject.transform.position, amount, 0);
         }
         if (currentHealth <= 0) Die();
-        
+
     }
 
     public void Die()
@@ -130,6 +150,14 @@ public class Health : MonoBehaviour
             return;
         }
         currentHealth = maxHealth;
+        OnHealthChanged?.Invoke(playerID, currentHealth, maxHealth);
+    }
+
+    public void Heal(int amount)
+    {
+        if (_isDead) return;
+
+        currentHealth = Mathf.Clamp(currentHealth + amount, 0, maxHealth);
         OnHealthChanged?.Invoke(playerID, currentHealth, maxHealth);
     }
 

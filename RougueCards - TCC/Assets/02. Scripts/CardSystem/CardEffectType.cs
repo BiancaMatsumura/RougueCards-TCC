@@ -1,5 +1,6 @@
 public enum CardEffectType
 {
     StatUpgrade,
-    UnlockWeapon
+    UnlockWeapon,
+    InstantEffect
 }

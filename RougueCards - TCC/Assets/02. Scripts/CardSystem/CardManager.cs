@@ -293,6 +293,10 @@ public class CardManager : MonoBehaviour
                 EquipWeapon(data);
                 EquipWeaponMelee(data);
             }
+            else if (data.effectType == CardEffectType.InstantEffect)
+            {
+                ApplyInstantEffect(data);
+            }
 
             AttributeMaestro.Instance.CheckForCardCombos();
         }
@@ -301,6 +305,51 @@ public class CardManager : MonoBehaviour
             OnBossCardPicked?.Invoke(data);
 
         HidePanel();
+    }
+
+    public void ApplyInstantEffect(CardData data)
+    {
+        if (data.effectType != CardEffectType.InstantEffect) return;
+
+        switch (data.instantEffectType)
+        {
+            case InstantEffectType.HealAll:
+                foreach (var p in GameObject.FindGameObjectsWithTag("Player"))
+                    p.GetComponent<Health>()?.FullHeal();
+                break;
+
+            case InstantEffectType.FreezeEnemies:
+                foreach (var e in FindObjectsByType<Enemy>(FindObjectsSortMode.None))
+                    e.FreezeFor(data.instantDuration);
+                break;
+
+            case InstantEffectType.KillAllEnemies:
+                foreach (var e in GameObject.FindGameObjectsWithTag("Enemy"))
+                    Destroy(e);
+                break;
+
+            case InstantEffectType.AddXP:
+                playerProgress.AddXP((int)data.instantValue);
+                break;
+
+            case InstantEffectType.DamageShare:
+                foreach (var b in FindObjectsByType<PlayerBuffs>(FindObjectsSortMode.None))
+                    b.ActivateDamageShare(data.instantDuration, data.instantValue);
+                break;
+
+            case InstantEffectType.OneHitKill:
+                foreach (var b in FindObjectsByType<PlayerBuffs>(FindObjectsSortMode.None))
+                    b.ActivateOneHitKill(data.instantDuration);
+                break;
+
+            case InstantEffectType.Shield:
+                foreach (var b in FindObjectsByType<PlayerBuffs>(FindObjectsSortMode.None))
+                    b.AddShield((int)data.instantValue);
+                break;
+            default:
+                Debug.LogWarning($"Carta {data.cardName} sem efeito instantâneo definido.");
+                break;
+        }
     }
 
     private void EquipWeapon(CardData data)
