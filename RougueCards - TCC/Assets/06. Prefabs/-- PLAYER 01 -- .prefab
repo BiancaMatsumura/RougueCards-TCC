@@ -1271,7 +1271,6 @@ MonoBehaviour:
   audioSource: {fileID: 4346600192731848026}
   blockSound: {fileID: 8300000, guid: 986f492ba4744e34a8a03248837799a7, type: 3}
   breakSound: {fileID: 8300000, guid: 986f492ba4744e34a8a03248837799a7, type: 3}
-  maxCharges: 3
 --- !u!1 &1407896814079509567
 GameObject:
   m_ObjectHideFlags: 0
@@ -10544,7 +10543,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6810996157262494735, guid: fae829017f481c0409a7811f98a3b337, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: 0.54
       objectReference: {fileID: 0}
     - target: {fileID: 6810996157262494735, guid: fae829017f481c0409a7811f98a3b337, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -10594,6 +10593,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   panel: {fileID: 3822479380228755205}
   reviveSlider: {fileID: 8069684205381151867}
+  promptText: {fileID: 2991811420572941474}
+  promptFormat: 'P{0}: hold  [{1}]'
+--- !u!114 &2991811420572941474 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8202671258276227271, guid: fae829017f481c0409a7811f98a3b337, type: 3}
+  m_PrefabInstance: {fileID: 6363782733883806821}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3822479380228755205 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7880347241479854944, guid: fae829017f481c0409a7811f98a3b337, type: 3}
